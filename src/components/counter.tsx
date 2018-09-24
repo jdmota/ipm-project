@@ -1,6 +1,12 @@
 import React from "react"; // eslint-disable-line
 
-export default ( { value, onIncrement, onDecrement } ) => (
+type CounterProps = {
+  value: number,
+  onIncrement: () => void,
+  onDecrement: () => void
+};
+
+export default ( { value, onIncrement, onDecrement }: CounterProps ) => (
   <p>
     Clicked: {value} times
     {" "}
