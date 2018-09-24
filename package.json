@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack-cli",
     "start": "webpack-dev-server",
-    "lint": "eslint src/**/*.ts src/**/*.tsx"
+    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "typescript": "tsc"
   },
   "dependencies": {
     "react": "^16.5.2",

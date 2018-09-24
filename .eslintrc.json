@@ -10,12 +10,16 @@
     }
   },
   "rules": {
+    "flowtype/no-types-missing-file-annotation": 0,
     "import/extensions": [ 0, "never", { "ts": "never" } ]
   },
   "settings": {
     "import/resolver": {
       "node": true,
       "eslint-import-resolver-typescript": true
+    },
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
     }
   }
 }

@@ -1,4 +1,6 @@
+__dev__
 dist
+dist_ts
 node_modules
 *.txt
 *.log
