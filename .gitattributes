@@ -1,7 +1,10 @@
 * text=auto
 *.html eol=lf
 *.css eol=lf
+*.ts eol=lf
+*.tsx eol=lf
 *.js eol=lf
+*.jsx eol=lf
 *.json eol=lf
 .gitattributes eol=lf
 .gitignore eol=lf
