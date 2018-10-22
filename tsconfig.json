@@ -4,6 +4,7 @@
     "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
+    "baseUrl": "/",
     "rootDir": "src",
     "outDir": "dist_ts",
     "strict": true,

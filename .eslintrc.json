@@ -1,5 +1,8 @@
 {
-  "extends": "@quase/eslint-config-quase",
+  "extends": [
+    "@quase/eslint-config-quase",
+    "plugin:react/recommended"
+  ],
   "globals": {
     "window": true,
     "document": true
