@@ -17,6 +17,10 @@
     "import/extensions": [ 0, "never", { "ts": "never" } ]
   },
   "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "16.5.2"
+    },
     "import/resolver": {
       "node": true,
       "eslint-import-resolver-typescript": true

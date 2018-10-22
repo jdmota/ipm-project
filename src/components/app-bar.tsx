@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -21,7 +20,16 @@ const styles = {
   },
 };
 
-function ButtonAppBar( props ) {
+type OurAppBarProps = {
+  classes: {
+    root: string,
+    grow: string,
+    menuButton: string
+  },
+  onLeftDrawerToggle: () => void
+};
+
+function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
   return (
     <div className={classes.root}>
@@ -40,9 +48,4 @@ function ButtonAppBar( props ) {
   );
 }
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  onLeftDrawerToggle: PropTypes.func.isRequired
-};
-
-export default withStyles( styles )( ButtonAppBar );
+export default withStyles( styles )( OurAppBar );

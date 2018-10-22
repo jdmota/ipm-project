@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
@@ -19,7 +18,17 @@ const styles = {
   },
 };
 
-function LeftDrawer( { classes, open, onOpen, onClose } ) {
+type LeftDrawerProps = {
+  classes: {
+    list: string,
+    fullList: string
+  },
+  open: boolean,
+  onOpen: () => void,
+  onClose: () => void
+};
+
+function LeftDrawer( { classes, open, onOpen, onClose }: LeftDrawerProps ) {
   const sideList = (
     <div className={classes.list}>
       <List>
@@ -54,12 +63,5 @@ function LeftDrawer( { classes, open, onOpen, onClose } ) {
     </div>
   );
 }
-
-LeftDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  open: PropTypes.bool.isRequired,
-  onOpen: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired
-};
 
 export default withStyles( styles )( LeftDrawer );

@@ -1,12 +1,8 @@
-import React from "react"; // eslint-disable-line
+import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/app";
 
-const rootEl = document.getElementById( "root" );
-
-const render = () => ReactDOM.render(
+ReactDOM.render(
   <App />,
-  rootEl
+  document.getElementById( "root" )
 );
-
-render();

@@ -2,24 +2,26 @@ import React from "react";
 import AppBar from "./app-bar";
 import LeftDrawer from "./left-drawer";
 
-class App extends React.Component {
+type AppState = {
+  leftDrawer: boolean
+};
+
+class App extends React.Component<{}, AppState> {
 
   state = {
     leftDrawer: false
   };
 
-  toggleLeftDrawer = ( open?: boolean ) => {
-    this.setState( state => {
-      return {
-        leftDrawer: open == null ? !state.leftDrawer : open,
-      };
-    } );
+  toggleLeftDrawer = ( open: null | boolean ) => {
+    this.setState( state => ( {
+      leftDrawer: open == null ? !state.leftDrawer : open,
+    } ) );
   };
 
   render() {
     return <>
       <AppBar
-        onLeftDrawerToggle={() => this.toggleLeftDrawer()}
+        onLeftDrawerToggle={() => this.toggleLeftDrawer( null )}
       />
       <LeftDrawer
         open={this.state.leftDrawer}
