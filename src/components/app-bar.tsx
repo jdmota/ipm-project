@@ -18,6 +18,11 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+  },
+  search: {
+    width: "100%",
+    marginLeft: 24,
+    marginRight: 24
   }
 };
 
@@ -25,7 +30,8 @@ type OurAppBarProps = {
   classes: {
     root: string,
     grow: string,
-    menuButton: string
+    menuButton: string,
+    search: string
   },
   onLeftDrawerToggle: () => void
 };
@@ -39,11 +45,11 @@ function OurAppBar( props: OurAppBarProps ) {
           <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit">
             FCTicket
           </Typography>
           <SearchBar
-            value={""}
+            className={classes.search}
             onChange={() => {}}
             onRequestSearch={() => {}}
           />

@@ -12,10 +12,13 @@ let events: Event[] = [
     priceUnit: 50 }
 ];
 
-export function search( inputSearch : string ) {
+export function search( inputSearch: string ) {
   let inputSearchMin = inputSearch.trim().toUpperCase();
-  let inputWords = inputSearchMin.split( " " );
-  let resultEvents = events.find( x => x.title.toUpperCase().includes( inputWords. ) );
+  let inputWords = inputSearchMin.split( /\s+/ );
+  let resultEvents = events.filter( event => {
+    const title = event.title.toUpperCase();
+    return !inputWords.some( word => title.includes( word ) );
+  } );
 
   return resultEvents;
 }
