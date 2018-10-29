@@ -28,7 +28,6 @@ const styles = {
     opacity: 0.38
   },
   icon: {
-    opacity: 0.54,
     transition: "opacity 200ms cubic-bezier(0.4, 0.0, 0.2, 1)"
   },
   input: {
