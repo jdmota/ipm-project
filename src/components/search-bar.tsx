@@ -1,17 +1,24 @@
 import React, { Component } from "react";
+import Autosuggest from "react-autosuggest";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
 import ClearIcon from "@material-ui/icons/Clear";
 import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
+import { Event } from "../data/types";
+import { search } from "../search";
 
-const styles = {
+const styles = theme => ( {
   root: {
     height: 48,
     display: "flex",
     justifyContent: "space-between",
     backgroundColor: "rgba(255, 255, 255, 0.15)"
+  },
+  grow: {
+    flexGrow: 1
   },
   iconButton: {
     color: "white",
@@ -36,9 +43,28 @@ const styles = {
   },
   searchContainer: {
     margin: "auto 16px",
-    width: "calc(100% - 48px - 32px)" // 48px button + 32px margin,
+    display: "flex"
+  },
+  container: {
+    position: "relative",
+    width: "100%"
+  },
+  suggestionsContainerOpen: {
+    position: "absolute",
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    left: 0,
+    right: 0
+  },
+  suggestion: {
+    display: "block"
+  },
+  suggestionsList: {
+    margin: 0,
+    padding: 0,
+    listStyleType: "none"
   }
-};
+} );
 
 type SearchBarProps = {
   onChange: ( value: string ) => void,
@@ -49,15 +75,29 @@ type SearchBarProps = {
 
 type SearchBarState = {
   focus: boolean,
-  value: string
+  value: string,
+  suggestions: any[]
 };
+
+const getSuggestionValue = ( evt: Event ) => evt.title;
+
+const renderSuggestionsContainer = ( options: any ) => <Paper {...options.containerProps} square>{options.children}</Paper>;
+
+function renderSuggestion( suggestion: Event, { isHighlighted }: { isHighlighted: boolean } ) {
+  return (
+    <MenuItem selected={isHighlighted} component="div">
+      <div>{suggestion.title}</div>
+    </MenuItem>
+  );
+}
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
   constructor( props: SearchBarProps ) {
     super( props );
     this.state = {
       focus: false,
-      value: ""
+      value: "",
+      suggestions: []
     };
   }
 
@@ -95,47 +135,80 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   }
 
+  handleSuggestionsFetchRequested = ( { value }: { value: string } ) => {
+    this.setState( {
+      suggestions: search( value )
+    } );
+  };
+
+  handleSuggestionsClearRequested = () => {
+    this.setState( {
+      suggestions: []
+    } );
+  };
+
+  renderInputComponent = ( inputProps: any ) => {
+
+    const { value } = this.state;
+    const { classes } = this.props;
+    const disabled = false;
+
+    return <div className={classes.searchContainer}>
+      <Input {...inputProps}/>
+      <div className={classes.grow}></div>
+      <IconButton
+        onClick={this.handleCancel}
+        classes={{
+          root: `${classes.iconButton} ${value === "" ? classes.iconButtonHidden : ""}`,
+          disabled: classes.iconButtonDisabled
+        }}
+        disabled={disabled}
+      >
+        <ClearIcon classes={{ root: classes.icon }} />
+      </IconButton>
+      <IconButton
+        onClick={this.handleRequestSearch}
+        classes={{
+          root: classes.iconButton,
+          disabled: classes.iconButtonDisabled
+        }}
+        disabled={disabled}
+      >
+        <SearchIcon classes={{ root: classes.icon }} />
+      </IconButton>
+    </div>;
+  };
+
   render() {
     const { value } = this.state;
     const { classes, className } = this.props;
 
-    const disabled = false;
-
     return (
       <Paper className={`${classes.root} ${className || ""}`}>
-        <div className={classes.searchContainer}>
-          <Input
-            onBlur={this.handleBlur}
-            value={value}
-            onChange={this.handleInput}
-            onKeyUp={this.handleKeyUp}
-            onFocus={this.handleFocus}
-            fullWidth
-            className={classes.input}
-            disableUnderline
-            disabled={disabled}
-          />
-        </div>
-        <IconButton
-          onClick={this.handleCancel}
-          classes={{
-            root: `${classes.iconButton} ${value === "" ? classes.iconButtonHidden : ""}`,
-            disabled: classes.iconButtonDisabled
+        <Autosuggest
+          inputProps={{
+            onBlur: this.handleBlur,
+            value: value,
+            onChange: this.handleInput,
+            onKeyUp: this.handleKeyUp,
+            onFocus: this.handleFocus,
+            className: classes.input,
+            disableUnderline: true
           }}
-          disabled={disabled}
-        >
-          <ClearIcon classes={{ root: classes.icon }} />
-        </IconButton>
-        <IconButton
-          onClick={this.handleRequestSearch}
-          classes={{
-            root: classes.iconButton,
-            disabled: classes.iconButtonDisabled
+          theme={{
+            container: classes.container,
+            suggestionsContainerOpen: classes.suggestionsContainerOpen,
+            suggestionsList: classes.suggestionsList,
+            suggestion: classes.suggestion
           }}
-          disabled={disabled}
-        >
-          <SearchIcon classes={{ root: classes.icon }} />
-        </IconButton>
+          suggestions={this.state.suggestions}
+          onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+          renderSuggestion={renderSuggestion}
+          renderInputComponent={this.renderInputComponent}
+          renderSuggestionsContainer={renderSuggestionsContainer}
+          getSuggestionValue={getSuggestionValue}
+        />
       </Paper>
     );
   }

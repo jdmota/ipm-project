@@ -17,7 +17,7 @@ export function search( inputSearch: string ) {
   let inputWords = inputSearchMin.split( /\s+/ );
   let resultEvents = events.filter( event => {
     const title = event.title.toUpperCase();
-    return !inputWords.some( word => title.includes( word ) );
+    return inputWords.some( word => title.includes( word ) );
   } );
 
   return resultEvents;
