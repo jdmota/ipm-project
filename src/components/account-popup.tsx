@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Avatar from "./avatars";
-import Button from "@material-ui/core/Button";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import IconButton from "@material-ui/core/IconButton";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
@@ -43,16 +43,17 @@ class MenuListComposition extends React.Component {
     return (
       <div className={classes.root}>
         <div>
-          <Button
+          <IconButton
             buttonRef={node => {
               this.anchorEl = node;
             }}
+            color="inherit"
             aria-owns={open ? "menu-list-grow" : null}
             aria-haspopup="true"
             onClick={this.handleToggle}
           >
-            <Avatar />
-          </Button>
+            <AccountCircle/>
+          </IconButton>
           <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
             {( { TransitionProps, placement } ) => (
               <Grow

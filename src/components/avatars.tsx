@@ -21,6 +21,7 @@ function ImageAvatars( props ) {
         alt="N A"
         src="https://www.jampakbooks.com/images/avatar.png"
         className={ classes.avatar }
+        imgProps={{ style: { width: "50%", height: "50%" } }}
       />
     </div>
   );
