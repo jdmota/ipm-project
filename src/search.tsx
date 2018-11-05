@@ -9,6 +9,28 @@ let events: Event[] = [
     type: "festival",
     location: "Alges",
     comments: [],
+    priceUnit: 50 },
+
+  {
+    id: "2",
+    title: "A pior comédia do mundo",
+    description: "Super funny",
+    date: new Date(),
+    images: [],
+    type: "theater",
+    location: "Lisboa",
+    comments: [],
+    priceUnit: 50 },
+
+  {
+    id: "3",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [],
+    type: "other",
+    location: "Almada",
+    comments: [],
     priceUnit: 50 }
 ];
 
