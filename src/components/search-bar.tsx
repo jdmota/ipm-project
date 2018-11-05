@@ -7,8 +7,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ClearIcon from "@material-ui/icons/Clear";
 import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
+import FilterIcon from "@material-ui/icons/FilterList";
 import { Event } from "../data/types";
 import { search } from "../search";
+import AdvancedSearchDrawer from "./advanced-search-drawer";
 
 const styles = theme => ( {
   root: {
@@ -76,7 +78,8 @@ type SearchBarProps = {
 type SearchBarState = {
   focus: boolean,
   value: string,
-  suggestions: any[]
+  suggestions: any[],
+  advancedSearchDrawer: boolean
 };
 
 const getSuggestionValue = ( evt: Event ) => evt.title;
@@ -97,9 +100,16 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     this.state = {
       focus: false,
       value: "",
-      suggestions: []
+      suggestions: [],
+      advancedSearchDrawer: false
     };
   }
+
+  toggleAvancedSearchDrawer = ( open: null | boolean ) => {
+    this.setState( state => ( {
+      advancedSearchDrawer: open == null ? !state.advancedSearchDrawer : open,
+    } ) );
+  };
 
   handleFocus = () => {
     this.setState( { focus: true } );
@@ -175,6 +185,16 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
         disabled={disabled}
       >
         <SearchIcon classes={{ root: classes.icon }} />
+      </IconButton>
+      <IconButton
+        onClick={this.handleRequestSearch}
+        classes={{
+          root: classes.iconButton,
+          disabled: classes.iconButtonDisabled
+        }}
+        disabled={disabled}
+      >
+        <FilterIcon classes={{ root: classes.icon }} />
       </IconButton>
     </div>;
   };

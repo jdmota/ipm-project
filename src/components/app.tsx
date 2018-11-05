@@ -4,18 +4,26 @@ import LeftDrawer from "./left-drawer";
 import Main from "./main";
 
 type AppState = {
-  leftDrawer: boolean
+  leftDrawer: boolean,
+  rightAvancedSearchDrawer: boolean
 };
 
 class App extends React.Component<{}, AppState> {
 
   state = {
-    leftDrawer: false
+    leftDrawer: false,
+    rightAvancedSearchDrawer: false
   };
 
   toggleLeftDrawer = ( open: null | boolean ) => {
     this.setState( state => ( {
       leftDrawer: open == null ? !state.leftDrawer : open,
+    } ) );
+  };
+
+  toggleAvancedSearchDrawer = ( open: null | boolean ) => {
+    this.setState( state => ( {
+      rightAvancedSearchDrawer: open == null ? !state.rightAvancedSearchDrawer : open,
     } ) );
   };
 
@@ -29,6 +37,7 @@ class App extends React.Component<{}, AppState> {
         onOpen={() => this.toggleLeftDrawer( true )}
         onClose={() => this.toggleLeftDrawer( false )}
       />
+      right
       <Main />
     </>;
   }
