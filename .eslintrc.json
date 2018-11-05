@@ -5,7 +5,8 @@
   ],
   "globals": {
     "window": true,
-    "document": true
+    "document": true,
+    "location": true
   },
   "parser": "pluggable-babel-eslint",
   "plugins": [

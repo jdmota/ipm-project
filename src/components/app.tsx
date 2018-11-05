@@ -1,6 +1,7 @@
 import React from "react";
 import AppBar from "./app-bar";
 import LeftDrawer from "./left-drawer";
+import Main from "./main";
 
 type AppState = {
   leftDrawer: boolean
@@ -28,6 +29,7 @@ class App extends React.Component<{}, AppState> {
         onOpen={() => this.toggleLeftDrawer( true )}
         onClose={() => this.toggleLeftDrawer( false )}
       />
+      <Main />
     </>;
   }
 }
