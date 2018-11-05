@@ -1,20 +1,20 @@
 {
   "extends": [
-    "@quase/eslint-config-quase",
+    "@quase/eslint-config-base",
     "plugin:react/recommended"
   ],
   "globals": {
     "window": true,
     "document": true
   },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
+  "parser": "pluggable-babel-eslint",
+  "plugins": [
+    "typescript"
+  ],
   "rules": {
-    "flowtype/no-types-missing-file-annotation": 0,
-    "import/extensions": [ 0, "never", { "ts": "never" } ]
+    "import/extensions": [ 0, "never", { "ts": "never" } ],
+    "typescript/no-unused-vars": 2,
+    "typescript/no-use-before-define": 2
   },
   "settings": {
     "react": {
@@ -24,9 +24,6 @@
     "import/resolver": {
       "node": true,
       "eslint-import-resolver-typescript": true
-    },
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
     }
   }
 }
