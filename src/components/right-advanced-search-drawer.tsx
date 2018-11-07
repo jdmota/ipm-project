@@ -2,7 +2,6 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -13,16 +12,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import purple from "@material-ui/core/colors/purple";
 import Input from "@material-ui/core/Input";
 
-
 const styles = theme => ( {
+  drawer: {
+    top: 64
+  },
   list: {
     width: "auto",
   },
   fullList: {
     width: "auto",
-  },
-  BackdropProps: {
-    invisible: true,
   },
   container: {
     display: "flex",
@@ -83,32 +81,25 @@ const styles = theme => ( {
   },
 } );
 
-
 type RightAdvancedSearchDrawerProps = {
-  classes: {
-    list: string,
-    fullList: string
-  },
+  classes: any,
   open: boolean,
   onOpen: () => void,
   onClose: () => void
 };
 
-
 function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
   const sideList = (
     <div className={classes.list}>
       <List>
-        <FormControl className={styles.margin}>
+        <FormControl className={classes.margin}>
           <InputLabel
             htmlFor="custom-css-standard-input"
-
           >
           Custom CSS888
           </InputLabel>
           <Input
             id="custom-css-standard-input"
-
           />
         </FormControl>
       </List>
@@ -126,12 +117,23 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
   return (
     <div>
       <SwipeableDrawer
+        className={classes.drawer}
         open={open}
         onOpen={onOpen}
         onClose={onClose}
-        anchor = {"right"}
-        // hideBackdrop= {true}
-        BackdropProps = {styles.BackdropProps}
+        anchor={"right"}
+        ModalProps={{
+          disableEnforceFocus: true,
+          BackdropProps: {
+            style: {
+              top: 64
+            },
+            invisible: true
+          }
+        }}
+        classes={{
+          paper: classes.drawer
+        }}
       >
         {sideList}
       </SwipeableDrawer>
