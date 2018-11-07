@@ -10,7 +10,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import FilterIcon from "@material-ui/icons/FilterList";
 import { Event } from "../data/types";
 import { search } from "../search";
-import AdvancedSearchDrawer from "./advanced-search-drawer";
 
 const styles = theme => ( {
   root: {
@@ -73,13 +72,13 @@ type SearchBarProps = {
   onRequestSearch: ( value: string ) => void,
   classes: any,
   className: string
+  onRightAdvancedSearchDrawerToggle: () => void
 };
 
 type SearchBarState = {
   focus: boolean,
   value: string,
   suggestions: any[],
-  advancedSearchDrawer: boolean
 };
 
 const getSuggestionValue = ( evt: Event ) => evt.title;
@@ -101,15 +100,8 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
       focus: false,
       value: "",
       suggestions: [],
-      advancedSearchDrawer: false
     };
   }
-
-  toggleAvancedSearchDrawer = ( open: null | boolean ) => {
-    this.setState( state => ( {
-      advancedSearchDrawer: open == null ? !state.advancedSearchDrawer : open,
-    } ) );
-  };
 
   handleFocus = () => {
     this.setState( { focus: true } );
@@ -157,10 +149,11 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     } );
   };
 
+
   renderInputComponent = ( inputProps: any ) => {
 
     const { value } = this.state;
-    const { classes } = this.props;
+    const { classes, onRightAdvancedSearchDrawerToggle } = this.props;
     const disabled = false;
 
     return <div className={classes.searchContainer}>
@@ -187,7 +180,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
         <SearchIcon classes={{ root: classes.icon }} />
       </IconButton>
       <IconButton
-        onClick={this.handleRequestSearch}
+        onClick={onRightAdvancedSearchDrawerToggle}
         classes={{
           root: classes.iconButton,
           disabled: classes.iconButtonDisabled
