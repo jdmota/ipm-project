@@ -72,13 +72,13 @@ type SearchBarProps = {
   onRequestSearch: ( value: string, suggestion: Event | null ) => void,
   classes: any,
   className: string
+  onRightAdvancedSearchDrawerToggle: () => void
 };
 
 type SearchBarState = {
   focus: boolean,
   value: string,
   suggestions: any[],
-  advancedSearchDrawer: boolean
 };
 
 const getSuggestionValue = ( evt: Event ) => evt.title;
@@ -103,16 +103,9 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
       focus: false,
       value: "",
       suggestions: [],
-      advancedSearchDrawer: false
     };
     this.justSelectedSuggestion = false;
   }
-
-  toggleAvancedSearchDrawer = ( open: null | boolean ) => {
-    this.setState( state => ( {
-      advancedSearchDrawer: open == null ? !state.advancedSearchDrawer : open,
-    } ) );
-  };
 
   handleFocus = () => {
     this.setState( { focus: true } );
@@ -171,7 +164,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   renderInputComponent = ( inputProps: any ) => {
 
     const { value } = inputProps;
-    const { classes } = this.props;
+    const { classes, onRightAdvancedSearchDrawerToggle } = this.props;
     const disabled = false;
 
     return <div className={classes.searchContainer}>
@@ -198,7 +191,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
         <SearchIcon classes={{ root: classes.icon }} />
       </IconButton>
       <IconButton
-        onClick={this.handleRequestSearch}
+        onClick={onRightAdvancedSearchDrawerToggle}
         classes={{
           root: classes.iconButton,
           disabled: classes.iconButtonDisabled

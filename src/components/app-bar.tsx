@@ -35,7 +35,9 @@ type OurAppBarProps = {
     loginButton: string
   },
   onLeftDrawerToggle: () => void
+  onRightDrawerToggle: () => void
 };
+
 
 function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
@@ -52,6 +54,7 @@ function OurAppBar( props: OurAppBarProps ) {
           <SearchBar
             className={classes.search}
             onRequestSearch={( ...args: any ) => console.log( "search onRequestSearch", args )}
+            onRightAdvancedSearchDrawerToggle={() => props.onRightDrawerToggle()}
           />
           <div className={classes.grow} />
           <LoginButton />
