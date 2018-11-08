@@ -75,11 +75,11 @@ class Slider extends React.Component<Props, State> {
 
     this.state = {
       images: [
-        "http://nosalive.com/wp-content/uploads/2016/08/nos-alive-2017-tickets.jpg",
-        "http://nosalive.com/wp-content/uploads/2015/07/11-jul-og.jpg",
-        "http://nosalive.com/wp-content/uploads/2018/07/poster_541x426.png",
+        "/images/NOS/nos_alive_1.jpg",
+        "/images/NOS/nos_alive_2.jpg",
+        "/images/NOS/nos_alive_2.jpg",
       ],
-      currentIndex: 0, /* Default image index*/
+      currentIndex: 0,
       translateValue: 0
     };
   }
