@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Autosuggest from "react-autosuggest";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
@@ -9,7 +9,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Event } from "../data/types";
 import { search } from "../helpers/search";
-import { navigate } from "../helpers/router";
 
 const styles = theme => ( {
   root: {
@@ -91,7 +90,7 @@ function renderSuggestion( suggestion: Event, { isHighlighted }: { isHighlighted
   );
 }
 
-class SearchBar extends Component<SearchBarProps, SearchBarState> {
+class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
 
   private justSelectedSuggestion: boolean;
 
