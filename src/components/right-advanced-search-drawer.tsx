@@ -135,9 +135,6 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
         ModalProps={{
           disableEnforceFocus: true,
           BackdropProps: {
-            style: {
-              top: 64
-            },
             invisible: true
           }
         }}

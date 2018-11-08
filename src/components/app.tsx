@@ -3,9 +3,6 @@ import AppBar from "./app-bar";
 import LeftDrawer from "./left-drawer";
 import RightAvancedSearchDrawer from "./right-advanced-search-drawer";
 import Main from "./main";
-import appBar from "./app-bar";
-import { string } from "prop-types";
-import { zIndex } from "material-ui/styles";
 
 type AppState = {
   leftDrawer: boolean,
