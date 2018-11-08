@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Autosuggest from "react-autosuggest";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
@@ -9,7 +9,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
 import FilterIcon from "@material-ui/icons/FilterList";
 import { Event } from "../data/types";
-import { search } from "../search";
+import AdvancedSearchDrawer from "./advanced-search-drawer";
+import { search } from "../helpers/search";
 
 const styles = theme => ( {
   root: {
@@ -68,8 +69,7 @@ const styles = theme => ( {
 } );
 
 type SearchBarProps = {
-  onChange: ( value: string ) => void,
-  onRequestSearch: ( value: string ) => void,
+  onRequestSearch: ( value: string, suggestion: Event | null ) => void,
   classes: any,
   className: string
   onRightAdvancedSearchDrawerToggle: () => void
@@ -93,7 +93,10 @@ function renderSuggestion( suggestion: Event, { isHighlighted }: { isHighlighted
   );
 }
 
-class SearchBar extends Component<SearchBarProps, SearchBarState> {
+class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
+
+  private justSelectedSuggestion: boolean;
+
   constructor( props: SearchBarProps ) {
     super( props );
     this.state = {
@@ -101,6 +104,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
       value: "",
       suggestions: [],
     };
+    this.justSelectedSuggestion = false;
   }
 
   handleFocus = () => {
@@ -114,27 +118,30 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     }
   }
 
-  handleInput = ( e: any ) => {
-    this.setState( { value: e.target.value } );
-    if ( this.props.onChange ) {
-      this.props.onChange( e.target.value );
-    }
-  }
-
   handleCancel = () => {
     this.setState( { value: "" } );
   }
 
   handleKeyUp = ( e: any ) => {
     if ( e.charCode === 13 || e.key === "Enter" ) {
-      this.handleRequestSearch();
+      if ( this.justSelectedSuggestion ) {
+        this.justSelectedSuggestion = false;
+      } else {
+        this.handleRequestSearch();
+      }
+    }
+  }
+
+  handleChange = ( _: any, { newValue, method }: { newValue: any, method: string } ) => {
+    if ( method !== "down" && method !== "up" ) {
+      this.setState( {
+        value: newValue
+      } );
     }
   }
 
   handleRequestSearch = () => {
-    if ( this.props.onRequestSearch ) {
-      this.props.onRequestSearch( this.state.value );
-    }
+    this.props.onRequestSearch( this.state.value, null );
   }
 
   handleSuggestionsFetchRequested = ( { value }: { value: string } ) => {
@@ -149,10 +156,14 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     } );
   };
 
+  handleSuggestionSelected = ( _: any, { suggestion, suggestionValue }: { suggestion: Event, suggestionValue: string } ) => {
+    this.props.onRequestSearch( suggestionValue, suggestion );
+    this.justSelectedSuggestion = true;
+  }
 
   renderInputComponent = ( inputProps: any ) => {
 
-    const { value } = this.state;
+    const { value } = inputProps;
     const { classes, onRightAdvancedSearchDrawerToggle } = this.props;
     const disabled = false;
 
@@ -199,12 +210,13 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     return (
       <Paper className={`${classes.root} ${className || ""}`}>
         <Autosuggest
+          focusInputOnSuggestionClick={false}
           inputProps={{
-            onBlur: this.handleBlur,
             value: value,
-            onChange: this.handleInput,
+            onChange: this.handleChange,
             onKeyUp: this.handleKeyUp,
             onFocus: this.handleFocus,
+            onBlur: this.handleBlur,
             className: classes.input,
             disableUnderline: true
           }}
@@ -215,12 +227,13 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
             suggestion: classes.suggestion
           }}
           suggestions={this.state.suggestions}
+          getSuggestionValue={getSuggestionValue}
           onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+          onSuggestionSelected={this.handleSuggestionSelected}
           renderSuggestion={renderSuggestion}
           renderInputComponent={this.renderInputComponent}
           renderSuggestionsContainer={renderSuggestionsContainer}
-          getSuggestionValue={getSuggestionValue}
         />
       </Paper>
     );

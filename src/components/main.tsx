@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import installRouter from "../helpers/router";
+import { installRouter } from "../helpers/router";
+import EventPage from "./event-page";
 
 type MainState = {
   pathname: string,
@@ -38,10 +39,32 @@ class Main extends React.Component<MainProps, MainState> {
     const { classes } = this.props;
 
     return <div className={classes.main}>
-      <div>{this.state.pathname}</div>
-      <div>{this.state.search}</div>
-      <div><a href="/abc">/abc</a></div>
-      <div><a href="/cba">/cba</a></div>
+      <div>
+        <EventPage event={{ id: "1",
+          title: "NOS Alive",
+          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          date: new Date(),
+          images: [],
+          type: "festival",
+          location: "Alges",
+          comments: [ {
+            author: {
+              id: "1",
+              mail: "bestcostumer@gmail.com",
+              nickname: "Thebest",
+              password: "best123",
+              firstName: "John",
+              lastName: "Smith",
+              creditCardNumber: "0000 1111 2222 3333",
+              dateCreditCard: new Date( 2020, 5, 20 ),
+              cvc: "123"
+            },
+            data: new Date(),
+            text: "Adorei!"
+          } ],
+          priceUnit: 50 }}>
+        </EventPage>
+      </div>
     </div>;
   }
 }
