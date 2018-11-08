@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Event, EventComment } from "src/data/types";
+import React from "react";
+import { Event } from "src/data/types";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
@@ -63,19 +63,14 @@ const styles = theme => ( {
 
 } );
 
-function EventPage( props: {event: Event} ) {
+function EventPage( props: { classes: any, event: Event } ) {
 
-  const { title, description: eventDescription, date, location, comments, priceUnit } = props.event;
+  const { title, description: eventDescription, comments, priceUnit } = props.event;
   const { classes } = props;
 
   return <div className={classes.container}>
 
     <div className={classes.imageContainer}>
-      {/* http://nosalive.com/wp-content/uploads/2016/08/nos-alive-2017-tickets.jpg
-      src/images/NOS/nos_alive_1.jpg
-      <img className={classes.image} src={ "http://nosalive.com/wp-content/uploads/2016/08/nos-alive-2017-tickets.jpg" } />
-      */}
-
       <Slider/>
       <Input
         placeholder="Here to comment"
@@ -87,7 +82,6 @@ function EventPage( props: {event: Event} ) {
       <Typography className={classes.description} variant="subtitle1">
         {comments[ 0 ].author.nickname}
       </Typography>
-
     </div>
 
     <div className={classes.descriptionContiner}>

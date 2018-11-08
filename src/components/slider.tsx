@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Slide from "./slide";
 import { withStyles } from "@material-ui/core/styles";
 import ArrowBack from "@material-ui/icons/ArrowBack";
@@ -12,7 +12,7 @@ type State = {
 };
 
 type Props = {
-
+  classes: any
 };
 
 const styles = {
@@ -69,8 +69,8 @@ const styles = {
   }
 };
 
-class Slider extends React.Component <Props, State> {
-  constructor( props ) {
+class Slider extends React.Component<Props, State> {
+  constructor( props: Props ) {
     super( props );
 
     this.state = {
@@ -85,22 +85,16 @@ class Slider extends React.Component <Props, State> {
   }
 
   goToPrevSlide = () => {
-    if ( this.state.currentIndex === 0 ) { return; }
+    if ( this.state.currentIndex === 0 ) return;
 
     this.setState( prevState => ( {
       currentIndex: prevState.currentIndex - 1,
       translateValue: prevState.translateValue + ( this.slideWidth() )
-
     } ) );
   }
 
   goToNextSlide = () => {
-    if ( this.state.currentIndex === this.state.images.length - 1 ) {
-      return this.setState( {
-        currentIndex: 0,
-        translateValue: 0
-      } );
-    }
+    if ( this.state.currentIndex === this.state.images.length - 1 ) return;
 
     this.setState( prevState => ( {
       currentIndex: prevState.currentIndex + 1,

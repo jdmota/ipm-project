@@ -13,7 +13,7 @@ const styles = {
   },
 };
 
-function ImageAvatars( props ) {
+function ImageAvatars( props: any ) {
   const { classes } = props;
   return (
     <div className={classes.row}>

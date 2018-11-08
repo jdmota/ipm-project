@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -58,7 +57,6 @@ class MenuListComposition extends React.Component {
             {( { TransitionProps, placement } ) => (
               <Grow
                 {...TransitionProps}
-                id="menu-list-grow"
                 style={{ transformOrigin: placement === "bottom" ? "center top" : "center bottom" }}
               >
                 <Paper>
@@ -77,9 +75,5 @@ class MenuListComposition extends React.Component {
     );
   }
 }
-
-MenuListComposition.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles( styles )( MenuListComposition );
