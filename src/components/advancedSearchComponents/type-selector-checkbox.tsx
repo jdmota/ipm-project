@@ -16,19 +16,14 @@ const styles = theme => ( {
     flexWrap: "wrap",
   },
   formControl: {
-    margin: theme.spacing.unit,
     minWidth: 120,
     maxWidth: 300,
   },
-  chips: {
-    display: "flex",
-    flexWrap: "wrap",
+  textField: {
+    flexBasis: 240
   },
-  chip: {
-    margin: theme.spacing.unit / 4,
-  },
-  noLabel: {
-    marginTop: theme.spacing.unit * 3,
+  margin: {
+    margin: theme.spacing.unit,
   },
 } );
 
@@ -64,7 +59,7 @@ class MultipleSelect extends React.Component {
 
     return (
 
-      <FormControl className={classes.formControl}>
+      <FormControl className= {classNames( classes.margin, classes.textField )}>
         <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
         <Select
           multiple = {true}
