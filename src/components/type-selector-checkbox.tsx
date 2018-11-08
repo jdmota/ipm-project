@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -49,10 +47,9 @@ const names = [
   "Theater"
 ];
 
-
 class MultipleSelect extends React.Component {
   state = {
-    name: [],
+    name: []
   };
 
   handleChange = event => {
@@ -63,7 +60,6 @@ class MultipleSelect extends React.Component {
     const { classes } = this.props;
 
     return (
-
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
         <Select
@@ -86,8 +82,4 @@ class MultipleSelect extends React.Component {
   }
 }
 
-MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles( styles, { withTheme: true } )( MultipleSelect );
+export default withStyles( styles )( MultipleSelect );

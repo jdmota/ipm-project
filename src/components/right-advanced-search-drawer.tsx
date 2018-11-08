@@ -3,16 +3,11 @@ import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import purple from "@material-ui/core/colors/purple";
 import Input from "@material-ui/core/Input";
 import TypeSelectorCheckBox from "./type-selector-checkbox";
-
 
 const styles = theme => ( {
   drawer: {
@@ -107,7 +102,6 @@ const MenuProps = {
   },
 };
 
-
 function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
 
   const sideList = (
@@ -128,7 +122,6 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
             />
           </FormControl>
         </ListItem>
-
       </List>
     </div>
   );
@@ -142,11 +135,7 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
         onClose={onClose}
         anchor={"right"}
         ModalProps={{
-          disableEnforceFocus: true,
           BackdropProps: {
-            style: {
-              top: 64
-            },
             invisible: true
           }
         }}

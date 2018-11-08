@@ -41,12 +41,11 @@ type OurAppBarProps = {
   onRightDrawerToggle: () => void
 };
 
-
 function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appBar}>
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
             <MenuIcon />
