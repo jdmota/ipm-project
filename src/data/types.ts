@@ -8,13 +8,13 @@ export type User = {
   creditCardNumber: string,
   dateCreditCard: Date,
   cvc: string
-}
+};
 
 export type EventComment = {
   author: User,
   text: string,
   data: Date,
-}
+};
 
 export type Event = {
   id: string,
@@ -26,5 +26,10 @@ export type Event = {
   location: string,
   comments: EventComment[],
   priceUnit: number,
-}
+};
+
+export type Picture = {
+  id: string,
+  url: string
+};
 
