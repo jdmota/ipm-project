@@ -11,13 +11,16 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import purple from "@material-ui/core/colors/purple";
 import Input from "@material-ui/core/Input";
+import TypeSelectorCheckBox from "./type-selector-checkbox";
+
 
 const styles = theme => ( {
   drawer: {
-    top: 64
+    zIndex: 1
   },
   list: {
     width: "auto",
+    top: 64
   },
   fullList: {
     width: "auto",
@@ -79,6 +82,11 @@ const styles = theme => ( {
   bootstrapFormLabel: {
     fontSize: 18,
   },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+    maxWidth: 300,
+  },
 } );
 
 type RightAdvancedSearchDrawerProps = {
@@ -88,28 +96,39 @@ type RightAdvancedSearchDrawerProps = {
   onClose: () => void
 };
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+
 function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
+
   const sideList = (
     <div className={classes.list}>
-      <List>
-        <FormControl className={classes.margin}>
-          <InputLabel
-            htmlFor="custom-css-standard-input"
-          >
+      <List className = {classes.list}>
+        <ListItem>
+          <TypeSelectorCheckBox></TypeSelectorCheckBox>
+        </ListItem>
+        <ListItem>
+          <FormControl className={classes.margin}>
+            <InputLabel
+              htmlFor="custom-css-standard-input"
+            >
           Custom CSS888
-          </InputLabel>
-          <Input
-            id="custom-css-standard-input"
-          />
-        </FormControl>
-      </List>
-      <List>
-        {[ "OLAAAAAAAAAAA Tickets", "Account" ].map( ( text, index ) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) )}
+            </InputLabel>
+            <Input
+              id="custom-css-standard-input"
+            />
+          </FormControl>
+        </ListItem>
+
       </List>
     </div>
   );
