@@ -1,7 +1,9 @@
-import { Event } from "./data/types";
+import { Event } from "../data/types";
 
 let events: Event[] = [
-  { id: "1",
+  {
+    id: "1",
+    url: "/event/1",
     title: "NOS Alive",
     description: "cool",
     date: new Date(),
@@ -9,10 +11,11 @@ let events: Event[] = [
     type: "festival",
     location: "Alges",
     comments: [],
-    priceUnit: 50 },
-
+    priceUnit: 50
+  },
   {
     id: "2",
+    url: "/event/1",
     title: "A pior comédia do mundo",
     description: "Super funny",
     date: new Date(),
@@ -20,10 +23,11 @@ let events: Event[] = [
     type: "theater",
     location: "Lisboa",
     comments: [],
-    priceUnit: 50 },
-
+    priceUnit: 50
+  },
   {
     id: "3",
+    url: "/event/1",
     title: "Escape Room",
     description: "Try your best",
     date: new Date(),
@@ -31,7 +35,8 @@ let events: Event[] = [
     type: "other",
     location: "Almada",
     comments: [],
-    priceUnit: 50 }
+    priceUnit: 50
+  }
 ];
 
 export function search( inputSearch: string ) {

@@ -18,7 +18,8 @@ export type EventComment = {
 
 export type Event = {
   id: string,
-  title:string,
+  url: string,
+  title: string,
   description: string,
   date: Date,
   images: string[],

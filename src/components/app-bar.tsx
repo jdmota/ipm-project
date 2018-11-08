@@ -51,8 +51,7 @@ function OurAppBar( props: OurAppBarProps ) {
           </Typography>
           <SearchBar
             className={classes.search}
-            onChange={() => {}}
-            onRequestSearch={() => {}}
+            onRequestSearch={( ...args: any ) => console.log( "search onRequestSearch", args )}
           />
           <div className={classes.grow} />
           <LoginButton />

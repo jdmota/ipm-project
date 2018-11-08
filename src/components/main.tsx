@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import installRouter from "../helpers/router";
+import { installRouter } from "../helpers/router";
 import EventPage from "./event-page";
 
 type MainState = {
