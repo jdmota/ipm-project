@@ -16,6 +16,10 @@ const styles = theme => ( {
   },
   paper: {
     marginRight: theme.spacing.unit * 2,
+    overflow: "auto",
+  },
+  MenuList: {
+    overflow: "visible",
   },
 } );
 
@@ -52,16 +56,27 @@ class MenuListComposition extends React.Component {
             aria-haspopup="true"
             onClick={this.handleToggle}
           >
-            <AccountCircle/>
+            <AccountCircle />
           </IconButton>
-          <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+          <Popper
+            open={open}
+            anchorEl={this.anchorEl}
+            transition
+            disablePortal
+            modifiers={{
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "viewport",
+              },
+            }}
+          >
             {( { TransitionProps, placement } ) => (
               <Grow
                 {...TransitionProps}
                 id="menu-list-grow"
                 style={{ transformOrigin: placement === "bottom" ? "center top" : "center bottom" }}
               >
-                <Paper>
+                <Paper className={classes.paper}>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}>Create Account</MenuItem>
