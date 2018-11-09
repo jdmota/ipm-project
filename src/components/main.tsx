@@ -47,6 +47,7 @@ class Main extends React.Component<MainProps, MainState> {
           images: [],
           type: "festival",
           location: "Alges",
+          priceUnit: 50,
           comments: [ {
             author: {
               id: "1",
@@ -61,8 +62,21 @@ class Main extends React.Component<MainProps, MainState> {
             },
             data: new Date(),
             text: "Adorei!"
-          } ],
-          priceUnit: 50 }}>
+          }, {
+            author: {
+              id: "2",
+              mail: "worstcustomer@gmail.com",
+              nickname: "Theworst",
+              password: "worst123",
+              firstName: "Potatoes",
+              lastName: "Smith",
+              creditCardNumber: "0000 1111 2222 3333",
+              dateCreditCard: new Date( 2020, 5, 20 ),
+              cvc: "123"
+            },
+            data: new Date(),
+            text: "Odiei!"
+          } ] }}>
         </EventPage>
       </div>
     </div>;

@@ -115,13 +115,13 @@ function EventPage( props: { classes: any, event: Event } ) {
       <Typography className={classes.comment} variant="body1">
         <b>{comments[ 0 ].author.nickname}</b>
         <br/>
-        <div className={classes.text}>{comments[ 0 ].text}</div>
+        <span className={classes.text}>{comments[ 0 ].text}</span>
       </Typography>
 
       <Typography className={classes.comment} variant="body1">
         <b>{comments[ 1 ].author.nickname}</b>
         <br/>
-        <div className={classes.text}>{comments[ 1 ].text}</div>
+        <span className={classes.text}>{comments[ 1 ].text}</span>
       </Typography>
       <br/>
     </div>
