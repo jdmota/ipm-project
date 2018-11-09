@@ -2,7 +2,7 @@ const path = require( "path" );
 const CopyWebpackPlugin = require( "copy-webpack-plugin" );
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.tsx",
   output: {
     path: path.join( __dirname, "dist" ),
@@ -10,7 +10,7 @@ module.exports = {
     publicPath: "/"
   },
   resolve: {
-    extensions: [ ".ts", ".tsx", ".js", ".jsx", ".json" ]
+    extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
   },
   devtool: "source-map",
   module: {

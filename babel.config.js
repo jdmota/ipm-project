@@ -4,7 +4,8 @@ module.exports = function( api ) {
   return {
     presets: [
       "@babel/preset-react",
-      "@babel/preset-typescript"
+      "@babel/preset-typescript",
+      "minify"
     ],
     plugins: [
       "@babel/plugin-proposal-object-rest-spread",
