@@ -78,7 +78,7 @@ type SearchBarProps = {
 type SearchBarState = {
   focus: boolean,
   value: string,
-  suggestions: any[]
+  suggestions: any[],
 };
 
 const getSuggestionValue = ( evt: Event ) => evt.title;
@@ -102,7 +102,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     this.state = {
       focus: false,
       value: "",
-      suggestions: []
+      suggestions: [],
     };
     this.justSelectedSuggestion = false;
   }

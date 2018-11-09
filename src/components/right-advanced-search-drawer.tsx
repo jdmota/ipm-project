@@ -3,18 +3,18 @@ import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import purple from "@material-ui/core/colors/purple";
-import Input from "@material-ui/core/Input";
-import TypeSelectorCheckBox from "./type-selector-checkbox";
+import TypeSelectorCheckBox from "./advancedSearchComponents/type-selector-checkbox";
+import TextFieldLocation from "./advancedSearchComponents/text-field-location";
+import PriceRange from "./advancedSearchComponents/price-range";
+import DatePickers from "./advancedSearchComponents/date-pickers";
 
 const styles = theme => ( {
   drawer: {
     zIndex: 1
   },
   list: {
-    width: "auto",
+    width: 300,
     top: 64
   },
   fullList: {
@@ -102,6 +102,7 @@ const MenuProps = {
   },
 };
 
+
 function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
 
   const sideList = (
@@ -111,16 +112,13 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
           <TypeSelectorCheckBox></TypeSelectorCheckBox>
         </ListItem>
         <ListItem>
-          <FormControl className={classes.margin}>
-            <InputLabel
-              htmlFor="custom-css-standard-input"
-            >
-          Custom CSS888
-            </InputLabel>
-            <Input
-              id="custom-css-standard-input"
-            />
-          </FormControl>
+          <TextFieldLocation></TextFieldLocation>
+        </ListItem>
+        <ListItem>
+          <PriceRange></PriceRange>
+        </ListItem>
+        <ListItem>
+          <DatePickers></DatePickers>
         </ListItem>
       </List>
     </div>
@@ -135,6 +133,7 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
         onClose={onClose}
         anchor={"right"}
         ModalProps={{
+          disableEnforceFocus: true,
           BackdropProps: {
             invisible: true
           }
