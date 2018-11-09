@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
@@ -44,14 +43,17 @@ const names = [
   "Theater"
 ];
 
+type State = {
+  names: string[]
+};
 
-class MultipleSelect extends React.Component {
+class MultipleSelect extends React.Component<any, State> {
   state = {
-    name: [],
+    names: [],
   };
 
   handleChange = event => {
-    this.setState( { name: event.target.value } );
+    this.setState( { names: event.target.value } );
   };
 
   render() {
@@ -62,16 +64,16 @@ class MultipleSelect extends React.Component {
       <FormControl className= {classNames( classes.margin, classes.textField )}>
         <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
         <Select
-          multiple = {true}
-          value={this.state.name}
+          multiple={true}
+          value={this.state.names}
           onChange={this.handleChange}
           input={<Input id="select-multiple-checkbox" />}
-          renderValue={selected => selected.join( ", " )}
+          renderValue={selected => ( Array.isArray( selected ) ? selected.join( ", " ) : selected )}
           MenuProps={MenuProps}
         >
           {names.map( name => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={this.state.name.indexOf( name ) > -1} />
+              <Checkbox checked={this.state.names.indexOf( name ) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ) )}
@@ -80,9 +82,5 @@ class MultipleSelect extends React.Component {
     );
   }
 }
-
-MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles( styles, { withTheme: true } )( MultipleSelect );

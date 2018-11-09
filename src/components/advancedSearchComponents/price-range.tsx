@@ -31,9 +31,7 @@ const styles = theme => ( {
   textField: {
     flexBasis: 75
   }
-
 } );
-
 
 function CustomizedInputs( props ) {
   const { classes } = props;

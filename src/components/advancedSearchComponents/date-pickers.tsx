@@ -9,12 +9,12 @@ const styles = theme => ( {
     flexWrap: "wrap",
   },
   margin: {
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 2
   },
   textField: {
     flexBasis: 40
   }
-
 } );
 
 class InlineDatePickerDemo extends PureComponent {
