@@ -60,25 +60,46 @@ const styles = theme => ( {
   geral: {
     position: "static"
   },
-  container: {
-    display: "flex"
+  flexContainerEvent: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "space-around",
+    "@media all and (max-width: 1300px)": {
+      flexFlow: "column"
+    },
+    "& > div": {
+      marginBottom: 20
+    }
   },
   imageContainer: {
-    width: "70%"
+    flex: "1 1 0%",
+    maxWidth: "100%",
+    width: 900,
+    height: 500,
+    margin: "auto",
   },
   descriptionContiner: {
-    width: "30%",
-    marginLeft: 15
+    flex: "0 1 25%",
+    width: "100%",
+    "@media all and (min-width: 1300px)": {
+      marginLeft: 30
+    },
+  },
+  flexContainerComment: {
+    display: "flex",
+    flexFlow: "row",
+    justifyContent: "space-around",
+    margin: 10
   },
   commentContainer: {
-    width: "92%"
+    flex: "1 1 0%",
   },
   commentButtonContiner: {
-    width: "8%",
-    marginLeft: 10
+    flex: "0 1 0%",
+    paddingLeft: 20
   },
   text: {
-    paddingLeft: 10
+
   }
 } );
 
@@ -89,7 +110,7 @@ function EventPage( props: { classes: any, event: Event } ) {
 
   return <div>
 
-    <div className={classes.container}>
+    <div className={classes.flexContainerEvent}>
       <div className={classes.imageContainer}>
         <Slider/>
       </div>
@@ -118,7 +139,7 @@ function EventPage( props: { classes: any, event: Event } ) {
     </div>
 
     <div>
-      <div className={classes.container}>
+      <div className={classes.flexContainerComment}>
         <div className={classes.commentContainer}>
           <TextField
             id="standard-with-placeholder"

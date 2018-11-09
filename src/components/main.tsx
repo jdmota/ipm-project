@@ -14,9 +14,13 @@ type MainProps = {
 
 const styles = {
   main: {
-    maxWidth: "1200px",
+    maxWidth: "1600px",
     margin: "auto",
     marginTop: 30
+  },
+  margin: {
+    marginLeft: 30,
+    marginRight: 30
   }
 };
 
@@ -40,7 +44,7 @@ class Main extends React.Component<MainProps, MainState> {
     const { classes } = this.props;
 
     return <div className={classes.main}>
-      <div>
+      <div className={classes.margin}>
         <EventPage event={{ id: "1",
           title: "NOS Alive",
           description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
