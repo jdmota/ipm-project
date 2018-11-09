@@ -1,8 +1,9 @@
 const path = require( "path" );
+const webpack = require( "webpack" );
 const CopyWebpackPlugin = require( "copy-webpack-plugin" );
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: "./src/index.tsx",
   output: {
     path: path.join( __dirname, "dist" ),
@@ -28,10 +29,12 @@ module.exports = {
     new CopyWebpackPlugin( [
       { from: "src/index.html", to: "index.html" },
       { from: "src/images", to: "images" }
-    ] )
+    ] ),
+    new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     contentBase: path.join( __dirname, "dist" ),
-    port: 9000
+    port: 9000,
+    hot: true
   }
 };

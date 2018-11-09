@@ -41,7 +41,6 @@ type OurAppBarProps = {
   onRightDrawerToggle: () => void
 };
 
-
 function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
   return (

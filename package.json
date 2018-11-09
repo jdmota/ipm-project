@@ -39,6 +39,7 @@
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-typescript": "^0.13.0",
     "pluggable-babel-eslint": "^0.3.0",
+    "react-hot-loader": "^4.3.12",
     "typescript": "^3.1.6",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2",
