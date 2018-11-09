@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Paper from "@material-ui/core/Paper";
 import Slider from "./slider";
+import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ( {
   title: {
@@ -14,14 +15,18 @@ const styles = theme => ( {
     marginLeft: "75%",
     position: "static",
   },
-  button: {
+  buttonPurchase: {
     marginLeft: 15,
     fontSize: 17,
   },
+  buttonComment: {
+    marginTop: 20,
+    marginRight: 10
+  },
   comments: {
-    width: "95%",
-    marginLeft: 10,
-    marginTop: 10
+    width: "100%",
+    marginLeft: 0,
+    marginTop: 5
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
@@ -32,7 +37,12 @@ const styles = theme => ( {
     textAlign: "justify",
   },
   comment: {
-
+    fontSize: 15,
+    backgroundColor: "#ccccff",
+    borderRadius: "3px",
+    paddingLeft: "5px",
+    marginTop: 5,
+    paddingTop: 2
   },
   scroll: {
     marginTop: 15,
@@ -41,11 +51,11 @@ const styles = theme => ( {
     border: "blue"
   },
   image: {
-    width: "95%",
+    /* width: "95%",
     height: "95%",
     float: "left",
     position: "static",
-    marginLeft: 10,
+    marginLeft: 10,*/
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
   },
   geral: {
@@ -58,36 +68,68 @@ const styles = theme => ( {
     width: "70%"
   },
   descriptionContiner: {
-    width: "30%"
+    width: "30%",
+    marginLeft: 15
+  },
+  commentContainer: {
+    width: "92%"
+  },
+  commentButtonContiner: {
+    width: "8%",
+    marginLeft: 10
+  },
+  text: {
+    paddingLeft: 10
   }
 
 } );
 
 function EventPage( props: { classes: any, event: Event } ) {
 
-  const { title, description: eventDescription, comments, priceUnit } = props.event;
+  const { title, description: eventDescription, date, location, type, comments, priceUnit } = props.event;
   const { classes } = props;
 
   return <div className={classes.container}>
 
     <div className={classes.imageContainer}>
       <Slider/>
-      <Input
-        placeholder="Here to comment"
-        className={classes.comments}
-        inputProps={{
-          "aria-label": "Description",
-        }}
-      />
-      <Typography className={classes.description} variant="subtitle1">
-        {comments[ 0 ].author.nickname}
+
+      <div className={classes.container}>
+        <div className={classes.commentContainer}>
+          <TextField
+            id="standard-with-placeholder"
+            label="Your comment"
+            placeholder="Write your thoughts here!"
+            className={`${classes.textField} ${classes.comments}`}
+            margin="normal">
+          </TextField>
+        </div>
+
+        <div className={classes.commentButtonContiner}>
+          <Button variant="contained" size="small" color="primary" className={classes.buttonComment}>
+          Post
+          </Button>
+        </div>
+      </div>
+
+      <Typography className={classes.comment} variant="body1">
+        <b>{comments[ 0 ].author.nickname}</b>
+        <br/>
+        <div className={classes.text}>{comments[ 0 ].text}</div>
       </Typography>
+
+      <Typography className={classes.comment} variant="body1">
+        <b>{comments[ 1 ].author.nickname}</b>
+        <br/>
+        <div className={classes.text}>{comments[ 1 ].text}</div>
+      </Typography>
+      <br/>
     </div>
 
     <div className={classes.descriptionContiner}>
       <Typography variant="h4" color="inherit">
-        {title}
-        <Button className={classes.button} variant="contained">
+        <b>{title}</b>
+        <Button className={classes.buttonPurchase} variant="contained">
           {priceUnit}€
           <AddShoppingCartIcon className={classes.rightIcon}/>
         </Button>
@@ -95,6 +137,12 @@ function EventPage( props: { classes: any, event: Event } ) {
 
       <Paper className={classes.scroll}>
         <Typography className={classes.description} variant="subtitle1">
+          <b>Category: </b>{type}
+          <br/>
+          <b>Date: </b>{`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+          <br/>
+          <b>Location: </b>{location}
+          <br/>
           {eventDescription}
         </Typography>
       </Paper>
