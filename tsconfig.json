@@ -9,6 +9,7 @@
     "rootDir": "src",
     "outDir": "dist_ts",
     "strict": true,
+    "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
   },
