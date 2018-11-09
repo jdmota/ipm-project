@@ -9,18 +9,17 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ( {
+const styles = {
   root: {
     display: "flex",
   },
-  paper: {
-    marginRight: theme.spacing.unit * 2,
-    overflow: "auto",
+  popper: {
+    zIndex: 20
   },
   MenuList: {
     overflow: "visible",
   },
-} );
+};
 
 class MenuListComposition extends React.Component {
   state = {
@@ -51,7 +50,7 @@ class MenuListComposition extends React.Component {
               this.anchorEl = node;
             }}
             color="inherit"
-            aria-owns={open ? "menu-list-grow" : null}
+            aria-owns={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
             onClick={this.handleToggle}
           >
@@ -60,8 +59,9 @@ class MenuListComposition extends React.Component {
           <Popper
             open={open}
             anchorEl={this.anchorEl}
+            className={classes.popper}
+            placement="bottom-end"
             transition
-            disablePortal
             modifiers={{
               preventOverflow: {
                 enabled: true,
@@ -69,12 +69,9 @@ class MenuListComposition extends React.Component {
               },
             }}
           >
-            {( { TransitionProps, placement } ) => (
-              <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: placement === "bottom" ? "center top" : "center bottom" }}
-              >
-                <Paper className={classes.paper}>
+            {( { TransitionProps } ) => (
+              <Grow {...TransitionProps}>
+                <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
                       <MenuItem onClick={this.handleClose}>Create Account</MenuItem>
