@@ -2,7 +2,6 @@ import React from "react";
 import { Event } from "src/data/types";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Input from "@material-ui/core/Input";
 import { withStyles } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Paper from "@material-ui/core/Paper";
@@ -81,7 +80,6 @@ const styles = theme => ( {
   text: {
     paddingLeft: 10
   }
-
 } );
 
 function EventPage( props: { classes: any, event: Event } ) {
@@ -89,11 +87,37 @@ function EventPage( props: { classes: any, event: Event } ) {
   const { title, description: eventDescription, date, location, type, comments, priceUnit } = props.event;
   const { classes } = props;
 
-  return <div className={classes.container}>
+  return <div>
 
-    <div className={classes.imageContainer}>
-      <Slider/>
+    <div className={classes.container}>
+      <div className={classes.imageContainer}>
+        <Slider/>
+      </div>
 
+      <div className={classes.descriptionContiner}>
+        <Typography variant="h4" color="inherit">
+          <b>{title}</b>
+          <Button className={classes.buttonPurchase} variant="contained">
+            {priceUnit}€
+            <AddShoppingCartIcon className={classes.rightIcon}/>
+          </Button>
+        </Typography>
+
+        <Paper className={classes.scroll}>
+          <Typography className={classes.description} variant="subtitle1">
+            <b>Category: </b>{type}
+            <br/>
+            <b>Date: </b>{`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+            <br/>
+            <b>Location: </b>{location}
+            <br/>
+            {eventDescription}
+          </Typography>
+        </Paper>
+      </div>
+    </div>
+
+    <div>
       <div className={classes.container}>
         <div className={classes.commentContainer}>
           <TextField
@@ -107,7 +131,7 @@ function EventPage( props: { classes: any, event: Event } ) {
 
         <div className={classes.commentButtonContiner}>
           <Button variant="contained" size="small" color="primary" className={classes.buttonComment}>
-          Post
+            Post
           </Button>
         </div>
       </div>
@@ -123,30 +147,8 @@ function EventPage( props: { classes: any, event: Event } ) {
         <br/>
         <span className={classes.text}>{comments[ 1 ].text}</span>
       </Typography>
-      <br/>
     </div>
 
-    <div className={classes.descriptionContiner}>
-      <Typography variant="h4" color="inherit">
-        <b>{title}</b>
-        <Button className={classes.buttonPurchase} variant="contained">
-          {priceUnit}€
-          <AddShoppingCartIcon className={classes.rightIcon}/>
-        </Button>
-      </Typography>
-
-      <Paper className={classes.scroll}>
-        <Typography className={classes.description} variant="subtitle1">
-          <b>Category: </b>{type}
-          <br/>
-          <b>Date: </b>{`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-          <br/>
-          <b>Location: </b>{location}
-          <br/>
-          {eventDescription}
-        </Typography>
-      </Paper>
-    </div>
   </div>;
 }
 

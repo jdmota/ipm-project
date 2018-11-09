@@ -15,7 +15,8 @@ type MainProps = {
 const styles = {
   main: {
     maxWidth: "1200px",
-    margin: "20px"
+    margin: "auto",
+    marginTop: 30
   }
 };
 
