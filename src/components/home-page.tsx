@@ -23,11 +23,10 @@ const styles = theme => ( {
     flex: "1 1 0%",
     maxWidth: "100%",
     width: 900,
-    height: 500,
     margin: "auto",
   },
   recentlyAnnouncedContiner: {
-    flex: "0 1 25%",
+    flex: "0%",
     width: "100%",
     "@media all and (min-width: 1300px)": {
       marginLeft: 30
@@ -62,7 +61,7 @@ const styles = theme => ( {
     paddingBottom: 0
   },
   size: {
-    width: 300,
+    // width: 300,
     height: 120,
     marginTop: 15,
     marginBottom: 0
@@ -108,6 +107,7 @@ function HomePage( props: {classes: any, events: Event[]} ) {
 
         <div className={classes.size}>
           <Card className={classes.card}>
+          
             <CardHeader
               className={classes.force}
               avatar={
@@ -118,6 +118,7 @@ function HomePage( props: {classes: any, events: Event[]} ) {
               title={title}
               subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
             />
+
           </Card>
         </div>
 
