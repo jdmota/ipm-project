@@ -49,3 +49,13 @@ export function search( inputSearch: string ) {
 
   return resultEvents;
 }
+
+
+export function advancedSearch( types: [], location: string, minPrice: number, maxPrice: number, minDate: Date, maxDate: Date ) {
+  let resultEvents = events.filter( event => {
+    const title = event.title.toUpperCase();
+    return "";// inputWords.some( word => title.includes( word ) );
+  } );
+
+  return resultEvents;
+}

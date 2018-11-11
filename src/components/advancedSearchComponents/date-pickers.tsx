@@ -18,16 +18,22 @@ const styles = theme => ( {
 } );
 
 class InlineDatePickerDemo extends PureComponent {
+
   state = {
-    selectedDate: "2018-01-01T00:00:00.000Z",
+    selectedDate1: new Date(),
+    selectedDate2: new Date()
   }
 
-  handleDateChange = date => {
-    this.setState( { selectedDate: date } );
+  handleDateChange1 = date => {
+    this.setState( { selectedDate1: date } );
+  }
+
+  handleDateChange2 = date => {
+    this.setState( { selectedDate2: date } );
   }
 
   render() {
-    const { selectedDate } = this.state;
+    const { selectedDate1, selectedDate2 } = this.state;
     const { classes } = this.props;
 
     return (
@@ -36,8 +42,16 @@ class InlineDatePickerDemo extends PureComponent {
           <InlineDatePicker className= {classNames( classes.margin, classes.textField )}
             keyboard
             label="From"
-            value={selectedDate}
-            onChange={this.handleDateChange}
+            value={selectedDate1}
+            onChange={this.handleDateChange1}
+            format="dd/MM/yyyy"
+            mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
+          />
+          <InlineDatePicker className= {classNames( classes.margin, classes.textField )}
+            keyboard
+            label="To"
+            value={selectedDate2}
+            onChange={this.handleDateChange2}
             format="dd/MM/yyyy"
             mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
           />

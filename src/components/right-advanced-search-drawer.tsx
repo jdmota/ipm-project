@@ -8,13 +8,18 @@ import TypeSelectorCheckBox from "./advancedSearchComponents/type-selector-check
 import TextFieldLocation from "./advancedSearchComponents/text-field-location";
 import PriceRange from "./advancedSearchComponents/price-range";
 import DatePickers from "./advancedSearchComponents/date-pickers";
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Button from "@material-ui/core/Button";
+import { advancedSearch } from "../helpers/search";
 
 const styles = theme => ( {
   drawer: {
     zIndex: 1
   },
   list: {
-    width: 300,
+    width: 280,
     top: 64
   },
   fullList: {
@@ -82,6 +87,13 @@ const styles = theme => ( {
     minWidth: 120,
     maxWidth: 300,
   },
+  buttonSearch: {
+    marginTop: 20,
+    marginLeft: 30
+  },
+  IconButton: {
+    marginLeft: 15
+  }
 } );
 
 type RightAdvancedSearchDrawerProps = {
@@ -94,8 +106,12 @@ type RightAdvancedSearchDrawerProps = {
 function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
 
   const sideList = (
-    <div className={classes.list}>
-      <List className = {classes.list}>
+    <div>
+      <List className={classes.list}>
+        <IconButton onClick={onClose} className = {classes.IconButton}>
+          <ChevronRightIcon />
+        </IconButton>
+        <Divider />
         <ListItem>
           <TypeSelectorCheckBox></TypeSelectorCheckBox>
         </ListItem>
@@ -108,6 +124,9 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
         <ListItem>
           <DatePickers></DatePickers>
         </ListItem>
+        <Button variant="contained" size="medium" color="primary" className={classes.buttonSearch} >
+            Search
+        </Button>
       </List>
     </div>
   );
@@ -130,6 +149,7 @@ function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdv
           paper: classes.drawer
         }}
       >
+
         {sideList}
       </SwipeableDrawer>
     </div>

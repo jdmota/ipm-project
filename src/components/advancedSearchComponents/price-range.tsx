@@ -29,7 +29,7 @@ const styles = theme => ( {
     },
   },
   textField: {
-    flexBasis: 75
+    flexBasis: 100
   }
 } );
 
@@ -42,7 +42,7 @@ function CustomizedInputs( props ) {
         <InputLabel
           htmlFor="custom-css-standard-input"
           classes={{
-            root: classes.cssLabel,
+            // root: classes.cssLabel,
             focused: classes.cssFocused,
           }}
         >
@@ -65,7 +65,7 @@ function CustomizedInputs( props ) {
         <InputLabel
           htmlFor="custom-css-standard-input"
           classes={{
-            root: classes.cssLabel,
+            // root: classes.cssLabel,
             focused: classes.cssFocused,
           }}
         >

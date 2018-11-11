@@ -39,7 +39,7 @@ function CustomizedInputs( props ) {
       <InputLabel
         htmlFor="custom-css-standard-input"
         classes={{
-          root: classes.cssLabel,
+          // root: classes.cssLabel,
           focused: classes.cssFocused,
         }}
       >

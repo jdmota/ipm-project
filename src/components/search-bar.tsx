@@ -9,7 +9,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
 import FilterIcon from "@material-ui/icons/FilterList";
 import { Event } from "../data/types";
-import AdvancedSearchDrawer from "./advanced-search-drawer";
 import { search } from "../helpers/search";
 
 const styles = theme => ( {
