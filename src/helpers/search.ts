@@ -1,6 +1,6 @@
 import { Event } from "../data/types";
 
-let events: Event[] = [
+export const events: Event[] = [
   {
     id: "1",
     url: "/event/2",

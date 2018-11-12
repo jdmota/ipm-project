@@ -25,6 +25,16 @@ const styles = {
   }
 };
 
+const eventItems = Events.map( event => {
+  return (
+    <EventCard
+      image="https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547"
+      key = {event.title}
+      events={event}
+    />
+  );
+} );
+
 class Main extends React.Component<MainProps, MainState> {
 
   state = {
