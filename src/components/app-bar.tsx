@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import LoginButton from "./account-popup";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchBar from "./search-bar";
+import SearchWithAutoComplete from "./search/search-auto-complete";
 
 const styles = theme => ( {
   root: {
@@ -53,7 +53,7 @@ function OurAppBar( props: OurAppBarProps ) {
           <Typography variant="h6" color="inherit">
             FCTicket
           </Typography>
-          <SearchBar
+          <SearchWithAutoComplete
             className={classes.search}
             onRequestSearch={( ...args: any ) => console.log( "search onRequestSearch", args )}
             onRightAdvancedSearchDrawerToggle={() => props.onRightDrawerToggle()}

@@ -1,15 +1,11 @@
 import React from "react";
 import Autosuggest from "react-autosuggest";
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
-import ClearIcon from "@material-ui/icons/Clear";
-import SearchIcon from "@material-ui/icons/Search";
 import withStyles from "@material-ui/core/styles/withStyles";
-import FilterIcon from "@material-ui/icons/FilterList";
-import { Event } from "../data/types";
-import { search } from "../helpers/search";
+import Search from "./search";
+import { Event } from "../../data/types";
+import { search } from "../../helpers/search";
 
 const styles = theme => ( {
   root: {
@@ -92,7 +88,7 @@ function renderSuggestion( suggestion: Event, { isHighlighted }: { isHighlighted
   );
 }
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
+class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBarState> {
 
   private justSelectedSuggestion: boolean;
 
@@ -161,46 +157,13 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   }
 
   renderInputComponent = ( inputProps: any ) => {
-
-    const { value } = inputProps;
-    const { classes, onRightAdvancedSearchDrawerToggle } = this.props;
-    const disabled = false;
-
-    return <div className={classes.searchContainer}>
-      <Input {...inputProps}/>
-      <div className={classes.grow}></div>
-      <IconButton
-        onClick={this.handleCancel}
-        classes={{
-          root: `${classes.iconButton} ${value === "" ? classes.iconButtonHidden : ""}`,
-          disabled: classes.iconButtonDisabled
-        }}
-        disabled={disabled}
-      >
-        <ClearIcon classes={{ root: classes.icon }} />
-      </IconButton>
-      <IconButton
-        onClick={this.handleRequestSearch}
-        classes={{
-          root: classes.iconButton,
-          disabled: classes.iconButtonDisabled
-        }}
-        disabled={disabled}
-      >
-        <SearchIcon classes={{ root: classes.icon }} />
-      </IconButton>
-      <IconButton
-        onClick={onRightAdvancedSearchDrawerToggle}
-        classes={{
-          root: classes.iconButton,
-          disabled: classes.iconButtonDisabled
-        }}
-        disabled={disabled}
-      >
-        <FilterIcon classes={{ root: classes.icon }} />
-      </IconButton>
-    </div>;
-  };
+    return <Search
+      onRightAdvancedSearchDrawerToggle={this.props.onRightAdvancedSearchDrawerToggle}
+      inputProps={inputProps}
+      handleCancel={this.handleCancel}
+      handleRequestSearch={this.handleRequestSearch}
+    />;
+  }
 
   render() {
     const { value } = this.state;
@@ -239,4 +202,4 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   }
 }
 
-export default withStyles( styles )( SearchBar );
+export default withStyles( styles )( SearchBarWithAutoComplete );
