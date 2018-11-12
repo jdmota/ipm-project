@@ -21,7 +21,13 @@ const styles = theme => ( {
     transform: "scale(1, 1)",
     transition: "transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1)"
   },
+  iconButtonBlack: {
+    color: "black",
+    transform: "scale(1, 1)",
+    transition: "transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1)"
+  },
   iconButtonHidden: {
+    display: "none",
     transform: "scale(0, 0)",
     "& > $icon": {
       opacity: 0
@@ -44,21 +50,6 @@ const styles = theme => ( {
   container: {
     position: "relative",
     width: "100%"
-  },
-  suggestionsContainerOpen: {
-    position: "absolute",
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0
-  },
-  suggestion: {
-    display: "block"
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: "none"
   }
 } );
 
@@ -66,8 +57,9 @@ function Search( props: any ) {
 
   const {
     classes,
+    variant,
     inputProps,
-    onRightAdvancedSearchDrawerToggle,
+    onRightDrawerToggle,
     handleCancel,
     handleRequestSearch
   } = props;
@@ -75,12 +67,11 @@ function Search( props: any ) {
   const disabled = false;
 
   return <div className={classes.searchContainer}>
-    <Input {...inputProps}/>
-    <div className={classes.grow}></div>
+    <Input {...inputProps} style={{ flexGrow: 1 }} />
     <IconButton
       onClick={handleCancel}
       classes={{
-        root: `${classes.iconButton} ${value === "" ? classes.iconButtonHidden : ""}`,
+        root: `${variant === "black" ? classes.iconButtonBlack : classes.iconButton} ${value ? "" : classes.iconButtonHidden}`,
         disabled: classes.iconButtonDisabled
       }}
       disabled={disabled}
@@ -90,7 +81,7 @@ function Search( props: any ) {
     <IconButton
       onClick={handleRequestSearch}
       classes={{
-        root: classes.iconButton,
+        root: variant === "black" ? classes.iconButtonBlack : classes.iconButton,
         disabled: classes.iconButtonDisabled
       }}
       disabled={disabled}
@@ -98,9 +89,9 @@ function Search( props: any ) {
       <SearchIcon classes={{ root: classes.icon }} />
     </IconButton>
     <IconButton
-      onClick={onRightAdvancedSearchDrawerToggle}
+      onClick={onRightDrawerToggle}
       classes={{
-        root: classes.iconButton,
+        root: variant === "black" ? classes.iconButtonBlack : classes.iconButton,
         disabled: classes.iconButtonDisabled
       }}
       disabled={disabled}

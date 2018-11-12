@@ -1,7 +1,8 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
-import EventPage from "./event-page";
+
+const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
 
 type MainState = {
   pathname: string,
@@ -45,44 +46,11 @@ class Main extends React.Component<MainProps, MainState> {
 
     return <div className={classes.main}>
       <div className={classes.margin}>
-        <EventPage event={{ id: "1",
-          title: "NOS Alive",
-          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          date: new Date(),
-          images: [],
-          type: "festival",
-          location: "Alges",
-          priceUnit: 50,
-          comments: [ {
-            author: {
-              id: "1",
-              mail: "bestcostumer@gmail.com",
-              nickname: "Thebest",
-              password: "best123",
-              firstName: "John",
-              lastName: "Smith",
-              creditCardNumber: "0000 1111 2222 3333",
-              dateCreditCard: new Date( 2020, 5, 20 ),
-              cvc: "123"
-            },
-            data: new Date(),
-            text: "Adorei!"
-          }, {
-            author: {
-              id: "2",
-              mail: "worstcustomer@gmail.com",
-              nickname: "Theworst",
-              password: "worst123",
-              firstName: "Potatoes",
-              lastName: "Smith",
-              creditCardNumber: "0000 1111 2222 3333",
-              dateCreditCard: new Date( 2020, 5, 20 ),
-              cvc: "123"
-            },
-            data: new Date(),
-            text: "Odiei!"
-          } ] }}>
-        </EventPage>
+        <Suspense fallback={<div>Loading...</div>}>
+          <TicketExchange
+            onRightDrawerToggle={this.props.onRightDrawerToggle}
+          />
+        </Suspense>
       </div>
     </div>;
   }

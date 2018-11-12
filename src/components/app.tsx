@@ -45,7 +45,9 @@ class App extends React.Component<{}, AppState> {
         onOpen={() => this.toggleRightAvancedSearchDrawer( true )}
         onClose={() => this.toggleRightAvancedSearchDrawer( false )}
       />
-      <Main />
+      <Main
+        onRightDrawerToggle={() => this.toggleRightAvancedSearchDrawer( null )}
+      />
     </>;
   }
 }

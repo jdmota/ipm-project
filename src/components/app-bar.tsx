@@ -56,7 +56,7 @@ function OurAppBar( props: OurAppBarProps ) {
           <SearchWithAutoComplete
             className={classes.search}
             onRequestSearch={( ...args: any ) => console.log( "search onRequestSearch", args )}
-            onRightAdvancedSearchDrawerToggle={() => props.onRightDrawerToggle()}
+            onRightDrawerToggle={() => props.onRightDrawerToggle()}
           />
           <div className={classes.grow} />
           <LoginButton />

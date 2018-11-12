@@ -67,7 +67,7 @@ type SearchBarProps = {
   onRequestSearch: ( value: string, suggestion: Event | null ) => void,
   classes: any,
   className: string
-  onRightAdvancedSearchDrawerToggle: () => void
+  onRightDrawerToggle: () => void
 };
 
 type SearchBarState = {
@@ -158,7 +158,7 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
 
   renderInputComponent = ( inputProps: any ) => {
     return <Search
-      onRightAdvancedSearchDrawerToggle={this.props.onRightAdvancedSearchDrawerToggle}
+      onRightDrawerToggle={this.props.onRightDrawerToggle}
       inputProps={inputProps}
       handleCancel={this.handleCancel}
       handleRequestSearch={this.handleRequestSearch}
