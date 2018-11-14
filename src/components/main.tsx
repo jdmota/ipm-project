@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
 
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
+const SignInPage = lazy( () => import( "./signIn-page" ) );
 
 type MainState = {
   pathname: string,
@@ -10,7 +11,8 @@ type MainState = {
 };
 
 type MainProps = {
-  classes: any
+  classes: any,
+  onRightDrawerToggle: () => void
 };
 
 const styles = {
@@ -24,16 +26,6 @@ const styles = {
     marginRight: 30
   }
 };
-
-const eventItems = Events.map( event => {
-  return (
-    <EventCard
-      image="https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547"
-      key = {event.title}
-      events={event}
-    />
-  );
-} );
 
 class Main extends React.Component<MainProps, MainState> {
 
@@ -57,13 +49,17 @@ class Main extends React.Component<MainProps, MainState> {
     return <div className={classes.main}>
       <div className={classes.margin}>
         <Suspense fallback={<div>Loading...</div>}>
-          <TicketExchange
-            onRightDrawerToggle={this.props.onRightDrawerToggle}
-          />
+          <SignInPage />
         </Suspense>
       </div>
     </div>;
   }
 }
+
+/*
+<TicketExchange
+  onRightDrawerToggle={this.props.onRightDrawerToggle}
+/>
+*/
 
 export default withStyles( styles )( Main );

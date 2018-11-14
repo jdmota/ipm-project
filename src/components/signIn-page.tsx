@@ -10,16 +10,13 @@ import PasswordTextField from "./logInPageComponents/password-text-field";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
-
 const styles = theme => ( {
   flexContainerLogIn: {
-
     width: 330,
     height: 500,
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "200",
-
     // top: "600"
   },
   titlePosition: {
@@ -66,7 +63,6 @@ const styles = theme => ( {
     paddingBottom: theme.spacing.unit,
     width: "100%",
     float: "right"
-
   },
   linkDiv2: {
     float: "right",
@@ -118,7 +114,6 @@ const styles = theme => ( {
     width: "100%",
     height: 50,
     display: "inline-flex",
-
   },
   wrongPasswordText: {
     margin: "auto",
@@ -130,13 +125,7 @@ const styles = theme => ( {
     marginLeft: 20,
     color: "#b30000"
   }
-
 } );
-
-
-// function LogInPage( props: { classes: any } ) {
-
-// const { classes } = props;
 
 class SignInPage extends React.Component {
 
@@ -156,60 +145,56 @@ class SignInPage extends React.Component {
     const { visible } = this.state;
 
     return <div>
-      <div className={classes.flexContainerLogInContent} >
-      </div>
-      <div className={classes.flexContainerLogIn} >
+      <div className={classes.flexContainerLogInContent}></div>
+      <div className={classes.flexContainerLogIn}>
 
-        <Typography variant="h3" color="inherit" align = "center" className = {classes.titlePosition}>
-          {"Sign In"}
+        <Typography variant="h3" color="inherit" align="center" className={classes.titlePosition}>
+          Sign In
         </Typography>
 
-        <div className={classes.marginWrongPassword} >
+        <div className={classes.marginWrongPassword}>
         </div>
-        <Card className={visible ? classes.wrongPasswordCardVisible : classes.wrongPasswordCardInvisible} id= "wrongPasswordCard">
+        <Card className={visible ? classes.wrongPasswordCardVisible : classes.wrongPasswordCardInvisible} id="wrongPasswordCard">
 
           <div className={classes.containerWrongPasswordAndClose}>
 
             <div className={classes.wrongPasswordText}>
-              <Typography variant="h7" color="inherit" align = "center">
-                {"Wrong username or password."}
+              <Typography variant="caption" color="inherit" align="center">
+                Wrong username or password.
               </Typography>
             </div>
 
             <div className={classes.closeWrongPasswordButton}>
-              <IconButton aria-label="Close" onClick = {this.handleCloseWrongPassword}>
-                <CloseIcon fontSize="small" color = "secondary" />
+              <IconButton aria-label="Close" onClick={this.handleCloseWrongPassword}>
+                <CloseIcon fontSize="small" color="secondary" />
               </IconButton>
             </div>
 
           </div>
         </Card>
 
-        <div className={classes.marginWrongPassword} >
-        </div>
+        <div className={classes.marginWrongPassword}></div>
+
         <Card >
           <CardContent >
-            <div className = { classes.controls}>
-              <UsernameTextField>
-              </UsernameTextField>
+            <div className={classes.controls}>
+              <UsernameTextField></UsernameTextField>
             </div>
-            <div className = { classes.controls}>
-              <PasswordTextField>
-              </PasswordTextField>
+            <div className={classes.controls}>
+              <PasswordTextField></PasswordTextField>
             </div>
-            <div className = { classes.linkDiv}>
-              <div className = { classes.linkDiv2}>
-
-                <a href="default.asp" className= { classes.a} >Forgot password?</a>
+            <div className={classes.linkDiv}>
+              <div className={classes.linkDiv2}>
+                <Typography variant="caption" color="inherit" align="center">
+                  <a href="default.asp" className={classes.a} >Forgot password?</a>
+                </Typography>
               </div>
-
             </div>
-
             <div>
               <CardActions>
-                <div className= {classes.buttonLogin}>
+                <div className={classes.buttonLogin}>
                   <Button variant="contained" size="small" color="primary">
-            Sign In
+                    Sign In
                   </Button>
                 </div>
               </CardActions>
@@ -219,11 +204,12 @@ class SignInPage extends React.Component {
 
         <div className={classes.signUpContainer} >
           <Card className={classes.signUpCard}>
-            <CardContent >
-              <Typography variant="h7" color="inherit" align = "center">
-                {"New to FCTicket?"}
-                <a href="default.asp" className= { classes.createAccontLink} color = "inherit" > Create an account.</a>
-
+            <CardContent>
+              <Typography variant="caption" color="inherit" align="center">
+                <span style={{ marginRight: 10 }}>New to FCTicket?</span>
+                <span>
+                  <a href="default.asp" className={classes.createAccontLink} color="inherit">Create an account</a>
+                </span>
               </Typography>
             </CardContent>
           </Card>
@@ -233,6 +219,5 @@ class SignInPage extends React.Component {
     </div>;
   }
 }
-
 
 export default withStyles( styles )( SignInPage );
