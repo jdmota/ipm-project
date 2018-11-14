@@ -19,8 +19,7 @@ const styles = theme => ( {
     zIndex: 1
   },
   list: {
-    width: 280,
-    top: 64
+    width: 280
   },
   fullList: {
     width: "auto",
