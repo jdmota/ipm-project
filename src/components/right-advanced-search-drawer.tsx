@@ -5,14 +5,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import purple from "@material-ui/core/colors/purple";
 import TypeSelectorCheckBox from "./advancedSearchComponents/type-selector-checkbox";
-import TextFieldLocation from "./advancedSearchComponents/text-field-location";
+import TextFieldLocation from "./advancedSearchComponents/location-text-field";
 import PriceRange from "./advancedSearchComponents/price-range";
 import DatePickers from "./advancedSearchComponents/date-pickers";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Button from "@material-ui/core/Button";
-import { advancedSearch } from "../helpers/search";
 
 const styles = theme => ( {
   drawer: {
