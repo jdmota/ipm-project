@@ -1,9 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
-import EventCard from "./event-card";
+import EventCardList from "./event-card-list";
 import { events as Events } from "../helpers/search";
 import { checkPropTypes } from "prop-types";
+import eventCard from "./event-card";
 
 type MainState = {
   pathname: string,
@@ -26,16 +27,6 @@ const styles = {
   }
 };
 
-const eventItems = Events.map( event => {
-  return (
-    <EventCard
-      image="https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547"
-      key = {event.title}
-      events={event}
-    />
-  );
-} );
-
 class Main extends React.Component<MainProps, MainState> {
 
   state = {
@@ -55,11 +46,9 @@ class Main extends React.Component<MainProps, MainState> {
   render() {
     const { classes } = this.props;
 
-    return <div className={classes.main}>
-      <div className={classes.margin}>
-        {eventItems}
-      </div>
-    </div>;
+    return (
+      <EventCardList />
+    );
   }
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { Event } from "../data/types";
 import { installRouter } from "../helpers/router";
@@ -26,7 +27,7 @@ const styles = {
     marginRight: 30
   }
 };
-
+/*
 const eventItems = allEvents.map( event => {
   return (
     <EventCard
@@ -35,17 +36,18 @@ const eventItems = allEvents.map( event => {
       events={event}
     />
   );
-} );
+} );*/
 
 class eventCardList extends React.Component<MainProps, MainState> {
 
   state = {
     pathname: location.pathname,
     search: location.search,
-    eventList: [],
+    eventList: allEvents,
   };
 
-  EventSearch( eventName ) {
+
+  /* EventSearch( eventName ) {
     let events: Array<Event> = [];
     allEvents.map( event => {
       if ( event.title === eventName ) {
@@ -55,7 +57,7 @@ class eventCardList extends React.Component<MainProps, MainState> {
     this.setState( {
       eventList: events
     } );
-  }
+  }*/
 
   componentDidMount() {
     installRouter( location => {
@@ -66,15 +68,34 @@ class eventCardList extends React.Component<MainProps, MainState> {
     } );
   }
 
+  renderList() {
+    return this.state.eventList.map( event => {
+      return (
+        <EventCard
+          image="https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547"
+          key = {event.title}
+          events={event}
+        />
+      );
+    } );
+  }
+
   render() {
     const { classes } = this.props;
 
     return <div className={classes.main}>
       <div className={classes.margin}>
-        {eventItems}
+        {this.renderList()}
+        {this.props.params.name}
       </div>
     </div>;
   }
 }
 
-export default withStyles( styles )( eventCardList );
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
+
+export default connect( mapStateToProps )( withStyles( styles )( eventCardList ) );
