@@ -3,6 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
 
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
+const PaymentPage = lazy( () => import( "./payment-page" ) );
 const SignInPage = lazy( () => import( "./signIn-page" ) );
 
 type MainState = {
@@ -49,7 +50,7 @@ class Main extends React.Component<MainProps, MainState> {
     return <div className={classes.main}>
       <div className={classes.margin}>
         <Suspense fallback={<div>Loading...</div>}>
-          <SignInPage />
+          <PaymentPage />
         </Suspense>
       </div>
     </div>;
