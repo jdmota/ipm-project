@@ -124,12 +124,12 @@ class Slider extends React.Component<Props, State> {
           }
         </div>
 
-          ${ this.state.currentIndex > 0 &&
+        { this.state.currentIndex > 0 &&
           <IconButton className={`${classes.arrow} ${classes.leftArrow}`} onClick={this.goToPrevSlide}>
             <ArrowBack/>
           </IconButton> }
 
-          ${ this.state.currentIndex < this.state.images.length - 1 &&
+        { this.state.currentIndex < this.state.images.length - 1 &&
           <IconButton className={`${classes.arrow} ${classes.rightArrow}`} onClick={this.goToNextSlide}>
             <ArrowForward/>
           </IconButton> }

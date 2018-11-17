@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
+import HomePage from "./home-page";
+import { Event } from "src/data/types";
 
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
 const PaymentPage = lazy( () => import( "./payment-page" ) );
