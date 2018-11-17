@@ -1,16 +1,15 @@
 import React from "react";
-import { Event } from "src/data/types";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import Button from "@material-ui/core/Button";
-import Slider from "./slider";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
+import { Event } from "src/data/types";
+import Slider from "./slider";
 
 const styles = theme => ( {
-
   container: {
     display: "flex",
     flexFlow: "row wrap",
@@ -118,7 +117,7 @@ const styles = theme => ( {
 } );
 
 
-function HomePage( props: {classes: any, events: Event[]} ) {
+function HomePage( props: { classes: any, events: Event[] } ) {
   const { classes } = props;
   const { title, date, location, type, priceUnit } = props.events[ 0 ];
 
@@ -271,4 +270,10 @@ function HomePage( props: {classes: any, events: Event[]} ) {
   </div>;
 }
 
-export default withStyles( styles )( HomePage );
+function mapStateToProps( state ) {
+  return {
+    events: state.events
+  };
+}
+
+export default connect( mapStateToProps )( withStyles( styles )( HomePage ) );

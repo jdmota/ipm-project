@@ -101,7 +101,8 @@ type RightAdvancedSearchDrawerProps = {
   classes: any,
   open: boolean,
   onOpen: () => void,
-  onClose: () => void
+  onClose: () => void,
+  setParamsFilters: any
 };
 
 type RightAdvancedSearchDrawerState = {
@@ -132,26 +133,26 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
     return (
       <div>
         <List className={classes.list}>
-          <IconButton onClick={this.props.onClose} className = {classes.IconButton}>
+          <IconButton onClick={this.props.onClose} className={classes.IconButton}>
             <ChevronRightIcon />
           </IconButton>
           <Divider />
           <ListItem>
-            <TypeSelectorCheckBox onValueChange={ type => { this.setState( { eventType: type } ); console.log( type ); } }/>
+            <TypeSelectorCheckBox onValueChange={type => this.setState( { eventType: type } )}/>
           </ListItem>
           <ListItem>
-            <TextFieldLocation onInputChange={ location => { this.setState( { eventLocation: location } ); console.log( location ); }}/>
+            <TextFieldLocation onInputChange={location => this.setState( { eventLocation: location } )}/>
           </ListItem>
           <ListItem>
             <PriceRange
-              onMinPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMinPrice: price } ); console.log( "Min Price:" + price ); } }}
-              onMaxPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMaxPrice: price } ); console.log( "Max Price:" + price ); } }}
+              onMinPriceChange={price => !isNaN( price ) && this.setState( { eventMinPrice: price } ) }
+              onMaxPriceChange={price => !isNaN( price ) && this.setState( { eventMaxPrice: price } ) }
             />
           </ListItem>
           <ListItem>
             <DatePickers
-              onBeginDateChange={ date => { this.setState( { eventStartDate: date } ); console.log( "Begin: " + date ); }}
-              onEndDateChange={ date => { this.setState( { eventEndDate: date } ); console.log( "End: " + date ); }}
+              onBeginDateChange={date => this.setState( { eventStartDate: date } )}
+              onEndDateChange={date => this.setState( { eventEndDate: date } )}
             />
           </ListItem>
           <Button variant="contained"

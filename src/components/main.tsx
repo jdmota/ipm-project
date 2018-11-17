@@ -1,16 +1,12 @@
 import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
-import EventCardList from "./event-card-list";
-import { events as Events } from "../helpers/search";
-import { checkPropTypes } from "prop-types";
-import eventCard from "./event-card";
-import HomePage from "./home-page";
-import { Event } from "src/data/types";
 
+const HomePage = lazy( () => import( "./home-page" ) );
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
 const PaymentPage = lazy( () => import( "./payment-page" ) );
 const SignInPage = lazy( () => import( "./signIn-page" ) );
+const SignUpPage = lazy( () => import( "./signUp-page" ) );
 
 type MainState = {
   pathname: string,
@@ -56,7 +52,7 @@ class Main extends React.Component<MainProps, MainState> {
     return <div className={classes.main}>
       <div className={classes.margin}>
         <Suspense fallback={<div>Loading...</div>}>
-          <PaymentPage />
+          <HomePage />
         </Suspense>
       </div>
     </div>;

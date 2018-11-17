@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
-import ParamsReducer from "./reducer_params";
-
+import EventsReducer from "./events";
+import ParamsReducer from "./params";
 
 const rootReducer = combineReducers( {
-  params: ParamsReducer
+  params: ParamsReducer,
+  events: EventsReducer,
 } );
 
 export default rootReducer;

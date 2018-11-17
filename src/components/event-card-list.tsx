@@ -1,19 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { search, advancedSearch } from "../helpers/search";
-import { installRouter } from "../helpers/router";
+import { advancedSearch } from "../helpers/search";
 import EventCard from "./event-card";
-import { checkPropTypes } from "prop-types";
-
-type MainState = {
-  pathname: string,
-  search: string,
-};
-
-type MainProps = {
-  classes: any
-};
 
 const styles = {
   main: {
@@ -26,6 +15,7 @@ const styles = {
     marginRight: 30
   }
 };
+
 /*
 const eventItems = allEvents.map( event => {
   return (
@@ -35,14 +25,10 @@ const eventItems = allEvents.map( event => {
       events={event}
     />
   );
-} );*/
+} );
+*/
 
-class eventCardList extends React.Component<MainProps, MainState> {
-
-  state = {
-    pathname: location.pathname,
-    search: location.search
-  };
+class EventCardList extends React.Component<any, any> {
 
   /*
   EventSearch( params ) {
@@ -56,19 +42,18 @@ class eventCardList extends React.Component<MainProps, MainState> {
   }
   */
 
-  componentDidMount() {
-    installRouter( location => {
-      this.setState( {
-        pathname: location.pathname,
-        search: location.search
-      } );
-    } );
-  }
-
   renderList() {
     // let eventList = this.EventSearch( this.props.params );
     // let eventList = search( this.props.params.name );
-    let eventList = advancedSearch( this.props.params.name, this.props.params.type, this.props.params.location, this.props.params.minPrice, this.props.params.maxPrice, this.props.params.startDate, this.props.params.endDate );
+    const eventList = advancedSearch(
+      this.props.params.name,
+      this.props.params.type,
+      this.props.params.location,
+      this.props.params.minPrice,
+      this.props.params.maxPrice,
+      this.props.params.startDate,
+      this.props.params.endDate
+    );
 
     return eventList.map( event => {
       return (
@@ -82,18 +67,17 @@ class eventCardList extends React.Component<MainProps, MainState> {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, params } = this.props;
 
     return <div className={classes.main}>
       <div className={classes.margin}>
         {this.renderList()}
-        Name: {this.props.params.name} <p></p>
-        Type: {this.props.params.type} <p></p>
-        Localização: {this.props.params.location} <p></p>
-        Range: {this.props.params.minPrice} - {this.props.params.maxPrice} <p></p>
-        Data de Início: {this.props.params.startDate.toString()}<p></p>
-        Data de Fim: {this.props.params.endDate.toString()}<p></p>
-
+        Name: {params.name} <p></p>
+        Type: {params.type} <p></p>
+        Localização: {params.location} <p></p>
+        Range: {params.minPrice} - {params.maxPrice} <p></p>
+        Data de Início: {params.startDate.toString()}<p></p>
+        Data de Fim: {params.endDate.toString()}<p></p>
       </div>
     </div>;
   }
@@ -105,4 +89,4 @@ function mapStateToProps( state ) {
   };
 }
 
-export default connect( mapStateToProps )( withStyles( styles )( eventCardList ) );
+export default connect( mapStateToProps )( withStyles( styles )( EventCardList ) );
