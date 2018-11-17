@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Slider from "./slider";
+import IconButton from "@material-ui/core/IconButton";
+import InfoIcon from "@material-ui/icons/Info";
 
 const styles = theme => ( {
 
@@ -103,6 +105,9 @@ const styles = theme => ( {
   outside: {
     marginLeft: 100,
     marginRight: 40
+  },
+  icon: {
+    // color: "rgba(255, 255, 255, 0.54)",
   }
 } );
 
@@ -153,6 +158,11 @@ function HomePage( props: {classes: any, events: Event[]} ) {
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
                 </div>
               }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
               title={title}
               subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
             />
@@ -169,12 +179,14 @@ function HomePage( props: {classes: any, events: Event[]} ) {
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
                 </div>
               }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
               title={title}
               subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
             ></CardHeader>
-            <Button variant="contained" className={classes.button}>
-              Default
-            </Button>
           </Card>
         </div>
       </div>
@@ -194,6 +206,11 @@ function HomePage( props: {classes: any, events: Event[]} ) {
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
                 </div>
               }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
               title={title}
               subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
             />
@@ -208,6 +225,11 @@ function HomePage( props: {classes: any, events: Event[]} ) {
                 <div className={classes.image}>
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
                 </div>
+              }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
               }
               title={title}
               subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}

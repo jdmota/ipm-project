@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
-// import EventPage from "./event-page";
 import HomePage from "./home-page";
 import { Event } from "src/data/types";
 
@@ -47,6 +46,10 @@ class Main extends React.Component<MainProps, MainState> {
 
     return <div className={classes.main}>
       <div className={classes.margin}>
+        {/* <Suspense fallback={<div>Loading...</div>}>
+          <PaymentPage />
+  </Suspense>*/}
+
         <HomePage events={[
           { id: "1",
             url: "",
