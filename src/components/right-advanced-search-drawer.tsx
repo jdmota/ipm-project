@@ -109,7 +109,7 @@ type RightAdvancedSearchDrawerProps = {
 class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, {}> {
 
   renderSideList() {
-    const { classes, setParamsFilters } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <List className={classes.list}>
@@ -118,10 +118,10 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
           </IconButton>
           <Divider />
           <ListItem>
-            <TypeSelectorCheckBox onValueChange={type => setParamsFilters( { type } )}/>
+            <TypeSelectorCheckBox />
           </ListItem>
           <ListItem>
-            <TextFieldLocation onInputChange={location => setParamsFilters( { location } )}/>
+            <TextFieldLocation />
           </ListItem>
           <ListItem>
             <PriceRange />

@@ -1,6 +1,8 @@
 import React from "react";
-import classNames from "classnames";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
+import { setParamsFilters } from "../../actions/setParams";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -43,38 +45,25 @@ const names = [
   "Theater"
 ];
 
-type State = {
-  names: string[]
-};
-
-class MultipleSelect extends React.Component<any, State> {
-  state = {
-    names: [],
-  };
-
-  handleChange = event => {
-    this.setState( { names: event.target.value } );
-    this.props.onValueChange( event.target.value );
-  };
+class MultipleSelect extends React.Component<any, any> {
 
   render() {
-    const { classes } = this.props;
+    const { classes, params, setParamsFilters } = this.props;
 
     return (
-
-      <FormControl className= {classNames( classes.margin, classes.textField )}>
+      <FormControl className={`${classes.margin} ${classes.textField}`}>
         <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
         <Select
           multiple={true}
-          value={this.state.names}
-          onChange={this.handleChange}
+          value={params.type}
+          onChange={event => setParamsFilters( { type: event.target.value } )}
           input={<Input id="select-multiple-checkbox" />}
           renderValue={selected => ( Array.isArray( selected ) ? selected.join( ", " ) : selected )}
           MenuProps={MenuProps}
         >
           {names.map( name => (
             <MenuItem key={name} value={name}>
-              <Checkbox checked={this.state.names.indexOf( name ) > -1} />
+              <Checkbox checked={params.type.indexOf( name ) > -1} />
               <ListItemText primary={name} />
             </MenuItem>
           ) )}
@@ -84,4 +73,14 @@ class MultipleSelect extends React.Component<any, State> {
   }
 }
 
-export default withStyles( styles, { withTheme: true } )( MultipleSelect );
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( MultipleSelect ) );

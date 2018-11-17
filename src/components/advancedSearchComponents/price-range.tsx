@@ -34,7 +34,7 @@ const styles = theme => ( {
 } );
 
 function CustomizedInputs( props: any ) {
-  const { classes, setParamsFilters } = props;
+  const { classes, params, setParamsFilters } = props;
 
   return (
     <div className={classes.container}>
@@ -48,6 +48,7 @@ function CustomizedInputs( props: any ) {
         <Input
           id="min-price"
           type="number"
+          value={params.minPrice}
           onChange={event => setParamsFilters( { minPrice: event.target.value } )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
@@ -62,6 +63,7 @@ function CustomizedInputs( props: any ) {
         <Input
           id="max-price"
           type="number"
+          value={params.maxPrice}
           onChange={event => setParamsFilters( { maxPrice: event.target.value } )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />

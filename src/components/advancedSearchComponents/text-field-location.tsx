@@ -1,11 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
+import { setParamsFilters } from "../../actions/setParams";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import purple from "@material-ui/core/colors/purple";
-import classNames from "classnames";
 
 const styles = theme => ( {
   container: {
@@ -31,33 +32,34 @@ const styles = theme => ( {
   }
 } );
 
-function CustomizedInputs( props ) {
-  const { classes, onInputChange } = props;
+function CustomizedInputs( props: any ) {
+  const { classes, params, setParamsFilters } = props;
 
   return (
-    <FormControl className={classNames( classes.margin, classes.textField )} >
+    <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="location"
         classes={{
-          // root: classes.cssLabel,
           focused: classes.cssFocused,
         }}
-      >
-        Location
-      </InputLabel>
+      >Location</InputLabel>
       <Input
-        id="custom-css-standard-input"
-        /* classes={{
-            underline: classes.cssUnderline,
-          }}*/
-        onChange = { event => onInputChange( event.target.value ) }
+        id="location"
+        value={params.location}
+        onChange={event => setParamsFilters( { location: event.target.value } )}
       />
     </FormControl>
   );
 }
 
-CustomizedInputs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
 
-export default withStyles( styles )( CustomizedInputs );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( CustomizedInputs ) );
