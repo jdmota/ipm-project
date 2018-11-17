@@ -10,7 +10,7 @@ import PasswordTextField from "./signUpComponents/password-text-field";
 import EmailTextField from "./signUpComponents/email-text-field";
 import ConfirmPasswordTextField from "./signUpComponents/confirmPassword-text-field";
 import FullNameTextField from "./signUpComponents/fullName-text-field";
-import CardNumberTextField from "./signUpComponents/cardNumber-text-field.1";
+import CardNumberTextField from "./signUpComponents/cardNumber-text-field";
 import ExpirationDateTextField from "./signUpComponents/expirationDate-text-field";
 import CCVTextField from "./signUpComponents/ccv-text-field";
 import FastIcon from "@material-ui/icons/FastForwardRounded";
@@ -143,7 +143,7 @@ const styles = theme => ( {
   }
 } );
 
-class SignUpPage extends React.Component {
+class SignUpPage extends React.Component<any, any> {
 
   state = {
     visible: false,
@@ -166,9 +166,7 @@ class SignUpPage extends React.Component {
           Sign Up
         </Typography>
 
-        <div className={classes.marginWrongPassword}>
-        </div>
-
+        <div className={classes.marginWrongPassword}></div>
         <div className={classes.marginWrongPassword}></div>
 
         <Card >

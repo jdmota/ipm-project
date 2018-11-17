@@ -1,6 +1,4 @@
 import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
@@ -33,7 +31,7 @@ const styles = theme => ( {
 } );
 
 
-class PasswordTextField extends React.Component {
+class PasswordTextField extends React.Component<any, any> {
   state = {
     password: "",
     showPassword: false,
@@ -52,7 +50,7 @@ class PasswordTextField extends React.Component {
 
     return (
       <div className={classes.root}>
-        <FormControl className={classNames( classes.margin, classes.textField )}>
+        <FormControl className={`${classes.margin} ${classes.textField}`}>
           <InputLabel htmlFor="adornment-password">Password *</InputLabel>
           <Input
             id="adornment-password"
@@ -75,9 +73,5 @@ class PasswordTextField extends React.Component {
     );
   }
 }
-
-PasswordTextField.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles( styles )( PasswordTextField );

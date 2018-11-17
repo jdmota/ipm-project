@@ -32,7 +32,7 @@ const styles = theme => ( {
   }
 } );
 
-function CustomizedInputs( props: any ) {
+function LocationField( props: any ) {
   const { classes, params, setParamsFilters } = props;
 
   return (
@@ -62,4 +62,4 @@ function mapDispatchToProps( dispatch ) {
   return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( CustomizedInputs ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( LocationField ) );

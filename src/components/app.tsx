@@ -1,19 +1,19 @@
 import React from "react";
 import AppBar from "./app-bar";
 import LeftDrawer from "./left-drawer";
-import RightAvancedSearchDrawer from "./right-advanced-search-drawer";
+import RightDrawer from "./right-drawer";
 import Main from "./main";
 
 type AppState = {
   leftDrawer: boolean,
-  rightAvancedSearchDrawer: boolean
+  rightDrawer: boolean
 };
 
 class App extends React.Component<{}, AppState> {
 
   state = {
     leftDrawer: false,
-    rightAvancedSearchDrawer: false
+    rightDrawer: false
   };
 
   toggleLeftDrawer = ( open: null | boolean ) => {
@@ -22,9 +22,9 @@ class App extends React.Component<{}, AppState> {
     } ) );
   };
 
-  toggleRightAvancedSearchDrawer = ( open: null | boolean ) => {
+  toggleRightDrawer = ( open: null | boolean ) => {
     this.setState( state => ( {
-      rightAvancedSearchDrawer: open == null ? !state.rightAvancedSearchDrawer : open,
+      rightDrawer: open == null ? !state.rightDrawer : open,
     } ) );
   };
 
@@ -32,20 +32,20 @@ class App extends React.Component<{}, AppState> {
     return <>
       <AppBar
         onLeftDrawerToggle={() => this.toggleLeftDrawer( null )}
-        onRightDrawerToggle={() => this.toggleRightAvancedSearchDrawer( null )}
+        onRightDrawerToggle={() => this.toggleRightDrawer( null )}
       />
       <LeftDrawer
         open={this.state.leftDrawer}
         onOpen={() => this.toggleLeftDrawer( true )}
         onClose={() => this.toggleLeftDrawer( false )}
       />
-      <RightAvancedSearchDrawer
-        open={this.state.rightAvancedSearchDrawer}
-        onOpen={() => this.toggleRightAvancedSearchDrawer( true )}
-        onClose={() => this.toggleRightAvancedSearchDrawer( false )}
+      <RightDrawer
+        open={this.state.rightDrawer}
+        onOpen={() => this.toggleRightDrawer( true )}
+        onClose={() => this.toggleRightDrawer( false )}
       />
       <Main
-        onRightDrawerToggle={() => this.toggleRightAvancedSearchDrawer( null )}
+        onRightDrawerToggle={() => this.toggleRightDrawer( null )}
       />
     </>;
   }

@@ -45,32 +45,29 @@ const names = [
   "Theater"
 ];
 
-class MultipleSelect extends React.Component<any, any> {
+function TypeSelector( props: any ) {
+  const { classes, params, setParamsFilters } = props;
 
-  render() {
-    const { classes, params, setParamsFilters } = this.props;
-
-    return (
-      <FormControl className={`${classes.margin} ${classes.textField}`}>
-        <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
-        <Select
-          multiple={true}
-          value={params.type}
-          onChange={event => setParamsFilters( { type: event.target.value } )}
-          input={<Input id="select-multiple-checkbox" />}
-          renderValue={selected => ( Array.isArray( selected ) ? selected.join( ", " ) : selected )}
-          MenuProps={MenuProps}
-        >
-          {names.map( name => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={params.type.indexOf( name ) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ) )}
-        </Select>
-      </FormControl>
-    );
-  }
+  return (
+    <FormControl className={`${classes.margin} ${classes.textField}`}>
+      <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
+      <Select
+        multiple={true}
+        value={params.type}
+        onChange={event => setParamsFilters( { type: event.target.value } )}
+        input={<Input id="select-multiple-checkbox" />}
+        renderValue={selected => ( Array.isArray( selected ) ? selected.join( ", " ) : selected )}
+        MenuProps={MenuProps}
+      >
+        {names.map( name => (
+          <MenuItem key={name} value={name}>
+            <Checkbox checked={params.type.indexOf( name ) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ) )}
+      </Select>
+    </FormControl>
+  );
 }
 
 function mapStateToProps( state ) {
@@ -83,4 +80,4 @@ function mapDispatchToProps( dispatch ) {
   return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( MultipleSelect ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( TypeSelector ) );

@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { InlineDatePicker } from "material-ui-pickers";
@@ -19,42 +19,29 @@ const styles = theme => ( {
   }
 } );
 
-class InlineDatePickerDemo extends PureComponent<any, any> {
+function DatePicker( props:any ) {
+  const { classes, params, setParamsFilters } = props;
 
-  handleDateChange1 = date => {
-    this.props.setParamsFilters( { startDate: date } );
-  }
-
-  handleDateChange2 = date => {
-    this.props.setParamsFilters( { endDate: date } );
-  }
-
-  render() {
-    const { classes, params } = this.props;
-
-    return (
-      <Fragment>
-        <div className="picker">
-          <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
-            keyboard
-            label="From"
-            value={params.startDate}
-            onChange={this.handleDateChange1}
-            format="dd/MM/yyyy"
-            mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
-          />
-          <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
-            keyboard
-            label="To"
-            value={params.endDate}
-            onChange={this.handleDateChange2}
-            format="dd/MM/yyyy"
-            mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
-          />
-        </div>
-      </Fragment>
-    );
-  }
+  return (
+    <div className="picker">
+      <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
+        keyboard
+        label="From"
+        value={params.startDate}
+        onChange={date => setParamsFilters( { startDate: date } )}
+        format="dd/MM/yyyy"
+        mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
+      />
+      <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
+        keyboard
+        label="To"
+        value={params.endDate}
+        onChange={date => setParamsFilters( { endDate: date } )}
+        format="dd/MM/yyyy"
+        mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
+      />
+    </div>
+  );
 }
 
 function mapStateToProps( state ) {
@@ -67,4 +54,4 @@ function mapDispatchToProps( dispatch ) {
   return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( InlineDatePickerDemo ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( DatePicker ) );

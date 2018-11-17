@@ -1,11 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import purple from "@material-ui/core/colors/purple";
-import classNames from "classnames";
 
 const styles = theme => ( {
   container: {
@@ -31,11 +29,11 @@ const styles = theme => ( {
   }
 } );
 
-function CustomizedInputs( props ) {
+function FullNameField( props: any ) {
   const { classes } = props;
 
   return (
-    <FormControl className={classNames( classes.margin, classes.textField )} >
+    <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
         htmlFor="custom-css-standard-input"
         classes={{
@@ -55,8 +53,4 @@ function CustomizedInputs( props ) {
   );
 }
 
-CustomizedInputs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles( styles )( CustomizedInputs );
+export default withStyles( styles )( FullNameField );
