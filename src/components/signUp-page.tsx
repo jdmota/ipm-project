@@ -13,16 +13,18 @@ import FullNameTextField from "./signUpComponents/fullName-text-field";
 import CardNumberTextField from "./signUpComponents/cardNumber-text-field.1";
 import ExpirationDateTextField from "./signUpComponents/expirationDate-text-field";
 import CCVTextField from "./signUpComponents/ccv-text-field";
-
+import FastIcon from "@material-ui/icons/FastForwardRounded";
+import EuroIcon from "@material-ui/icons/EuroSymbolOutlined";
+import TicketIcon from "@material-ui/icons/LocalPlayOutlined";
 
 const styles = theme => ( {
   flexContainerLogIn: {
     width: 730,
     // height: 1000,
     marginLeft: "10%",
-    marginRight: "auto",
     marginTop: "200",
-    display: "inline-block"
+    display: "inline-block",
+    float: "left"
     // top: "600"
   },
   titlePosition: {
@@ -130,6 +132,14 @@ const styles = theme => ( {
     marginRight: 0,
     marginLeft: 20,
     color: "#b30000"
+  },
+  imagesContainer: {
+    // marginRight: "10%",
+    marginTop: "11%",
+    marginLeft: "75%",
+    minWidth: 100,
+    width: 230
+    // top: "600"
   }
 } );
 
@@ -148,7 +158,6 @@ class SignUpPage extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const { visible } = this.state;
 
     return <div>
       <div className={classes.marginFromAppBar}></div>
@@ -211,7 +220,46 @@ class SignUpPage extends React.Component {
           </CardContent>
         </Card>
       </div>
+      <div className={classes.imagesContainer}>
+        <Card>
+          <CardContent>
+            <div style={{ width: 100 }}>
+              <div style={{ marginBottom: 30 }}>
+                <div style={{ float: "left" }}>
+                  <FastIcon style={{ fontSize: 50 }} ></FastIcon>
+                </div>
+                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
+                  <Typography variant="h4" color="inherit" >
+                  Fast
+                  </Typography>
+                </div>
+              </div>
 
+              <div style={{ marginBottom: 30 }}>
+                <div style={{ float: "left" }}>
+                  <EuroIcon style={{ fontSize: 50 }} ></EuroIcon>
+                </div>
+                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
+                  <Typography variant="h4" color="inherit" >
+                  Cheap
+                  </Typography>
+                </div>
+              </div>
+
+              <div style={{ marginBottom: 30 }}>
+                <div style={{ float: "left" }}>
+                  <TicketIcon style={{ fontSize: 50 }} ></TicketIcon>
+                </div>
+                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
+                  <Typography variant="h4" color="inherit" >
+                  Tickets
+                  </Typography>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
     </div>;
   }
