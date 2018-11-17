@@ -1,6 +1,10 @@
 import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
+import EventCardList from "./event-card-list";
+import { events as Events } from "../helpers/search";
+import { checkPropTypes } from "prop-types";
+import eventCard from "./event-card";
 import HomePage from "./home-page";
 import { Event } from "src/data/types";
 

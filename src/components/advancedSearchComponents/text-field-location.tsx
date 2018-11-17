@@ -32,7 +32,7 @@ const styles = theme => ( {
 } );
 
 function CustomizedInputs( props ) {
-  const { classes } = props;
+  const { classes, onInputChange } = props;
 
   return (
     <FormControl className={classNames( classes.margin, classes.textField )} >
@@ -50,6 +50,7 @@ function CustomizedInputs( props ) {
         /* classes={{
             underline: classes.cssUnderline,
           }}*/
+        onChange = { event => onInputChange( event.target.value ) }
       />
     </FormControl>
   );

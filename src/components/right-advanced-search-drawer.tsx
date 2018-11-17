@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setParamsFilters } from "../actions/setParams";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
@@ -101,57 +104,105 @@ type RightAdvancedSearchDrawerProps = {
   onClose: () => void
 };
 
-function RightAdvancedSearchDrawer( { classes, open, onOpen, onClose }: RightAdvancedSearchDrawerProps ) {
+type RightAdvancedSearchDrawerState = {
+  eventType: string[],
+  eventLocation: string,
+  eventMinPrice: number,
+  eventMaxPrice: number,
+  eventStartDate: Date,
+  eventEndDate: Date,
+};
 
-  const sideList = (
-    <div>
-      <List className={classes.list}>
-        <IconButton onClick={onClose} className = {classes.IconButton}>
-          <ChevronRightIcon />
-        </IconButton>
-        <Divider />
-        <ListItem>
-          <TypeSelectorCheckBox></TypeSelectorCheckBox>
-        </ListItem>
-        <ListItem>
-          <TextFieldLocation></TextFieldLocation>
-        </ListItem>
-        <ListItem>
-          <PriceRange></PriceRange>
-        </ListItem>
-        <ListItem>
-          <DatePickers></DatePickers>
-        </ListItem>
-        <Button variant="contained" size="medium" color="primary" className={classes.buttonSearch} >
-            Search
-        </Button>
-      </List>
-    </div>
-  );
+class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, RightAdvancedSearchDrawerState> {
+  // { classes, open, onOpen, onClose }
+  constructor( props: RightAdvancedSearchDrawerProps ) {
+    super( props );
+    this.state = {
+      eventType: [],
+      eventLocation: "None",
+      eventMinPrice: 0,
+      eventMaxPrice: 100000000,
+      eventStartDate: new Date( 2018, 0, 1, 0, 0, 0, 0 ),
+      eventEndDate: new Date( 2019, 12, 31, 23, 59, 59, 0 ),
+    };
+  }
 
-  return (
-    <div>
-      <SwipeableDrawer
-        className={classes.drawer}
-        open={open}
-        onOpen={onOpen}
-        onClose={onClose}
-        anchor={"right"}
-        ModalProps={{
-          disableEnforceFocus: true,
-          BackdropProps: {
-            invisible: true
-          }
-        }}
-        classes={{
-          paper: classes.drawer
-        }}
-      >
+  renderSideList() {
+    const { classes, setParamsFilters } = this.props;
+    return (
+      <div>
+        <List className={classes.list}>
+          <IconButton onClick={this.props.onClose} className = {classes.IconButton}>
+            <ChevronRightIcon />
+          </IconButton>
+          <Divider />
+          <ListItem>
+            <TypeSelectorCheckBox onValueChange={ type => { this.setState( { eventType: type } ); console.log( type ); } }/>
+          </ListItem>
+          <ListItem>
+            <TextFieldLocation onInputChange={ location => { this.setState( { eventLocation: location } ); console.log( location ); }}/>
+          </ListItem>
+          <ListItem>
+            <PriceRange
+              onMinPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMinPrice: price } ); console.log( "Min Price:" + price ); } }}
+              onMaxPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMaxPrice: price } ); console.log( "Max Price:" + price ); } }}
+            />
+          </ListItem>
+          <ListItem>
+            <DatePickers
+              onBeginDateChange={ date => { this.setState( { eventStartDate: date } ); console.log( "Begin: " + date ); }}
+              onEndDateChange={ date => { this.setState( { eventEndDate: date } ); console.log( "End: " + date ); }}
+            />
+          </ListItem>
+          <Button variant="contained"
+            size="medium"
+            color="primary"
+            className={classes.buttonSearch}
+            onClick={() => setParamsFilters( {
+              type: this.state.eventType,
+              location: this.state.eventLocation,
+              minPrice: this.state.eventMinPrice,
+              maxPrice: this.state.eventMaxPrice,
+              startDate: this.state.eventStartDate,
+              endDate: this.state.eventEndDate
+            } )}
+          >
+              Search
+          </Button>
+        </List>
+      </div>
+    );
+  }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <SwipeableDrawer
+          className={classes.drawer}
+          open={this.props.open}
+          onOpen={this.props.onOpen}
+          onClose={this.props.onClose}
+          anchor={"right"}
+          ModalProps={{
+            disableEnforceFocus: true,
+            BackdropProps: {
+              invisible: true
+            }
+          }}
+          classes={{
+            paper: classes.drawer
+          }}
+        >
 
-        {sideList}
-      </SwipeableDrawer>
-    </div>
-  );
+          {this.renderSideList()}
+        </SwipeableDrawer>
+      </div>
+    );
+  }
 }
 
-export default withStyles( styles )( RightAdvancedSearchDrawer );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( null, mapDispatchToProps )( withStyles( styles )( RightAdvancedSearchDrawer ) );

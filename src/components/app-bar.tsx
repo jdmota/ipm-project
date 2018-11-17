@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setParamsName } from "../actions/setParams";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -55,7 +58,7 @@ function OurAppBar( props: OurAppBarProps ) {
           </Typography>
           <SearchWithAutoComplete
             className={classes.search}
-            onRequestSearch={( ...args: any ) => console.log( "search onRequestSearch", args )}
+            onRequestSearch={( text, event ) => props.setParamsName( text )}
             onRightDrawerToggle={() => props.onRightDrawerToggle()}
           />
           <div className={classes.grow} />
@@ -66,4 +69,8 @@ function OurAppBar( props: OurAppBarProps ) {
   );
 }
 
-export default withStyles( styles )( OurAppBar );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsName: setParamsName }, dispatch );
+}
+
+export default connect( null, mapDispatchToProps )( withStyles( styles )( OurAppBar ) );
