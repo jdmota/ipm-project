@@ -18,7 +18,7 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ( {
   drawer: {
-    zIndex: 1
+    zIndex: 99
   },
   list: {
     width: 280

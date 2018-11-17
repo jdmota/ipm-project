@@ -24,19 +24,16 @@ const styles = {
     overflow: "hidden",
     whiteSpace: "nowrap"
   },
-
   sliderWrapper: {
     position: "relative",
     height: "100%",
     width: "100%"
   },
-
   slide: {
     display: "inline-block",
     height: "100%",
     width: "100%"
   },
-
   arrow: {
     height: "50px",
     width: "50px",
@@ -51,21 +48,17 @@ const styles = {
       backgroundColor: "#bcbcbc"
     }
   },
-
   leftArrow: {
     position: "absolute",
     top: "50%",
     left: "25px",
-    zIndex: "999",
-    // color: "#fff"
+    zIndex: 20,
   },
-
   rightArrow: {
     position: "absolute",
     top: "50%",
     right: "25px",
-    zIndex: "999",
-    // color: "#fff"
+    zIndex: 20,
   }
 };
 
