@@ -1,8 +1,10 @@
 import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
+import { getEventByUrl } from "../helpers/search";
 
 const HomePage = lazy( () => import( "./home-page" ) );
+const EventPage = lazy( () => import( "./event-page" ) );
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
 const PaymentPage = lazy( () => import( "./payment-page" ) );
 const SignInPage = lazy( () => import( "./signIn-page" ) );
@@ -48,11 +50,27 @@ class Main extends React.Component<MainProps, MainState> {
 
   render() {
     const { classes } = this.props;
+    const pathname = this.state.pathname.replace( /\/+$/, "" ) || "/";
+
+    let component;
+    switch ( pathname ) {
+      case "/":
+        component = <HomePage />;
+        break;
+      default: {
+        const event = getEventByUrl( pathname );
+        if ( event ) {
+          component = <EventPage event={event} />;
+        } else {
+          component = <p>Not found.</p>;
+        }
+      }
+    }
 
     return <div className={classes.main}>
       <div className={classes.margin}>
         <Suspense fallback={<div>Loading...</div>}>
-          <HomePage />
+          {component}
         </Suspense>
       </div>
     </div>;

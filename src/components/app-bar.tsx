@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setParamsName } from "../actions/setParams";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import LoginButton from "./account-popup";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import { setParamsName } from "../actions/setParams";
+import LoginButton from "./account-popup";
 import SearchWithAutoComplete from "./search/search-auto-complete";
+import { navigate } from "../helpers/router";
 
 const styles = theme => ( {
   root: {
@@ -33,15 +34,10 @@ const styles = theme => ( {
 } );
 
 type OurAppBarProps = {
-  classes: {
-    root: string,
-    grow: string,
-    menuButton: string,
-    appBar: string
-    loginButton: string
-  },
+  classes: any,
   onLeftDrawerToggle: () => void
-  onRightDrawerToggle: () => void
+  onRightDrawerToggle: () => void,
+  setParamsName: any
 };
 
 function OurAppBar( props: OurAppBarProps ) {
@@ -58,7 +54,13 @@ function OurAppBar( props: OurAppBarProps ) {
           </Typography>
           <SearchWithAutoComplete
             className={classes.search}
-            onRequestSearch={( text, event ) => props.setParamsName( text )}
+            onRequestSearch={( text, event ) => {
+              if ( event ) {
+                navigate( event.url );
+              } else {
+                props.setParamsName( text );
+              }
+            }}
             onRightDrawerToggle={() => props.onRightDrawerToggle()}
           />
           <div className={classes.grow} />

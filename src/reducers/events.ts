@@ -3,7 +3,7 @@ import { Event } from "../data/types";
 const events: Event[] = [
   {
     id: "1",
-    url: "/event/2",
+    url: "/event/1",
     title: "NOS Alive",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     date: new Date(),

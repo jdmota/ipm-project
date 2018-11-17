@@ -157,17 +157,14 @@ function EventPage( props: { classes: any, event: Event } ) {
         </div>
       </div>
 
-      <Typography className={classes.comment} variant="body1">
-        <b>{comments[ 0 ].author.nickname}</b>
-        <br/>
-        <span className={classes.text}>{comments[ 0 ].text}</span>
-      </Typography>
+      {comments.map( ( comment, i ) => {
+        return <Typography key={i} className={classes.comment} variant="body1">
+          <b>{comment.author.nickname}</b>
+          <br/>
+          <span className={classes.text}>{comment.text}</span>
+        </Typography>;
+      } )}
 
-      <Typography className={classes.comment} variant="body1">
-        <b>{comments[ 1 ].author.nickname}</b>
-        <br/>
-        <span className={classes.text}>{comments[ 1 ].text}</span>
-      </Typography>
     </div>
 
   </div>;
