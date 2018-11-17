@@ -1,7 +1,9 @@
-import { InlineDatePicker } from "material-ui-pickers";
 import React, { Fragment, PureComponent } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { InlineDatePicker } from "material-ui-pickers";
 import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
+import { setParamsFilters } from "../../actions/setParams";
 
 const styles = theme => ( {
   container: {
@@ -17,41 +19,34 @@ const styles = theme => ( {
   }
 } );
 
-class InlineDatePickerDemo extends PureComponent {
-  state = {
-    selectedDate1: new Date(),
-    selectedDate2: new Date()
-  }
+class InlineDatePickerDemo extends PureComponent<any, any> {
 
   handleDateChange1 = date => {
-    this.setState( { selectedDate1: date } );
-    this.props.onBeginDateChange( date );
+    this.props.setParamsFilters( { startDate: date } );
   }
 
   handleDateChange2 = date => {
-    this.setState( { selectedDate2: date } );
-    this.props.onEndDateChange( date );
+    this.props.setParamsFilters( { endDate: date } );
   }
 
   render() {
-    const { selectedDate1, selectedDate2 } = this.state;
-    const { classes } = this.props;
+    const { classes, params } = this.props;
 
     return (
       <Fragment>
         <div className="picker">
-          <InlineDatePicker className= {classNames( classes.margin, classes.textField )}
+          <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
             keyboard
             label="From"
-            value={selectedDate1}
+            value={params.startDate}
             onChange={this.handleDateChange1}
             format="dd/MM/yyyy"
             mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
           />
-          <InlineDatePicker className= {classNames( classes.margin, classes.textField )}
+          <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
             keyboard
             label="To"
-            value={selectedDate2}
+            value={params.endDate}
             onChange={this.handleDateChange2}
             format="dd/MM/yyyy"
             mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
@@ -62,4 +57,14 @@ class InlineDatePickerDemo extends PureComponent {
   }
 }
 
-export default withStyles( styles )( InlineDatePickerDemo );
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( InlineDatePickerDemo ) );

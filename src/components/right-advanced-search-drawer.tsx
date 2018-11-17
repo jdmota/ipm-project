@@ -1,20 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setParamsFilters } from "../actions/setParams";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import purple from "@material-ui/core/colors/purple";
-import TypeSelectorCheckBox from "./advancedSearchComponents/type-selector-checkbox";
-import TextFieldLocation from "./advancedSearchComponents/text-field-location";
-import PriceRange from "./advancedSearchComponents/price-range";
-import DatePickers from "./advancedSearchComponents/date-pickers";
 import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Button from "@material-ui/core/Button";
+import { setParamsFilters } from "../actions/setParams";
+import { navigate } from "../helpers/router";
+import TypeSelectorCheckBox from "./advancedSearchComponents/type-selector-checkbox";
+import TextFieldLocation from "./advancedSearchComponents/text-field-location";
+import PriceRange from "./advancedSearchComponents/price-range";
+import DatePickers from "./advancedSearchComponents/date-pickers";
 
 const styles = theme => ( {
   drawer: {
@@ -105,28 +106,7 @@ type RightAdvancedSearchDrawerProps = {
   setParamsFilters: any
 };
 
-type RightAdvancedSearchDrawerState = {
-  eventType: string[],
-  eventLocation: string,
-  eventMinPrice: number,
-  eventMaxPrice: number,
-  eventStartDate: Date,
-  eventEndDate: Date,
-};
-
-class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, RightAdvancedSearchDrawerState> {
-  // { classes, open, onOpen, onClose }
-  constructor( props: RightAdvancedSearchDrawerProps ) {
-    super( props );
-    this.state = {
-      eventType: [],
-      eventLocation: "None",
-      eventMinPrice: 0,
-      eventMaxPrice: 100000000,
-      eventStartDate: new Date( 2018, 0, 1, 0, 0, 0, 0 ),
-      eventEndDate: new Date( 2019, 12, 31, 23, 59, 59, 0 ),
-    };
-  }
+class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, {}> {
 
   renderSideList() {
     const { classes, setParamsFilters } = this.props;
@@ -138,37 +118,27 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
           </IconButton>
           <Divider />
           <ListItem>
-            <TypeSelectorCheckBox onValueChange={type => this.setState( { eventType: type } )}/>
+            <TypeSelectorCheckBox onValueChange={type => setParamsFilters( { type } )}/>
           </ListItem>
           <ListItem>
-            <TextFieldLocation onInputChange={location => this.setState( { eventLocation: location } )}/>
+            <TextFieldLocation onInputChange={location => setParamsFilters( { location } )}/>
           </ListItem>
           <ListItem>
-            <PriceRange
-              onMinPriceChange={price => !isNaN( price ) && this.setState( { eventMinPrice: price } ) }
-              onMaxPriceChange={price => !isNaN( price ) && this.setState( { eventMaxPrice: price } ) }
-            />
+            <PriceRange />
           </ListItem>
           <ListItem>
-            <DatePickers
-              onBeginDateChange={date => this.setState( { eventStartDate: date } )}
-              onEndDateChange={date => this.setState( { eventEndDate: date } )}
-            />
+            <DatePickers />
           </ListItem>
           <Button variant="contained"
             size="medium"
             color="primary"
             className={classes.buttonSearch}
-            onClick={() => setParamsFilters( {
-              type: this.state.eventType,
-              location: this.state.eventLocation,
-              minPrice: this.state.eventMinPrice,
-              maxPrice: this.state.eventMaxPrice,
-              startDate: this.state.eventStartDate,
-              endDate: this.state.eventEndDate
-            } )}
+            onClick={() => {
+              this.props.onClose();
+              navigate( "/search" );
+            }}
           >
-              Search
+            Search
           </Button>
         </List>
       </div>
@@ -194,7 +164,6 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
             paper: classes.drawer
           }}
         >
-
           {this.renderSideList()}
         </SwipeableDrawer>
       </div>

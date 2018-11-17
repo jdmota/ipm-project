@@ -18,12 +18,7 @@ export default function( state = initialState, action ) {
     case "SET_FILTERS":
       return {
         ...state,
-        type: action.payload.type,
-        location: action.payload.location,
-        minPrice: action.payload.minPrice,
-        maxPrice: action.payload.maxPrice,
-        startDate: action.payload.startDate,
-        endDate: action.payload.endDate
+        ...action.payload
       };
     default:
       return state;

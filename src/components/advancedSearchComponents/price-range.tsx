@@ -1,13 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
+import { setParamsFilters } from "../../actions/setParams";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import purple from "@material-ui/core/colors/purple";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import classNames from "classnames";
-
 
 const styles = theme => ( {
   container: {
@@ -33,65 +33,51 @@ const styles = theme => ( {
   }
 } );
 
-function CustomizedInputs( props ) {
-  const { classes, onMinPriceChange, onMaxPriceChange } = props;
+function CustomizedInputs( props: any ) {
+  const { classes, setParamsFilters } = props;
 
   return (
     <div className={classes.container}>
-      <FormControl className= {classNames( classes.margin, classes.textField )}>
+      <FormControl className={`${classes.margin} ${classes.textField}`}>
         <InputLabel
-          htmlFor="custom-css-standard-input"
+          htmlFor="min-price"
           classes={{
-            // root: classes.cssLabel,
-            focused: classes.cssFocused,
+            focused: classes.cssFocused
           }}
-        >
-        Min
-        </InputLabel>
+        >Min</InputLabel>
         <Input
-          id="custom-css-standard-input"
-          /* classes={{
-            underline: classes.cssUnderline,
-          }}*/
-          onChange = { event => onMinPriceChange( event.target.value ) }
-          endAdornment={
-            <InputAdornment position="end">
-                  €
-            </InputAdornment>
-          }
+          id="min-price"
+          type="number"
+          onChange={event => setParamsFilters( { minPrice: event.target.value } )}
+          endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
-
       </FormControl>
-      <FormControl className= {classNames( classes.margin, classes.textField )}>
+      <FormControl className={`${classes.margin} ${classes.textField}`}>
         <InputLabel
-          htmlFor="custom-css-standard-input"
+          htmlFor="max-price"
           classes={{
-            // root: classes.cssLabel,
             focused: classes.cssFocused,
           }}
-        >
-        Max
-        </InputLabel>
+        >Max</InputLabel>
         <Input
-          id="custom-css-standard-input"
-          /* classes={{
-            underline: classes.cssUnderline,
-          }}*/
-          type= "text"
-          onChange = { event => onMaxPriceChange( parseFloat( event.target.value ) ) }
-          endAdornment={
-            <InputAdornment position="end">
-              €
-            </InputAdornment>
-          }
+          id="max-price"
+          type="number"
+          onChange={event => setParamsFilters( { maxPrice: event.target.value } )}
+          endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
       </FormControl>
     </div>
   );
 }
 
-CustomizedInputs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
 
-export default withStyles( styles )( CustomizedInputs );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( CustomizedInputs ) );
