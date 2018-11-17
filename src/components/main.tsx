@@ -25,7 +25,8 @@ const styles = {
   main: {
     maxWidth: "1600px",
     margin: "auto",
-    marginTop: 30
+    marginTop: 30,
+    marginBottom: 100
   },
   margin: {
     marginLeft: 30,
