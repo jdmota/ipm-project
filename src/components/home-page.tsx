@@ -107,14 +107,20 @@ const styles = theme => ( {
     marginRight: 40
   },
   icon: {
-    // color: "rgba(255, 255, 255, 0.54)",
+    color: "rgb(180, 180, 180)",
+  },
+  action: {
+    flex: "0 0 auto",
+    alignSelf: "flex-start",
+    marginTop: 0,
+    marginRight: 0
   }
 } );
 
 
 function HomePage( props: {classes: any, events: Event[]} ) {
   const { classes } = props;
-  const { title, description, date, location, type, priceUnit } = props.events[ 0 ];
+  const { title, date, location, type, priceUnit } = props.events[ 0 ];
 
   return <div className={classes.outside}>
     <div>
@@ -153,6 +159,9 @@ function HomePage( props: {classes: any, events: Event[]} ) {
 
             <CardHeader
               className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
               avatar={
                 <div className={classes.image}>
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
@@ -174,6 +183,9 @@ function HomePage( props: {classes: any, events: Event[]} ) {
           <Card className={classes.card}>
             <CardHeader
               className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
               avatar={
                 <div className={classes.image}>
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
@@ -201,6 +213,9 @@ function HomePage( props: {classes: any, events: Event[]} ) {
           <Card className={classes.card}>
             <CardHeader
               className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
               avatar={
                 <div className={classes.image}>
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
@@ -221,6 +236,9 @@ function HomePage( props: {classes: any, events: Event[]} ) {
           <Card className={classes.card}>
             <CardHeader
               className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
               avatar={
                 <div className={classes.image}>
                   <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
