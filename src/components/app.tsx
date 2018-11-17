@@ -9,7 +9,6 @@ type AppState = {
   rightAvancedSearchDrawer: boolean
 };
 
-
 class App extends React.Component<{}, AppState> {
 
   state = {

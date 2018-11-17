@@ -5,10 +5,11 @@ import { getEventByUrl } from "../helpers/search";
 
 const HomePage = lazy( () => import( "./home-page" ) );
 const EventPage = lazy( () => import( "./event-page" ) );
-const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
-const PaymentPage = lazy( () => import( "./payment-page" ) );
+const EventList = lazy( () => import( "./event-card-list" ) );
 const SignInPage = lazy( () => import( "./signIn-page" ) );
 const SignUpPage = lazy( () => import( "./signUp-page" ) );
+const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
+const PaymentPage = lazy( () => import( "./payment-page" ) );
 
 type MainState = {
   pathname: string,
@@ -56,6 +57,15 @@ class Main extends React.Component<MainProps, MainState> {
     switch ( pathname ) {
       case "/":
         component = <HomePage />;
+        break;
+      case "/search":
+        component = <EventList />;
+        break;
+      case "/sign-in":
+        component = <SignInPage />;
+        break;
+      case "/sign-up":
+        component = <SignUpPage />;
         break;
       default: {
         const event = getEventByUrl( pathname );

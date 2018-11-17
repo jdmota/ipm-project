@@ -8,6 +8,7 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
+import { navigate } from "../helpers/router";
 
 const styles = {
   root: {
@@ -34,8 +35,17 @@ class MenuListComposition extends React.Component {
     if ( this.anchorEl.contains( event.target ) ) {
       return;
     }
-
     this.setState( { open: false } );
+  };
+
+  createAccount = event => {
+    this.handleClose( event );
+    navigate( "/sign-up" );
+  };
+
+  login = event => {
+    this.handleClose( event );
+    navigate( "/sign-in" );
   };
 
   render() {
@@ -74,8 +84,8 @@ class MenuListComposition extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
-                      <MenuItem onClick={this.handleClose}>Create Account</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Login</MenuItem>
+                      <MenuItem onClick={this.createAccount}>Create Account</MenuItem>
+                      <MenuItem onClick={this.login}>Login</MenuItem>
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>

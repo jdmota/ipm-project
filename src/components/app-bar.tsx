@@ -30,6 +30,9 @@ const styles = theme => ( {
   },
   appBar: {
     zIndex: 2
+  },
+  home: {
+    cursor: "pointer"
   }
 } );
 
@@ -40,6 +43,8 @@ type OurAppBarProps = {
   setParamsName: any
 };
 
+const navigateHome = () => navigate( "/" );
+
 function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
   return (
@@ -49,9 +54,9 @@ function OurAppBar( props: OurAppBarProps ) {
           <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" color="inherit">
-            FCTicket
-          </Typography>
+          <div className={classes.home} onClick={navigateHome} role="button" aria-label="Home">
+            <Typography variant="h6" color="inherit">FCTicket</Typography>
+          </div>
           <SearchWithAutoComplete
             className={classes.search}
             onRequestSearch={( text, event ) => {
@@ -59,6 +64,7 @@ function OurAppBar( props: OurAppBarProps ) {
                 navigate( event.url );
               } else {
                 props.setParamsName( text );
+                navigate( "/search" );
               }
             }}
             onRightDrawerToggle={() => props.onRightDrawerToggle()}

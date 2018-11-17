@@ -13,6 +13,9 @@ export function navigate( href: string ) {
   }
 }
 
+// Expose navigate function
+window.navigate = navigate;
+
 export function installRouter( locationUpdatedCallback: Cb ) {
   callback = locationUpdatedCallback;
 
