@@ -1,0 +1,210 @@
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { setParamsFilters } from "../actions/setParams";
+import { withStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import purple from "@material-ui/core/colors/purple";
+import TypeSelectorCheckBox from "../components/advancedSearchComponents/type-selector-checkbox";
+import TextFieldLocation from "../components/advancedSearchComponents/text-field-location";
+import PriceRange from "../components/advancedSearchComponents/price-range";
+import DatePickers from "../components/advancedSearchComponents/date-pickers";
+import IconButton from "@material-ui/core/IconButton";
+import Divider from "@material-ui/core/Divider";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Button from "@material-ui/core/Button";
+import { advancedSearch } from "../helpers/search";
+
+const styles = theme => ( {
+  drawer: {
+    zIndex: 1
+  },
+  list: {
+    width: 280,
+    top: 64
+  },
+  fullList: {
+    width: "auto",
+  },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  margin: {
+    margin: theme.spacing.unit,
+  },
+  cssLabel: {
+    "&$cssFocused": {
+      color: purple[ 500 ],
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    "&:after": {
+      borderBottomColor: purple[ 500 ],
+    },
+  },
+  cssOutlinedInput: {
+    "&$cssFocused $notchedOutline": {
+      borderColor: purple[ 500 ],
+    },
+  },
+  notchedOutline: {},
+  bootstrapRoot: {
+    "label + &": {
+      marginTop: theme.spacing.unit * 3,
+    },
+  },
+  bootstrapInput: {
+    borderRadius: 4,
+    backgroundColor: theme.palette.common.white,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "10px 12px",
+    transition: theme.transitions.create( [ "border-color", "box-shadow" ] ),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join( "," ),
+    "&:focus": {
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+  bootstrapFormLabel: {
+    fontSize: 18,
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+    maxWidth: 300,
+  },
+  buttonSearch: {
+    marginTop: 20,
+    marginLeft: 30
+  },
+  IconButton: {
+    marginLeft: 15
+  }
+} );
+
+type RightAdvancedSearchDrawerProps = {
+  classes: any,
+  open: boolean,
+  onOpen: () => void,
+  onClose: () => void
+};
+
+type RightAdvancedSearchDrawerState = {
+  eventType: string[],
+  eventLocation: string,
+  eventMinPrice: number,
+  eventMaxPrice: number,
+  eventStartDate: Date,
+  eventEndDate: Date,
+};
+
+class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, RightAdvancedSearchDrawerState> {
+  // { classes, open, onOpen, onClose }
+  constructor( props: RightAdvancedSearchDrawerProps ) {
+    super( props );
+    this.state = {
+      eventType: [],
+      eventLocation: "None",
+      eventMinPrice: 0,
+      eventMaxPrice: 100000000,
+      eventStartDate: new Date( 2018, 0, 1, 0, 0, 0, 0 ),
+      eventEndDate: new Date( 2019, 12, 31, 23, 59, 59, 0 ),
+    };
+  }
+
+  renderSideList() {
+    const { classes, setParamsFilters } = this.props;
+    return (
+      <div>
+        <List className={classes.list}>
+          <IconButton onClick={this.props.onClose} className = {classes.IconButton}>
+            <ChevronRightIcon />
+          </IconButton>
+          <Divider />
+          <ListItem>
+            <TypeSelectorCheckBox onValueChange={ type => { this.setState( { eventType: type } ); console.log( type ); } }/>
+          </ListItem>
+          <ListItem>
+            <TextFieldLocation onInputChange={ location => { this.setState( { eventLocation: location } ); console.log( location ); }}/>
+          </ListItem>
+          <ListItem>
+            <PriceRange
+              onMinPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMinPrice: price } ); console.log( "Min Price:" + price ); } }}
+              onMaxPriceChange={ price => { if ( !isNaN( price ) ) { this.setState( { eventMaxPrice: price } ); console.log( "Max Price:" + price ); } }}
+            />
+          </ListItem>
+          <ListItem>
+            <DatePickers
+              onBeginDateChange={ date => { this.setState( { eventStartDate: date } ); console.log( "Begin: " + date ); }}
+              onEndDateChange={ date => { this.setState( { eventEndDate: date } ); console.log( "End: " + date ); }}
+            />
+          </ListItem>
+          <Button variant="contained"
+            size="medium"
+            color="primary"
+            className={classes.buttonSearch}
+            onClick={() => setParamsFilters( {
+              type: this.state.eventType,
+              location: this.state.eventLocation,
+              minPrice: this.state.eventMinPrice,
+              maxPrice: this.state.eventMaxPrice,
+              startDate: this.state.eventStartDate,
+              endDate: this.state.eventEndDate
+            } )}
+          >
+              Search
+          </Button>
+        </List>
+      </div>
+    );
+  }
+  render() {
+    const { classes } = this.props;
+    return (
+      <div>
+        <SwipeableDrawer
+          className={classes.drawer}
+          open={this.props.open}
+          onOpen={this.props.onOpen}
+          onClose={this.props.onClose}
+          anchor={"right"}
+          ModalProps={{
+            disableEnforceFocus: true,
+            BackdropProps: {
+              invisible: true
+            }
+          }}
+          classes={{
+            paper: classes.drawer
+          }}
+        >
+
+          {this.renderSideList()}
+        </SwipeableDrawer>
+      </div>
+    );
+  }
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
+}
+
+export default connect( null, mapDispatchToProps )( withStyles( styles )( RightAdvancedSearchDrawer ) );

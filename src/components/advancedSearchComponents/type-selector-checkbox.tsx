@@ -54,6 +54,7 @@ class MultipleSelect extends React.Component<any, State> {
 
   handleChange = event => {
     this.setState( { names: event.target.value } );
+    this.props.onValueChange( event.target.value );
   };
 
   render() {

@@ -8,7 +8,7 @@ export const events: Event[] = [
     description: "cool",
     date: new Date(),
     images: [],
-    type: "festival",
+    type: "Festival",
     location: "Alges",
     comments: [],
     priceUnit: 50
@@ -20,7 +20,7 @@ export const events: Event[] = [
     description: "Super funny",
     date: new Date(),
     images: [],
-    type: "theater",
+    type: "Theater",
     location: "Lisboa",
     comments: [],
     priceUnit: 50
@@ -32,7 +32,7 @@ export const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [],
-    type: "other",
+    type: "Other",
     location: "Almada",
     comments: [],
     priceUnit: 50
@@ -50,11 +50,12 @@ export function search( inputSearch: string ) {
   return resultEvents;
 }
 
-
-export function advancedSearch( types: [], location: string, minPrice: number, maxPrice: number, minDate: Date, maxDate: Date ) {
-  let resultEvents = events.filter( event => {
-    const title = event.title.toUpperCase();
-    return "";// inputWords.some( word => title.includes( word ) );
+export function advancedSearch( inputSearch: string, types: [], location: string, minPrice: number, maxPrice: number, minDate: Date, maxDate: Date ) {
+  let foundEvents = search( inputSearch );
+  let resultEvents = foundEvents.filter( event => {
+    return (
+      types.indexOf( event.type ) > -1
+    );
   } );
 
   return resultEvents;

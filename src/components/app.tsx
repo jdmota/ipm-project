@@ -1,7 +1,7 @@
 import React from "react";
-import AppBar from "./app-bar";
+import AppBar from "../containers/app-bar";
 import LeftDrawer from "./left-drawer";
-import RightAvancedSearchDrawer from "./right-advanced-search-drawer";
+import RightAvancedSearchDrawer from "../containers/right-advanced-search-drawer";
 import Main from "./main";
 
 type AppState = {

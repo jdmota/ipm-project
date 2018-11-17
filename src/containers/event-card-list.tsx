@@ -1,10 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { Event } from "../data/types";
+import { search, advancedSearch } from "../helpers/search";
 import { installRouter } from "../helpers/router";
-import EventCard from "./event-card";
-import { events as allEvents } from "../helpers/search";
+import EventCard from "../components/event-card";
 import { checkPropTypes } from "prop-types";
 
 type MainState = {
@@ -42,22 +41,20 @@ class eventCardList extends React.Component<MainProps, MainState> {
 
   state = {
     pathname: location.pathname,
-    search: location.search,
-    eventList: allEvents,
+    search: location.search
   };
 
-
-  /* EventSearch( eventName ) {
+  /*
+  EventSearch( params ) {
     let events: Array<Event> = [];
     allEvents.map( event => {
-      if ( event.title === eventName ) {
+      if ( event.title.toLowerCase().includes( params.name.toLowerCase() ) ) {
         events.push( event );
       }
     } );
-    this.setState( {
-      eventList: events
-    } );
-  }*/
+    return events;
+  }
+  */
 
   componentDidMount() {
     installRouter( location => {
@@ -69,7 +66,11 @@ class eventCardList extends React.Component<MainProps, MainState> {
   }
 
   renderList() {
-    return this.state.eventList.map( event => {
+    // let eventList = this.EventSearch( this.props.params );
+    // let eventList = search( this.props.params.name );
+    let eventList = advancedSearch( this.props.params.name, this.props.params.type, this.props.params.location, this.props.params.minPrice, this.props.params.maxPrice, this.props.params.startDate, this.props.params.endDate );
+
+    return eventList.map( event => {
       return (
         <EventCard
           image="https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547"
@@ -86,7 +87,13 @@ class eventCardList extends React.Component<MainProps, MainState> {
     return <div className={classes.main}>
       <div className={classes.margin}>
         {this.renderList()}
-        {this.props.params.name}
+        Name: {this.props.params.name} <p></p>
+        Type: {this.props.params.type} <p></p>
+        Localização: {this.props.params.location} <p></p>
+        Range: {this.props.params.minPrice} - {this.props.params.maxPrice} <p></p>
+        Data de Início: {this.props.params.startDate.toString()}<p></p>
+        Data de Fim: {this.props.params.endDate.toString()}<p></p>
+
       </div>
     </div>;
   }

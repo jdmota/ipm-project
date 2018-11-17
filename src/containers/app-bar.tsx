@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { setParams } from "../actions/setParams";
+import { setParamsName } from "../actions/setParams";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import LoginButton from "./account-popup";
+import LoginButton from "../components/account-popup";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import SearchWithAutoComplete from "./search/search-auto-complete";
+import SearchWithAutoComplete from "../components/search/search-auto-complete";
 
 const styles = theme => ( {
   root: {
@@ -58,7 +58,7 @@ function OurAppBar( props: OurAppBarProps ) {
           </Typography>
           <SearchWithAutoComplete
             className={classes.search}
-            onRequestSearch={( text, event ) => props.setParams( text )}
+            onRequestSearch={( text, event ) => props.setParamsName( text )}
             onRightAdvancedSearchDrawerToggle={() => props.onRightDrawerToggle()}
           />
           <div className={classes.grow} />
@@ -70,7 +70,7 @@ function OurAppBar( props: OurAppBarProps ) {
 }
 
 function mapDispatchToProps( dispatch ) {
-  return bindActionCreators( { setParams: setParams }, dispatch );
+  return bindActionCreators( { setParamsName: setParamsName }, dispatch );
 }
 
 export default connect( null, mapDispatchToProps )( withStyles( styles )( OurAppBar ) );

@@ -34,7 +34,7 @@ const styles = theme => ( {
 } );
 
 function CustomizedInputs( props ) {
-  const { classes } = props;
+  const { classes, onMinPriceChange, onMaxPriceChange } = props;
 
   return (
     <div className={classes.container}>
@@ -53,6 +53,7 @@ function CustomizedInputs( props ) {
           /* classes={{
             underline: classes.cssUnderline,
           }}*/
+          onChange = { event => onMinPriceChange( event.target.value ) }
           endAdornment={
             <InputAdornment position="end">
                   €
@@ -76,6 +77,8 @@ function CustomizedInputs( props ) {
           /* classes={{
             underline: classes.cssUnderline,
           }}*/
+          type= "text"
+          onChange = { event => onMaxPriceChange( parseFloat( event.target.value ) ) }
           endAdornment={
             <InputAdornment position="end">
               €

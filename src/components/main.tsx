@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
-import EventCardList from "./event-card-list";
+import EventCardList from "../containers/event-card-list";
 import { events as Events } from "../helpers/search";
 import { checkPropTypes } from "prop-types";
 import eventCard from "./event-card";

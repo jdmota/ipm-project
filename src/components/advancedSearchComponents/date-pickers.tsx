@@ -18,7 +18,6 @@ const styles = theme => ( {
 } );
 
 class InlineDatePickerDemo extends PureComponent {
-
   state = {
     selectedDate1: new Date(),
     selectedDate2: new Date()
@@ -26,10 +25,12 @@ class InlineDatePickerDemo extends PureComponent {
 
   handleDateChange1 = date => {
     this.setState( { selectedDate1: date } );
+    this.props.onBeginDateChange( date );
   }
 
   handleDateChange2 = date => {
     this.setState( { selectedDate2: date } );
+    this.props.onEndDateChange( date );
   }
 
   render() {

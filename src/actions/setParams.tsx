@@ -1,6 +1,13 @@
-export function setParams( params ) {
+export function setParamsName( name ) {
   return {
     type: "SET_NAME",
-    payload: params
+    payload: name
+  };
+}
+
+export function setParamsFilters( filters ) {
+  return {
+    type: "SET_FILTERS",
+    payload: filters
   };
 }
