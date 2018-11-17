@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { search, advancedSearch } from "../helpers/search";
 import { installRouter } from "../helpers/router";
-import EventCard from "../components/event-card";
+import EventCard from "./event-card";
 import { checkPropTypes } from "prop-types";
 
 type MainState = {
