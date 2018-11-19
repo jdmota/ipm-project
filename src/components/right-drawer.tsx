@@ -106,10 +106,19 @@ type RightAdvancedSearchDrawerProps = {
   setParamsFilters: any
 };
 
-class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, {}> {
+class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawerProps, any> {
+
+  constructor( props ) {
+    super( props );
+    const state = {
+      ...props.params
+    };
+    delete state.name;
+    this.state = state;
+  }
 
   renderSideList() {
-    const { classes } = this.props;
+    const { classes, setParamsFilters } = this.props;
     return (
       <div>
         <List className={classes.list}>
@@ -118,16 +127,32 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
           </IconButton>
           <Divider />
           <ListItem>
-            <TypeSelectorCheckBox />
+            <TypeSelectorCheckBox
+              value={this.state.type}
+              onChange={type => this.setState( { type } )}
+            />
           </ListItem>
           <ListItem>
-            <TextFieldLocation />
+            <TextFieldLocation
+              value={this.state.location}
+              onChange={location => this.setState( { location } )}
+            />
           </ListItem>
           <ListItem>
-            <PriceRange />
+            <PriceRange
+              min={this.state.minPrice}
+              max={this.state.maxPrice}
+              onMinChange={minPrice => this.setState( { minPrice } )}
+              onMaxChange={maxPrice => this.setState( { maxPrice } )}
+            />
           </ListItem>
           <ListItem>
-            <DatePickers />
+            <DatePickers
+              min={this.state.startDate}
+              max={this.state.endDate}
+              onMinChange={startDate => this.setState( { startDate } )}
+              onMaxChange={endDate => this.setState( { endDate } )}
+            />
           </ListItem>
           <Button variant="contained"
             size="medium"
@@ -135,6 +160,7 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
             className={classes.buttonSearch}
             onClick={() => {
               this.props.onClose();
+              setParamsFilters( this.state );
               navigate( "/search" );
             }}
           >
@@ -171,8 +197,14 @@ class RightAdvancedSearchDrawer extends React.Component<RightAdvancedSearchDrawe
   }
 }
 
+function mapStateToProps( state ) {
+  return {
+    params: state.params
+  };
+}
+
 function mapDispatchToProps( dispatch ) {
   return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
 }
 
-export default connect( null, mapDispatchToProps )( withStyles( styles )( RightAdvancedSearchDrawer ) );
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( RightAdvancedSearchDrawer ) );
