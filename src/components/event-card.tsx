@@ -1,23 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles, createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import { Event } from "../data/types";
-
-const theme = createMuiTheme( {
-  palette: {
-    primary: { main: "#11cb5f" },
-  },
-} );
 
 const styles = theme => ( {
   root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    // backgroundColor: "#a4a4a4",
-    width: 200,
+    display: "block",
+    // width: 300,
+    height: 120,
+    marginTop: 15,
+    marginBottom: 0,
+    cursor: "pointer",
+    textDecoration: "none"
   },
   card: {
     maxWidth: 500,
@@ -33,40 +27,30 @@ const styles = theme => ( {
     paddingRight: 0,
     paddingBottom: 0
   },
-  size: {
-    // width: 300,
-    height: 120,
-    marginTop: 15,
-    marginBottom: 0
-  },
 } );
 
-function PaperSheet( props: {classes: any, event: Event, image: string} ) {
+function PaperSheet( props: any ) {
   const { classes } = props;
-  const { title, description, date, location, type } = props.events;
+  const { url, title, description, type, location, date, images } = props.event;
+
+  const defaultImage = "https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547";
 
   return (
-    <div className={classes.size}>
+    <a className={classes.root} href={url}>
       <Card className={classes.card}>
         <CardHeader
           className={classes.force}
           avatar={
             <div className={classes.image}>
-              <img height={110} src={ props.image }/>
+              <img height={110} src={images[ 0 ] || defaultImage}/>
             </div>
           }
-
           title={title}
-
           subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
         />
       </Card>
-    </div>
+    </a>
   );
 }
-
-PaperSheet.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles( styles )( PaperSheet );
