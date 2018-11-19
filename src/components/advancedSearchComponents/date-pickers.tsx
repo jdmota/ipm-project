@@ -1,9 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { InlineDatePicker } from "material-ui-pickers";
 import { withStyles } from "@material-ui/core/styles";
-import { setParamsFilters } from "../../actions/setParams";
 
 const styles = theme => ( {
   container: {
@@ -20,23 +17,23 @@ const styles = theme => ( {
 } );
 
 function DatePicker( props:any ) {
-  const { classes, params, setParamsFilters } = props;
+  const { classes, min, max, onMinChange, onMaxChange } = props;
 
   return (
     <div className="picker">
       <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
         keyboard
         label="From"
-        value={params.startDate}
-        onChange={date => setParamsFilters( { startDate: date } )}
+        value={min}
+        onChange={onMinChange}
         format="dd/MM/yyyy"
         mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
       />
       <InlineDatePicker className={`${classes.margin} ${classes.textField}`}
         keyboard
         label="To"
-        value={params.endDate}
-        onChange={date => setParamsFilters( { endDate: date } )}
+        value={max}
+        onChange={onMaxChange}
         format="dd/MM/yyyy"
         mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
       />
@@ -44,14 +41,4 @@ function DatePicker( props:any ) {
   );
 }
 
-function mapStateToProps( state ) {
-  return {
-    params: state.params
-  };
-}
-
-function mapDispatchToProps( dispatch ) {
-  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( DatePicker ) );
+export default withStyles( styles )( DatePicker );

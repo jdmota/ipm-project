@@ -1,8 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
-import { setParamsFilters } from "../../actions/setParams";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -34,7 +31,7 @@ const styles = theme => ( {
 } );
 
 function PriceRange( props: any ) {
-  const { classes, params, setParamsFilters } = props;
+  const { classes, min, max, onMinChange, onMaxChange } = props;
 
   return (
     <div className={classes.container}>
@@ -48,8 +45,8 @@ function PriceRange( props: any ) {
         <Input
           id="min-price"
           type="number"
-          value={params.minPrice}
-          onChange={event => setParamsFilters( { minPrice: event.target.value } )}
+          value={min}
+          onChange={event => onMinChange( event.target.value )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
       </FormControl>
@@ -63,8 +60,8 @@ function PriceRange( props: any ) {
         <Input
           id="max-price"
           type="number"
-          value={params.maxPrice}
-          onChange={event => setParamsFilters( { maxPrice: event.target.value } )}
+          value={max}
+          onChange={event => onMaxChange( event.target.value )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
       </FormControl>
@@ -72,14 +69,4 @@ function PriceRange( props: any ) {
   );
 }
 
-function mapStateToProps( state ) {
-  return {
-    params: state.params
-  };
-}
-
-function mapDispatchToProps( dispatch ) {
-  return bindActionCreators( { setParamsFilters: setParamsFilters }, dispatch );
-}
-
-export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( PriceRange ) );
+export default withStyles( styles )( PriceRange );

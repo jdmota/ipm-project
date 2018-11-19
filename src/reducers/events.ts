@@ -7,7 +7,9 @@ const events: Event[] = [
     title: "NOS Alive",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     date: new Date(),
-    images: [],
+    images: [
+      "/images/NOS/nos_alive_4.jpg"
+    ],
     type: "Festival",
     location: "Alges",
     priceUnit: 50,
