@@ -173,7 +173,7 @@ class SignUpPage extends React.Component<any, any> {
           <CardContent >
             <div style={{ float: "left" }}>
               <div className={classes.controls}>
-                <EmailTextField></EmailTextField>
+                <EmailTextField ></EmailTextField>
               </div>
               <div className={classes.controls}>
                 <UsernameTextField></UsernameTextField>
@@ -209,7 +209,7 @@ class SignUpPage extends React.Component<any, any> {
             <div style={{ marginTop: 320 }}>
               <CardActions>
                 <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="medium" color="primary">
+                  <Button variant="contained" size="medium" color="primary" onClick = { () => { console.log( "Click!" ); }}>
                     Register
                   </Button>
                 </div>
