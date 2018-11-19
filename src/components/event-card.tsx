@@ -6,7 +6,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 const styles = theme => ( {
   root: {
     display: "block",
-    // width: 300,
+    maxWidth: 500,
     height: 120,
     marginTop: 15,
     marginBottom: 0,
