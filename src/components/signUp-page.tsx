@@ -140,6 +140,27 @@ const styles = theme => ( {
     minWidth: 100,
     width: 230
     // top: "600"
+  },
+  font: {
+    fontFamily: "Verdana, Geneva, sans-serif",
+  },
+  fontGreen: {
+    fontFamily: "Verdana, Geneva, sans-serif",
+    color: "#7DB901"
+  },
+  fontDarkBlue: {
+    fontFamily: "Verdana, Geneva, sans-serif",
+    color: "#426BBA"
+  },
+  fontLightBlue: {
+    fontFamily: "Verdana, Geneva, sans-serif",
+    color: "#5CB9CB"
+  },
+  containerInfoCard: {
+    display: "flex"
+  },
+  info: {
+    textAlign: "center"
   }
 } );
 
@@ -223,35 +244,55 @@ class SignUpPage extends React.Component<any, any> {
           <CardContent>
             <div style={{ width: 100 }}>
               <div style={{ marginBottom: 30 }}>
-                <div style={{ float: "left" }}>
+                {/* <div style={{ float: "left" }}>
                   <FastIcon style={{ fontSize: 50 }} ></FastIcon>
-                </div>
-                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
-                  <Typography variant="h4" color="inherit" >
-                  Fast
-                  </Typography>
-                </div>
-              </div>
-
-              <div style={{ marginBottom: 30 }}>
-                <div style={{ float: "left" }}>
-                  <EuroIcon style={{ fontSize: 50 }} ></EuroIcon>
-                </div>
-                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
-                  <Typography variant="h4" color="inherit" >
-                  Cheap
-                  </Typography>
+                </div>*/}
+                <div style={{ paddingTop: 6 }}>
+                  <div style={{ float: "left" }}>
+                    <FastIcon style={{ fontSize: 50 }} ></FastIcon>
+                  </div>
+                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                    <Typography className={`${classes.info} ${classes.fontGreen}`} variant="h4" color="inherit" >
+                    F
+                    </Typography>
+                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                    ast
+                    </Typography>
+                  </div>
                 </div>
               </div>
 
               <div style={{ marginBottom: 30 }}>
-                <div style={{ float: "left" }}>
-                  <TicketIcon style={{ fontSize: 50 }} ></TicketIcon>
+
+                <div style={{ paddingTop: 6 }}>
+                  <div style={{ float: "left" }}>
+                    <EuroIcon style={{ fontSize: 50 }} ></EuroIcon>
+                  </div>
+                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                    <Typography className={`${classes.info} ${classes.fontDarkBlue}`} variant="h4" color="inherit" >
+                    C
+                    </Typography>
+                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                    heap
+                    </Typography>
+                  </div>
                 </div>
-                <div style={{ paddingTop: 6, paddingLeft: 60 }}>
-                  <Typography variant="h4" color="inherit" >
-                  Tickets
-                  </Typography>
+              </div>
+
+              <div style={{ marginBottom: 30 }}>
+
+                <div style={{ paddingTop: 6 }}>
+                  <div style={{ float: "left" }}>
+                    <TicketIcon style={{ fontSize: 50 }} ></TicketIcon>
+                  </div>
+                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                    <Typography className={`${classes.info} ${classes.fontLightBlue}`} variant="h4" color="inherit" >
+                  T
+                    </Typography>
+                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                  ickets
+                    </Typography>
+                  </div>
                 </div>
               </div>
             </div>
