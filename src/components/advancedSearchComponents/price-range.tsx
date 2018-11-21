@@ -45,6 +45,7 @@ function PriceRange( props: any ) {
         <Input
           id="min-price"
           type="number"
+          inputProps={{ min: 0 }}
           value={min}
           onChange={event => onMinChange( event.target.value )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
@@ -60,6 +61,7 @@ function PriceRange( props: any ) {
         <Input
           id="max-price"
           type="number"
+          inputProps={{ min: 0 }}
           value={max}
           onChange={event => onMaxChange( event.target.value )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}

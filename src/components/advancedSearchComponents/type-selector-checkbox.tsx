@@ -49,7 +49,7 @@ function TypeSelector( props: any ) {
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel htmlFor="select-multiple-checkbox">Type</InputLabel>
       <Select
-        multiple={true}
+        multiple
         value={value}
         onChange={event => onChange( event.target.value )}
         input={<Input id="select-multiple-checkbox" />}
@@ -58,7 +58,7 @@ function TypeSelector( props: any ) {
       >
         {names.map( name => (
           <MenuItem key={name} value={name}>
-            <Checkbox checked={value.indexOf( name ) > -1} />
+            <Checkbox checked={value.indexOf( name ) > -1} color="primary" />
             <ListItemText primary={name} />
           </MenuItem>
         ) )}

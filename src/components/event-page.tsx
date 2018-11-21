@@ -1,12 +1,13 @@
 import React from "react";
-import { Event } from "src/data/types";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Paper from "@material-ui/core/Paper";
-import Slider from "./slider";
 import TextField from "@material-ui/core/TextField";
+import { Event } from "../data/types";
+import { navigate } from "../helpers/router";
+import Slider from "./slider";
 
 const styles = theme => ( {
   title: {
@@ -105,8 +106,12 @@ const styles = theme => ( {
 
 function EventPage( props: { classes: any, event: Event } ) {
 
-  const { title, description: eventDescription, date, location, type, comments, priceUnit } = props.event;
+  const { url, title, description: eventDescription, date, location, type, comments, priceUnit } = props.event;
   const { classes } = props;
+
+  function buy() {
+    navigate( `/buy/${url}`.replace( /\/+/g, "/" ) );
+  }
 
   return <div>
 
@@ -118,7 +123,7 @@ function EventPage( props: { classes: any, event: Event } ) {
       <div className={classes.descriptionContiner}>
         <Typography variant="h4" color="inherit">
           <b>{title}</b>
-          <Button className={classes.buttonPurchase} variant="contained">
+          <Button className={classes.buttonPurchase} variant="contained" onClick={buy}>
             {priceUnit}€
             <AddShoppingCartIcon className={classes.rightIcon}/>
           </Button>

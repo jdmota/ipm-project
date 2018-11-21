@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import UsernameTextField from "./logInPageComponents/username-text-field";
 import PasswordTextField from "./logInPageComponents/password-text-field";
-import CloseIcon from "@material-ui/icons/Close";
+import CloseIcon from "@material-ui/icons/Lens";
 import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ( {
