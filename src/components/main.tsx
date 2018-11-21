@@ -57,7 +57,7 @@ class Main extends React.Component<MainProps, MainState> {
     let component;
     switch ( pathname ) {
       case "/":
-        component = <PaymentPage />;
+        component = <HomePage />;
         break;
       case "/search":
         component = <EventList />;
@@ -69,9 +69,12 @@ class Main extends React.Component<MainProps, MainState> {
         component = <SignUpPage />;
         break;
       default: {
-        const event = getEventByUrl( pathname );
+        const eventUrl = pathname.replace( /^\/buy/, "" );
+        const isBuy = eventUrl !== pathname;
+
+        const event = getEventByUrl( eventUrl );
         if ( event ) {
-          component = <EventPage event={event} />;
+          component = isBuy ? <PaymentPage event={event} /> : <EventPage event={event} />;
         } else {
           component = <p>Not found.</p>;
         }
