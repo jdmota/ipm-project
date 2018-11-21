@@ -57,7 +57,7 @@ class Main extends React.Component<MainProps, MainState> {
     let component;
     switch ( pathname ) {
       case "/":
-        component = <HomePage />;
+        component = <PaymentPage />;
         break;
       case "/search":
         component = <EventList />;
