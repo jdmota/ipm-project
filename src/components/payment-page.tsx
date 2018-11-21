@@ -67,6 +67,32 @@ const checkedIcon = <div style={{ color: "#43A047" }}>
   <FilledSeatIcon />
 </div>;
 
+const columns = (
+  <div key="ui-columns" style={{ marginLeft: "30%" }}>
+    <Typography color="inherit">
+      <b style={{ marginRight: 26 }}>1</b>
+      <b style={{ marginRight: 26 }}>2</b>
+      <b style={{ marginRight: 26 }}>3</b>
+      <b style={{ marginRight: 26 }}>4</b>
+      <b style={{ marginRight: 26 }}>5</b>
+      <b style={{ marginRight: 26 }}>6</b>
+      <b style={{ marginRight: 26 }}>7</b>
+    </Typography>
+  </div>
+);
+
+const rows = (
+  <div key="ui-rows" style={{ float: "left", marginLeft: "15%", marginTop: 18 }}>
+    <Typography color="inherit">
+      <b style={{ marginBottom: 28, display: "block" }}>E</b>
+      <b style={{ marginBottom: 28, display: "block" }}>D</b>
+      <b style={{ marginBottom: 28, display: "block" }}>C</b>
+      <b style={{ marginBottom: 28, display: "block" }}>B</b>
+      <b style={{ marginBottom: 28, display: "block" }}>A</b>
+    </Typography>
+  </div>
+);
+
 class PaymentPage extends React.Component<any, any> {
   state = {
     selectedDate: new Date(),
@@ -93,7 +119,7 @@ class PaymentPage extends React.Component<any, any> {
 
     for ( const [ row, columns ] of places ) {
       checkboxes.push(
-        <div style={{ paddingLeft: 19 }}>
+        <div key={`row-${row}`} style={{ paddingLeft: 19 }}>
           {columns.map( column => (
             <Tooltip
               key={`${row}.${column}`}
@@ -207,39 +233,10 @@ class PaymentPage extends React.Component<any, any> {
               </Typography>
             </div>
 
-            <div style={{ marginLeft: "30%" }}>
-              <Typography color="inherit">
-                <b style={{ marginRight: 26 }}>1</b>
-                <b style={{ marginRight: 26 }}>2</b>
-                <b style={{ marginRight: 26 }}>3</b>
-                <b style={{ marginRight: 26 }}>4</b>
-                <b style={{ marginRight: 26 }}>5</b>
-                <b style={{ marginRight: 26 }}>6</b>
-                <b style={{ marginRight: 26 }}>7</b>
-              </Typography>
-            </div>
+            {rows}
+            {columns}
 
-            <div style={{ float: "left", marginLeft: "15%", marginTop: 18 }}>
-              <Typography color="inherit">
-                <div style={{ marginBottom: 28 }}>
-                  <b>E</b>
-                </div>
-                <div style={{ marginBottom: 28 }}>
-                  <b>D</b>
-                </div>
-                <div style={{ marginBottom: 28 }}>
-                  <b>C</b>
-                </div>
-                <div style={{ marginBottom: 28 }}>
-                  <b>B</b>
-                </div>
-                <div>
-                  <b>A</b>
-                </div>
-              </Typography>
-            </div>
-
-            <div
+            <div key="ui-checkboxes"
               style={{
                 height: "100%",
                 minWidth: 263,
