@@ -1,6 +1,20 @@
 import { User } from "../data/types";
 
-const users: User[] = [];
+const users: User[] = [ {
+  id: "1",
+  mail: "smithRules@gmail.com",
+  nickname: "bestCostumerOnFCTicket",
+  password: "1234SmithInTheHouse!",
+  firstName: "",
+  lastName: "Smith",
+  creditCardNumber: "",
+  dateCreditCard: new Date(),
+  cvc: "",
+  ticketList: [ {
+    id: "",
+    eventId: "",
+  } ],
+} ];
 
 export default function( state = users, action ) {
   switch ( action.type ) {
