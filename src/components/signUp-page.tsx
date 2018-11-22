@@ -168,6 +168,13 @@ class SignUpPage extends React.Component<any, any> {
 
   state = {
     visible: false,
+    email: "",
+    username: "",
+    password: "",
+    name: "",
+    creditcard: "",
+    expirationdate: new Date(),
+    ccv: "",
   };
 
   handleCloseWrongPassword = () => {
@@ -194,16 +201,16 @@ class SignUpPage extends React.Component<any, any> {
           <CardContent >
             <div style={{ float: "left" }}>
               <div className={classes.controls}>
-                <EmailTextField ></EmailTextField>
+                <EmailTextField onChange={ () => console.log( "E-Mail" ) }/>
               </div>
               <div className={classes.controls}>
-                <UsernameTextField></UsernameTextField>
+                <UsernameTextField onChange={ () => console.log( "UserName" ) }/>
               </div>
               <div className={classes.controls}>
-                <PasswordTextField></PasswordTextField>
+                <PasswordTextField onChange={ () => console.log( "Password" ) }/>
               </div>
               <div className={classes.controls}>
-                <ConfirmPasswordTextField></ConfirmPasswordTextField>
+                <ConfirmPasswordTextField onChange={ () => console.log( "Confirm Password" ) }/>
               </div>
               <div style={{ paddingLeft: 15, }}>
                 <Typography color="inherit" variant = "caption">
@@ -214,17 +221,17 @@ class SignUpPage extends React.Component<any, any> {
             </div>
             <div style={{ float: "right" }}>
               <div className={classes.controls}>
-                <FullNameTextField></FullNameTextField>
+                <FullNameTextField onChange={ () => console.log( "Full Name" ) }/>
               </div>
               <div className={classes.controls}>
-                <CardNumberTextField></CardNumberTextField>
+                <CardNumberTextField onChange={ () => console.log( "CardNumber" ) }/>
               </div>
               <div className={classes.controls}>
-                <ExpirationDateTextField></ExpirationDateTextField>
+                <ExpirationDateTextField onChange={ () => console.log( "expdate" ) }/>
               </div>
 
               <div className={classes.controls}>
-                <CCVTextField></CCVTextField>
+                <CCVTextField onChange={ () => console.log( "ccv" ) }/>
               </div>
             </div>
             <div style={{ marginTop: 320 }}>
@@ -303,5 +310,6 @@ class SignUpPage extends React.Component<any, any> {
     </div>;
   }
 }
+
 
 export default withStyles( styles )( SignUpPage );

@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -131,7 +132,22 @@ class SignInPage extends React.Component {
 
   state = {
     visible: false,
+    username: "",
+    password: "",
   };
+
+  login = () => {
+    // console.log( "A" );
+    let user = this.props.users.find( user => user.nickname === this.state.username );
+    if ( !user || user.password !== this.state.password ) {
+      this.handleOpenWrongPassowrd();
+    } else {
+      console.log( "User:" + user.nickname + " Password: " + user.password + " | return " + ( user.password === this.state.password ) );
+      // Faz login
+    }
+
+    return user.password === this.state.password;
+  }
 
   handleCloseWrongPassword = () => {
     this.setState( { visible: false } );
@@ -178,10 +194,10 @@ class SignInPage extends React.Component {
         <Card >
           <CardContent >
             <div className={classes.controls}>
-              <UsernameTextField></UsernameTextField>
+              <UsernameTextField onInputChange={ username => this.setState( { username } ) } />
             </div>
             <div className={classes.controls}>
-              <PasswordTextField></PasswordTextField>
+              <PasswordTextField onInputChange={ password => this.setState( { password } ) } />
             </div>
             <div className={classes.linkDiv}>
               <div className={classes.linkDiv2}>
@@ -193,7 +209,7 @@ class SignInPage extends React.Component {
             <div>
               <CardActions>
                 <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="small" color="primary">
+                  <Button variant="contained" size="small" color="primary" onClick={() => this.login()}>
                     Sign In
                   </Button>
                 </div>
@@ -220,4 +236,10 @@ class SignInPage extends React.Component {
   }
 }
 
-export default withStyles( styles )( SignInPage );
+function mapStateToProps( state ) {
+  return {
+    users: state.users
+  };
+}
+
+export default connect( mapStateToProps )( withStyles( styles )( SignInPage ) );

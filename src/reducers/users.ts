@@ -5,7 +5,7 @@ const users: User[] = [ {
   mail: "smithRules@gmail.com",
   nickname: "bestCostumerOnFCTicket",
   password: "1234SmithInTheHouse!",
-  firstName: "",
+  firstName: "Stan",
   lastName: "Smith",
   creditCardNumber: "",
   dateCreditCard: new Date(),
