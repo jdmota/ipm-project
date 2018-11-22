@@ -38,6 +38,7 @@ class PasswordTextField extends React.Component<any, any> {
 
   handleChange = prop => event => {
     this.setState( { [ prop ]: event.target.value } );
+    this.props.onChange( event.target.value );
   };
 
   handleClickShowPassword = () => {

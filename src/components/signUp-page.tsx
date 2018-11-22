@@ -171,17 +171,25 @@ class SignUpPage extends React.Component<any, any> {
     email: "",
     username: "",
     password: "",
+    confirmedpass: "",
     name: "",
     creditcard: "",
     expirationdate: new Date(),
     ccv: "",
   };
 
+  signUp() {
+    if ( this.state.password === "" ) {
+      this.handleOpenWrongPassword();
+      console.log( "Error" );
+    }
+  }
+
   handleCloseWrongPassword = () => {
     this.setState( { visible: false } );
   }
 
-  handleOpenWrongPassowrd = () => {
+  handleOpenWrongPassword = () => {
     this.setState( { visible: true } );
   }
   render() {
@@ -201,16 +209,16 @@ class SignUpPage extends React.Component<any, any> {
           <CardContent >
             <div style={{ float: "left" }}>
               <div className={classes.controls}>
-                <EmailTextField onChange={ () => console.log( "E-Mail" ) }/>
+                <EmailTextField onChange={ Email => this.setState( { email: Email } ) }/>
               </div>
               <div className={classes.controls}>
-                <UsernameTextField onChange={ () => console.log( "UserName" ) }/>
+                <UsernameTextField onChange={ Username => this.setState( { username: Username } ) }/>
               </div>
               <div className={classes.controls}>
-                <PasswordTextField onChange={ () => console.log( "Password" ) }/>
+                <PasswordTextField onChange={ Pass => this.setState( { password: Pass } ) }/>
               </div>
               <div className={classes.controls}>
-                <ConfirmPasswordTextField onChange={ () => console.log( "Confirm Password" ) }/>
+                <ConfirmPasswordTextField onChange={ ConfirmedPass => this.setState( { confirmedpass: ConfirmedPass } ) }/>
               </div>
               <div style={{ paddingLeft: 15, }}>
                 <Typography color="inherit" variant = "caption">
@@ -237,7 +245,7 @@ class SignUpPage extends React.Component<any, any> {
             <div style={{ marginTop: 320 }}>
               <CardActions>
                 <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="medium" color="primary" onClick = { () => { console.log( "Click!" ); }}>
+                  <Button variant="contained" size="medium" color="primary" onClick = { () => this.signUp()}>
                     Register
                   </Button>
                 </div>
