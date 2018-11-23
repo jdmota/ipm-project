@@ -17,7 +17,7 @@ export type User = {
 };
 
 export type EventComment = {
-  author: User,
+  author: string,
   text: string,
   data: Date,
 };

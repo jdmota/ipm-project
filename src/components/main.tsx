@@ -96,7 +96,7 @@ class Main extends React.Component<MainProps, MainState> {
 
         const event = getEventByUrl( eventUrl );
         if ( event ) {
-          component = isBuy ? <PageOrLogin><PaymentPage event={event} /></PageOrLogin> : <EventPage event={event} />;
+          component = isBuy ? <PageOrLogin><PaymentPage event={event} /></PageOrLogin> : <EventPage eventUrl={eventUrl} />;
         } else {
           component = <p>Not found.</p>;
         }
