@@ -6,13 +6,10 @@ const userList: User[] = [ {
   username: "bestCostumerOnFCTicket",
   password: "1234SmithInTheHouse!",
   fullName: "Stan Smith",
-  creditCardNumber: "",
+  creditCardNumber: 123,
   dateCreditCard: new Date(),
-  cvc: "",
-  ticketList: [ {
-    id: "",
-    eventId: "",
-  } ],
+  cvv: 123,
+  ticketList: [],
 } ];
 
 const initialState = {
@@ -40,6 +37,27 @@ export default function( state = initialState, action ) {
         ...state,
         loggedInUser: null
       };
+    case "BUY": {
+      let loggedInUser;
+      const userList = state.userList.map( user => {
+        if ( user === state.loggedInUser ) {
+          loggedInUser = {
+            // @ts-ignore
+            ...user,
+            ticketList: [
+              ...user.ticketList,
+              ...action.payload
+            ]
+          };
+          return loggedInUser;
+        }
+        return user;
+      } );
+      return {
+        userList,
+        loggedInUser
+      };
+    }
     default:
       return state;
   }

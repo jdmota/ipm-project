@@ -17,3 +17,10 @@ export function logoutUser() {
     type: "LOGOUT_USER"
   };
 }
+
+export function buy( tickets ) {
+  return {
+    type: "BUY",
+    payload: tickets
+  };
+}

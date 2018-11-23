@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
@@ -9,7 +11,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { InlineDatePicker } from "material-ui-pickers";
 import EmptySeatIcon from "../icons/emptySeat";
 import FilledSeatIcon from "../icons/filledSeat";
@@ -17,6 +18,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Tooltip from "@material-ui/core/Tooltip";
+import { buy } from "../actions/userActions";
+import { navigate } from "../helpers/router";
 
 const styles = theme => ( {
   title: {
@@ -82,7 +85,7 @@ const columns = (
 );
 
 const rows = (
-  <div key="ui-rows" style={{ float: "left", marginLeft: "15%", marginTop: 18 }}>
+  <div key="ui-rows" style={{ float: "left", marginLeft: "15%", marginTop: 35 }}>
     <Typography color="inherit">
       <b style={{ marginBottom: 28, display: "block" }}>E</b>
       <b style={{ marginBottom: 28, display: "block" }}>D</b>
@@ -94,17 +97,78 @@ const rows = (
 );
 
 class PaymentPage extends React.Component<any, any> {
-  state = {
-    selectedDate: new Date(),
-    openDialog: false
+
+  constructor( props ) {
+    super( props );
+    const loggedInUser = this.props.users.loggedInUser || {};
+    this.state = {
+      numberOfTickets: 0,
+      selectedDate: new Date(),
+      seats: {},
+      fullName: loggedInUser.fullName,
+      email: loggedInUser.email,
+      creditCardNumber: loggedInUser.creditCardNumber,
+      dateCreditCard: loggedInUser.dateCreditCard,
+      cvv: loggedInUser.cvv,
+      errorMsg: "",
+      openDialog: false
+    };
+  }
+
+  toggleSeat( place ) {
+    this.setState( state => {
+      if ( state.seats[ place ] ) {
+        return {
+          numberOfTickets: state.numberOfTickets - 1,
+          seats: {
+            ...state.seats,
+            [ place ]: false
+          }
+        };
+      }
+      return {
+        numberOfTickets: state.numberOfTickets + 1,
+        seats: {
+          ...state.seats,
+          [ place ]: true
+        }
+      };
+    } );
+  }
+
+  buy = () => {
+    const { numberOfTickets, email, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
+    if ( !numberOfTickets ) {
+      this.setState( { errorMsg: "Select the seats you want." } );
+      return;
+    }
+    if ( !email || !fullName || !creditCardNumber || !dateCreditCard || !cvv ) {
+      this.setState( { errorMsg: "Please fill the required fields." } );
+      return;
+    }
+    if ( !/@/.test( email ) ) {
+      this.setState( { errorMsg: "Please provide a valid email address." } );
+      return;
+    }
+    this.setState( { errorMsg: "", openDialog: true } );
   };
 
-  handleDateChange = date => {
-    this.setState( { selectedDate: date } );
+  cancelBuy = () => {
+    this.handleClose();
   };
 
-  handleClickOpen = () => {
-    this.setState( { openDialog: true } );
+  confirmBuy = () => {
+    const tickets: any[] = [];
+    const seats: any[] = Object.keys( this.state.seats ).filter( seat => this.state.seats[ seat ] );
+    for ( let i = 0; i < this.state.numberOfTickets; i++ ) {
+      tickets.push( {
+        eventId: this.props.event.id,
+        date: this.state.selectedDate,
+        seat: seats[ i ]
+      } );
+    }
+    this.props.buy( tickets );
+    navigate( this.props.event.url );
   };
 
   handleClose = () => {
@@ -113,8 +177,6 @@ class PaymentPage extends React.Component<any, any> {
 
   render() {
     const { classes, event } = this.props;
-    const { selectedDate } = this.state;
-
     const checkboxes: any[] = [];
 
     for ( const [ row, columns ] of places ) {
@@ -123,7 +185,7 @@ class PaymentPage extends React.Component<any, any> {
           {columns.map( column => (
             <Tooltip
               key={`${row}.${column}`}
-              title="50.00 €"
+              title={`${event.priceUnit}`}
               classes={{ tooltipPlacementBottom: classes.tooltipPlacementBottom }}
             >
               <FormControlLabel
@@ -132,7 +194,7 @@ class PaymentPage extends React.Component<any, any> {
                   <Checkbox
                     icon={icon}
                     checkedIcon={checkedIcon}
-                    value="checkedH"
+                    onChange={() => this.toggleSeat( `${row}.${column}` )}
                   />
                 }
                 label=""
@@ -156,59 +218,64 @@ class PaymentPage extends React.Component<any, any> {
             <Card>
               <CardContent>
                 <div className={classes.margin}>
-                  <div style={{ float: "left", width: 130 }}>
-                    <FormControl>
-                      <InputLabel htmlFor="number-ticket">Number of tickets</InputLabel>
-                      <Input
-                        defaultValue={0}
-                        inputProps={{ min: 0 }}
-                        required
-                        type="number"
-                        id="number-ticket"
-                      />
-                    </FormControl>
-                  </div>
-
-                  <div style={{ float: "right", width: 140, marginRight: 20 }}>
+                  <FormControl className={classes.formControl}>
                     <InlineDatePicker
                       keyboard
                       label="Date to Attend"
-                      value={selectedDate}
-                      onChange={this.handleDateChange}
+                      value={this.state.selectedDate}
+                      onChange={date => this.setState( { selectedDate: date } )}
                       format="dd/MM/yyyy"
                       mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
                     />
-                  </div>
+                  </FormControl>
                 </div>
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" required />
+                    <InputLabel htmlFor="fullname">Full name *</InputLabel>
+                    <Input
+                      id="fullname"
+                      required
+                      value={this.state.fullName || ""}
+                      onChange={e => this.setState( { fullName: e.target.value } )}
+                    />
                   </FormControl>
                 </div>
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="email">Email *</InputLabel>
-                    <Input id="email" required />
+                    <Input
+                      id="email"
+                      required
+                      value={this.state.email || ""}
+                      onChange={e => this.setState( { email: e.target.value } )}
+                    />
                   </FormControl>
                 </div>
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="credit-card">Credit Card *</InputLabel>
-                    <Input type="number" required id="credit-card" />
+                    <Input
+                      id="credit-card"
+                      type="number"
+                      required
+                      value={this.state.creditCardNumber || ""}
+                      onChange={e => this.setState( { creditCardNumber: parseInt( e.target.value, 10 ) || undefined } )}
+                    />
                   </FormControl>
                 </div>
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="expiration-date">Expiration Date *</InputLabel>
-                    <Input
-                      required
-                      id="expiration-date"
-                      endAdornment={<InputAdornment position="end">mm/yy</InputAdornment>}
+                    <InlineDatePicker
+                      keyboard
+                      clearable
+                      label="Expiration Date (MM/yyyy) *"
+                      value={this.state.dateCreditCard || null}
+                      onChange={dateCreditCard => this.setState( { dateCreditCard } )}
+                      format="MM/yyyy"
                     />
                   </FormControl>
                 </div>
@@ -216,11 +283,20 @@ class PaymentPage extends React.Component<any, any> {
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="cvv">CVV *</InputLabel>
-                    <Input type="number" required id="cvv" />
+                    <Input
+                      id="cvv"
+                      type="number"
+                      required
+                      value={this.state.cvv || ""}
+                      onChange={e => this.setState( { cvv: parseInt( e.target.value, 10 ) || undefined } )}
+                    />
                   </FormControl>
                 </div>
-                <div style={{ paddingLeft: 15 }}>
+                <div style={{ padding: 8 }}>
                   <Typography color="inherit" variant="caption">* Required Fields</Typography>
+                </div>
+                <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
+                  <Typography color="error">{this.state.errorMsg}</Typography>
                 </div>
               </CardContent>
             </Card>
@@ -270,11 +346,11 @@ class PaymentPage extends React.Component<any, any> {
             <div style={{ marginLeft: "25%", marginTop: 15 }}>
               <Typography variant="h6" color="primary" paragraph={false}>
                 <span><b>Total Price: </b></span>
-                <span><b>00.00 </b></span>
+                <span><b>${this.props.event.priceUnit * this.state.numberOfTickets} </b></span>
                 <span><b>€</b></span>
               </Typography>
               <div style={{ marginTop: 20 }}>
-                <Button variant="contained" size="large" color="primary" onClick={this.handleClickOpen}>Buy!</Button>
+                <Button variant="contained" size="large" color="primary" onClick={this.buy}>Buy!</Button>
               </div>
             </div>
           </div>
@@ -291,10 +367,10 @@ class PaymentPage extends React.Component<any, any> {
               {"Are you sure you want to confirm this purchase?"}
             </DialogTitle>
             <DialogActions style={{ display: "initial", margin: "auto" }}>
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.cancelBuy} color="primary">
                 No
               </Button>
-              <Button onClick={this.handleClose} color="primary" autoFocus>
+              <Button onClick={this.confirmBuy} color="primary" autoFocus>
                 Yes
               </Button>
             </DialogActions>
@@ -305,4 +381,12 @@ class PaymentPage extends React.Component<any, any> {
   }
 }
 
-export default withStyles( styles )( PaymentPage );
+function mapStateToProps( state ) {
+  return { users: state.users };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { buy: buy }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( PaymentPage ) );

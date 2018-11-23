@@ -29,25 +29,26 @@ const styles = theme => ( {
   }
 } );
 
-function CCVField( props: any ) {
+function CVVField( props: any ) {
   const { classes, onChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="signup-ccv"
+        htmlFor="signup-cvv"
         classes={{
           focused: classes.cssFocused,
         }}
       >
-        CCV
+        CVV
       </InputLabel>
       <Input
-        id="signup-ccv"
-        onChange={event => onChange( event.target.value )}
+        id="signup-cvv"
+        type="number"
+        onChange={event => onChange( parseInt( event.target.value, 10 ) || undefined )}
       />
     </FormControl>
   );
 }
 
-export default withStyles( styles )( CCVField );
+export default withStyles( styles )( CVVField );

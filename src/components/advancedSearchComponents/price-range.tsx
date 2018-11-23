@@ -47,7 +47,7 @@ function PriceRange( props: any ) {
           type="number"
           inputProps={{ min: 0 }}
           value={min}
-          onChange={event => onMinChange( event.target.value )}
+          onChange={event => onMinChange( parseInt( event.target.value, 10 ) || 0 )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
       </FormControl>
@@ -63,7 +63,7 @@ function PriceRange( props: any ) {
           type="number"
           inputProps={{ min: 0 }}
           value={max}
-          onChange={event => onMaxChange( event.target.value )}
+          onChange={event => onMaxChange( parseInt( event.target.value, 10 ) || 0 )}
           endAdornment={<InputAdornment position="end">€</InputAdornment>}
         />
       </FormControl>

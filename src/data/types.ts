@@ -1,6 +1,7 @@
 export type Ticket = {
-  id: String,
-  eventId: string,
+  eventId: String,
+  date: Number,
+  seat: string
 };
 
 export type User = {
@@ -8,10 +9,10 @@ export type User = {
   email: string,
   username: string,
   password: string,
-  fullName: string|null,
-  creditCardNumber: string|null,
+  fullName: string|undefined,
+  creditCardNumber: number|undefined,
   dateCreditCard: Date|null,
-  cvc: string|null,
+  cvv: number|undefined,
   ticketList: Ticket[]
 };
 

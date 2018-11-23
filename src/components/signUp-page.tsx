@@ -17,7 +17,7 @@ import ConfirmPasswordTextField from "./signUpComponents/confirmPassword-text-fi
 import FullNameTextField from "./signUpComponents/fullName-text-field";
 import CardNumberTextField from "./signUpComponents/cardNumber-text-field";
 import ExpirationDateTextField from "./signUpComponents/expirationDate-text-field";
-import CCVTextField from "./signUpComponents/ccv-text-field";
+import CVVTextField from "./signUpComponents/cvv-text-field";
 import { addUser } from "../actions/userActions";
 import { navigateBack } from "../helpers/router";
 
@@ -171,14 +171,14 @@ class SignUpPage extends React.Component<any, any> {
     username: "",
     password: "",
     confirmedPass: "",
-    fullName: null,
-    creditCardNumber: null,
+    fullName: undefined,
+    creditCardNumber: undefined,
     dateCreditCard: null,
-    ccv: null,
+    cvv: undefined,
   };
 
   signUp() {
-    const { email, username, password, confirmedPass, fullName, creditCardNumber, dateCreditCard, ccv } = this.state;
+    const { email, username, password, confirmedPass, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
     if ( !email || !username || !password || !confirmedPass ) {
       this.setState( { errorMsg: "Please fill the required fields." } );
       return;
@@ -191,8 +191,8 @@ class SignUpPage extends React.Component<any, any> {
       this.setState( { errorMsg: "Your password is not very strong." } );
       return;
     }
-    if ( creditCardNumber || dateCreditCard || ccv ) {
-      if ( !creditCardNumber || !dateCreditCard || !ccv ) {
+    if ( creditCardNumber || dateCreditCard || cvv ) {
+      if ( !creditCardNumber || !dateCreditCard || !cvv ) {
         this.setState( { errorMsg: "To prefill your credit card information, you have to fill all 3 related camps." } );
         return;
       }
@@ -213,7 +213,7 @@ class SignUpPage extends React.Component<any, any> {
       fullName,
       creditCardNumber,
       dateCreditCard,
-      ccv
+      cvv
     } );
     navigateBack();
   }
@@ -263,7 +263,7 @@ class SignUpPage extends React.Component<any, any> {
                   </div>
 
                   <div className={classes.controls}>
-                    <CCVTextField onChange={ccv => this.setState( { ccv } )}/>
+                    <CVVTextField onChange={cvv => this.setState( { cvv } )}/>
                   </div>
                 </div>
               </div>
