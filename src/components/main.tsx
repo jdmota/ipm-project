@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { installRouter } from "../helpers/router";
+import { getPathname, installRouter } from "../helpers/router";
 import { getEventByUrl } from "../helpers/search";
 import CategoryBar from "./home-page/category-bar";
 
@@ -44,15 +44,13 @@ const styles = {
 class Main extends React.Component<MainProps, MainState> {
 
   state = {
-    pathname: location.pathname,
-    search: location.search
+    pathname: getPathname()
   };
 
   componentDidMount() {
-    installRouter( location => {
+    installRouter( pathname => {
       this.setState( {
-        pathname: location.pathname,
-        search: location.search
+        pathname
       } );
     } );
   }

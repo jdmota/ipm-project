@@ -1,25 +1,35 @@
 // From https://github.com/Polymer/pwa-helpers/blob/master/src/router.ts
 
-type Cb = ( location: Location, event: Event | null ) => void;
+type Cb = ( string, event: Event | null ) => void;
 
 let callback: Cb | void;
 let previousPage = "";
 
-function historyPush( href: string ) {
-  const pathname = location.pathname.replace( /\/+$/, "" ) || "/";
-  if ( ![ "/sign-in", "/sign-up" ].some( p => pathname.startsWith( p ) ) ) {
-    previousPage = location.href;
-  }
-  window.history.pushState( {}, "", href );
-  console.log( "Navigating to:", href, "Previous page:", previousPage );
+export function getPathname() {
+  return location.pathname.replace( /^\/ipm-project/, "" ).replace( /\/+$/, "" ) || "/";
 }
 
-export function navigate( href: string ) {
-  if ( href !== location.href ) {
-    historyPush( href );
-    if ( callback ) {
-      callback( location, null );
-    }
+function historyPush( wanted: string ) {
+  const wantedPath = location.origin === "https://jdmota.github.io" ? `/ipm-project${wanted}` : wanted;
+
+  if ( wantedPath === location.pathname ) {
+    return false;
+  }
+
+  const currPath = getPathname();
+  if ( ![ "/sign-in", "/sign-up" ].some( p => currPath.startsWith( p ) ) ) {
+    previousPage = currPath;
+  }
+
+  window.history.pushState( {}, "", wantedPath );
+  console.log( "Navigating to:", wantedPath, "Previous page:", previousPage );
+
+  return true;
+}
+
+export function navigate( pathname: string ) {
+  if ( historyPush( pathname ) && callback ) {
+    callback( getPathname(), null );
   }
 }
 
@@ -32,7 +42,7 @@ export function navigateBack() {
 }
 
 export function navigateLogout() {
-  const pathname = location.pathname.replace( /\/+$/, "" ) || "/";
+  const pathname = getPathname();
   if ( [ "/buy", "/ticket-exchange" ].some( p => pathname.startsWith( p ) ) ) {
     navigate( "/" );
   }
@@ -41,8 +51,8 @@ export function navigateLogout() {
 // Expose navigate function
 window.navigate = navigate;
 
-export function installRouter( locationUpdatedCallback: Cb ) {
-  callback = locationUpdatedCallback;
+export function installRouter( cb: Cb ) {
+  callback = cb;
 
   document.body.addEventListener( "click", e => {
     if ( e.defaultPrevented || e.button !== 0 ||
@@ -57,18 +67,12 @@ export function installRouter( locationUpdatedCallback: Cb ) {
 
     const href = anchor.href;
     if ( !href || href.indexOf( "mailto:" ) !== -1 ) return;
-
-    const location = window.location;
-    const origin = location.origin || location.protocol + "//" + location.host;
-    if ( href.indexOf( origin ) !== 0 ) return;
+    if ( href.indexOf( location.origin || location.protocol + "//" + location.host ) !== 0 ) return;
 
     e.preventDefault();
-    if ( href !== location.href ) {
-      historyPush( href );
-      locationUpdatedCallback( location, e );
-    }
+    navigate( anchor.pathname );
   } );
 
-  window.addEventListener( "popstate", e => locationUpdatedCallback( window.location, e ) );
-  locationUpdatedCallback( window.location, null /* event */ );
+  window.addEventListener( "popstate", e => cb( getPathname(), e ) );
+  cb( getPathname(), null );
 }
