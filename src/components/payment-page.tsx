@@ -95,12 +95,14 @@ const rows = (
 
 class PaymentPage extends React.Component<any, any> {
   state = {
+    numberOfTickets: 0,
     selectedDate: new Date(),
+    fullName: "",
+    email: "",
+    creditCardNumber: "",
+    dateCreditCard: "",
+    cvv: "",
     openDialog: false
-  };
-
-  handleDateChange = date => {
-    this.setState( { selectedDate: date } );
   };
 
   handleClickOpen = () => {
@@ -113,8 +115,6 @@ class PaymentPage extends React.Component<any, any> {
 
   render() {
     const { classes, event } = this.props;
-    const { selectedDate } = this.state;
-
     const checkboxes: any[] = [];
 
     for ( const [ row, columns ] of places ) {
@@ -160,11 +160,12 @@ class PaymentPage extends React.Component<any, any> {
                     <FormControl>
                       <InputLabel htmlFor="number-ticket">Number of tickets</InputLabel>
                       <Input
-                        defaultValue={0}
-                        inputProps={{ min: 0 }}
-                        required
                         type="number"
                         id="number-ticket"
+                        required
+                        inputProps={{ min: 0 }}
+                        value={this.state.numberOfTickets}
+                        onChange={e => this.setState( { numberOfTickets: e.target.value } )}
                       />
                     </FormControl>
                   </div>
@@ -173,8 +174,8 @@ class PaymentPage extends React.Component<any, any> {
                     <InlineDatePicker
                       keyboard
                       label="Date to Attend"
-                      value={selectedDate}
-                      onChange={this.handleDateChange}
+                      value={this.state.selectedDate}
+                      onChange={date => this.setState( { selectedDate: date } )}
                       format="dd/MM/yyyy"
                       mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
                     />
@@ -183,40 +184,61 @@ class PaymentPage extends React.Component<any, any> {
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" required />
-                  </FormControl>
-                </div>
-
-                <div className={classes.margin}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="email">Email *</InputLabel>
-                    <Input id="email" required />
-                  </FormControl>
-                </div>
-
-                <div className={classes.margin}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="credit-card">Credit Card *</InputLabel>
-                    <Input type="number" required id="credit-card" />
-                  </FormControl>
-                </div>
-
-                <div className={classes.margin}>
-                  <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="expiration-date">Expiration Date *</InputLabel>
+                    <InputLabel htmlFor="fullname">Full name</InputLabel>
                     <Input
+                      id="fullname"
                       required
-                      id="expiration-date"
-                      endAdornment={<InputAdornment position="end">mm/yy</InputAdornment>}
+                      value={this.state.fullName}
+                      onChange={e => this.setState( { fullName: e.target.value } )}
                     />
                   </FormControl>
                 </div>
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="email">Email *</InputLabel>
+                    <Input
+                      id="email"
+                      required
+                      value={this.state.email}
+                      onChange={e => this.setState( { email: e.target.value } )}
+                    />
+                  </FormControl>
+                </div>
+
+                <div className={classes.margin}>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="credit-card">Credit Card *</InputLabel>
+                    <Input
+                      id="credit-card"
+                      type="number"
+                      required
+                      value={this.state.creditCardNumber}
+                      onChange={e => this.setState( { creditCardNumber: e.target.value } )}
+                    />
+                  </FormControl>
+                </div>
+
+                <div className={classes.margin}>
+                  <InlineDatePicker
+                    keyboard
+                    clearable
+                    label="Expiration Date (MM/yyyy)"
+                    value={this.state.dateCreditCard}
+                    onChange={dateCreditCard => this.setState( { dateCreditCard } )}
+                    format="MM/yyyy"
+                  />
+                </div>
+
+                <div className={classes.margin}>
+                  <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="cvv">CVV *</InputLabel>
-                    <Input type="number" required id="cvv" />
+                    <Input
+                      id="cvv"
+                      type="number"
+                      required
+                      onChange={cvv => this.setState( { cvv } )}
+                    />
                   </FormControl>
                 </div>
                 <div style={{ paddingLeft: 15 }}>
