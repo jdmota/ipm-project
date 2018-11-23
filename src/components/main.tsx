@@ -26,6 +26,9 @@ type MainProps = {
 const styles = {
   top: {
     marginTop: 64,
+    "@media all and (max-width: 600px)": {
+      marginTop: 48,
+    }
   },
   main: {
     maxWidth: "1300px",
