@@ -44,9 +44,10 @@ function LeftDrawer( { classes, open, onOpen, onClose, users, logoutUser }: any 
     <div className={classes.list}>
       <List>
         {[
-          [ "Festivals", () => null ] as [ string, any ],
-          [ "Concerts", () => null ] as [ string, any ],
-          [ "Theathers", () => null ] as [ string, any ],
+          [ "Highlights", () => navigateAndClose( "/" ) ] as [ string, any ],
+          [ "Festivals", () => navigateAndClose( "/festivals" ) ] as [ string, any ],
+          [ "Concerts", () => navigateAndClose( "/concerts" ) ] as [ string, any ],
+          [ "Theaters", () => navigateAndClose( "/theaters" ) ] as [ string, any ],
         ].map( item )}
       </List>
       <Divider />

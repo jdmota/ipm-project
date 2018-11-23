@@ -2,9 +2,10 @@ import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
 import { getEventByUrl } from "../helpers/search";
-import TabsBar from "./appbar-type";
+import CategoryBar from "./home-page/category-bar";
 
 const HomePage = lazy( () => import( "./home-page" ) );
+const HomePageCategory = lazy( () => import( "./home-page/home-page-category" ) );
 const EventPage = lazy( () => import( "./event-page" ) );
 const EventList = lazy( () => import( "./event-card-list" ) );
 const PageOrLogin = lazy( () => import( "./page-or-login" ) );
@@ -61,9 +62,17 @@ class Main extends React.Component<MainProps, MainState> {
     const pathname = this.state.pathname.replace( /\/+$/, "" ) || "/";
 
     let component;
+    let showCategoryBar = false;
     switch ( pathname ) {
       case "/":
         component = <HomePage />;
+        showCategoryBar = true;
+        break;
+      case "/festivals":
+      case "/concerts":
+      case "/theaters":
+        component = <HomePageCategory pathname={pathname} />;
+        showCategoryBar = true;
         break;
       case "/search":
         component = <EventList />;
@@ -95,7 +104,7 @@ class Main extends React.Component<MainProps, MainState> {
     }
 
     return <div className={classes.top}>
-      {pathname === "/" && <TabsBar />}
+      {showCategoryBar && <CategoryBar pathname={pathname} />}
       <div className={classes.main}>
         <div className={classes.padding}>
           <Suspense fallback={<div>Loading...</div>}>

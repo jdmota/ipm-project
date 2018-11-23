@@ -29,7 +29,7 @@ export type Event = {
   description: string,
   date: Date,
   images: string[],
-  type: "Concert"| "Theater" | "Festival" | "Other",
+  type: "Concert" | "Theater" | "Festival" | "Other",
   location: string,
   comments: EventComment[],
   priceUnit: number,
