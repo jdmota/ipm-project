@@ -6,7 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import purple from "@material-ui/core/colors/purple";
 
 const styles = theme => ( {
-  container: {
+  root: {
     display: "flex",
     flexWrap: "wrap",
   },
@@ -25,7 +25,7 @@ const styles = theme => ( {
     },
   },
   textField: {
-    flexBasis: 240
+    flexBasis: 300
   }
 } );
 
@@ -33,20 +33,16 @@ function UsernameField( props: any ) {
   const { classes, onInputChange } = props;
 
   return (
-    <FormControl className={`${classes.margin} ${classes.textField}`}>
-      <InputLabel
-        htmlFor="username"
-        classes={{
-          focused: classes.cssFocused,
-        }}
-      >
-        Username
-      </InputLabel>
-      <Input id="username"
-        type="text"
-        onChange={event => onInputChange( event.target.value )}
-      />
-    </FormControl>
+    <div className={classes.root}>
+      <FormControl className={`${classes.margin} ${classes.textField}`}>
+        <InputLabel htmlFor="login-username">Username</InputLabel>
+        <Input
+          id="login-username"
+          type="text"
+          onChange={event => onInputChange( event.target.value )}
+        />
+      </FormControl>
+    </div>
   );
 }
 

@@ -8,27 +8,15 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import UsernameTextField from "./logInPageComponents/username-text-field";
 import PasswordTextField from "./logInPageComponents/password-text-field";
-import CloseIcon from "@material-ui/icons/Lens";
-import IconButton from "@material-ui/core/IconButton";
 
 const styles = theme => ( {
   flexContainerLogIn: {
-    width: 330,
+    width: "fit-content",
     height: 500,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: "200",
-    // top: "600"
+    margin: "auto"
   },
   titlePosition: {
     // marginBottom: 40
-  },
-  flexContainerLogInContent: {
-    paddingBottom: "5%",
-  },
-  cardContentPosition: {
-    // position: "absolute",
-    left: "50%"
   },
   card: {
     minWidth: 275,
@@ -47,7 +35,6 @@ const styles = theme => ( {
   controls: {
     display: "flex",
     alignItems: "center",
-    paddingLeft: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
   },
   buttonLogin: {
@@ -60,14 +47,7 @@ const styles = theme => ( {
     underline: "none",
   },
   linkDiv: {
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    width: "100%",
-    float: "right"
-  },
-  linkDiv2: {
-    float: "right",
-    marginRight: 30
+    padding: theme.spacing.unit
   },
   a: {
     textDecoration: "none",
@@ -81,7 +61,7 @@ const styles = theme => ( {
     border: "1px solid #d8dee2",
     height: 50,
   },
-  createAccontLink: {
+  createAccountLink: {
     textDecoration: "none",
     fontSize: 16
   },
@@ -128,92 +108,68 @@ const styles = theme => ( {
   }
 } );
 
-class SignInPage extends React.Component {
+class SignInPage extends React.Component<any, any> {
 
   state = {
-    visible: false,
+    errorMsg: "",
     username: "",
     password: "",
   };
 
   login = () => {
-    // console.log( "A" );
-    let user = this.props.users.find( user => user.nickname === this.state.username );
-    if ( !user || user.password !== this.state.password ) {
-      this.handleOpenWrongPassowrd();
-    } else {
-      console.log( "User:" + user.nickname + " Password: " + user.password + " | return " + ( user.password === this.state.password ) );
-      // Faz login
+    const { username, password } = this.state;
+    const user = this.props.users.find( user => user.username === username );
+    if ( !username || !password ) {
+      this.setState( { errorMsg: "Please fill your username and password." } );
+      return;
     }
-
-    return user.password === this.state.password;
+    if ( !user || user.password !== password ) {
+      this.setState( { errorMsg: "Wrong username or password." } );
+    } else {
+      // TODO login
+    }
   }
 
-  handleCloseWrongPassword = () => {
-    this.setState( { visible: false } );
-  }
-
-  handleOpenWrongPassowrd = () => {
-    this.setState( { visible: true } );
-  }
   render() {
     const { classes } = this.props;
-    const { visible } = this.state;
 
     return <div>
-      <div className={classes.flexContainerLogInContent}></div>
       <div className={classes.flexContainerLogIn}>
 
         <Typography variant="h3" color="inherit" align="center" className={classes.titlePosition}>
           Sign In
         </Typography>
 
-        <div className={classes.marginWrongPassword}>
-        </div>
-        <Card className={visible ? classes.wrongPasswordCardVisible : classes.wrongPasswordCardInvisible} id="wrongPasswordCard">
-
-          <div className={classes.containerWrongPasswordAndClose}>
-
-            <div className={classes.wrongPasswordText}>
-              <Typography variant="caption" color="inherit" align="center">
-                Wrong username or password.
-              </Typography>
-            </div>
-
-            <div className={classes.closeWrongPasswordButton}>
-              <IconButton aria-label="Close" onClick={this.handleCloseWrongPassword}>
-                <CloseIcon fontSize="small" color="secondary" />
-              </IconButton>
-            </div>
-
-          </div>
-        </Card>
-
-        <div className={classes.marginWrongPassword}></div>
-
-        <Card >
-          <CardContent >
-            <div className={classes.controls}>
-              <UsernameTextField onInputChange={ username => this.setState( { username } ) } />
-            </div>
-            <div className={classes.controls}>
-              <PasswordTextField onInputChange={ password => this.setState( { password } ) } />
-            </div>
-            <div className={classes.linkDiv}>
-              <div className={classes.linkDiv2}>
+        <Card style={{ width: 450, marginTop: 30 }}>
+          <CardContent>
+            <div style={{ width: 280, margin: "auto" }}>
+              <div className={classes.controls}>
+                <div style={{ width: "100%", margin: "auto" }} >
+                  <UsernameTextField onInputChange={username => this.setState( { username } )} />
+                </div>
+              </div>
+              <div className={classes.controls}>
+                <div style={{ width: "100%", margin: "auto" }} >
+                  <PasswordTextField onInputChange={password => this.setState( { password } )} />
+                </div>
+              </div>
+              <div className={classes.linkDiv}>
                 <Typography variant="caption" color="inherit" align="center">
-                  <a href="default.asp" className={classes.a} >Forgot password?</a>
+                  <a href="default.asp" className={classes.a}>Forgot your password?</a>
                 </Typography>
               </div>
-            </div>
-            <div>
-              <CardActions>
-                <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="small" color="primary" onClick={() => this.login()}>
+              <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
+                <Typography color="error">{this.state.errorMsg}</Typography>
+              </div>
+              <div>
+                <CardActions>
+                  <div className={classes.buttonLogin}>
+                    <Button variant="contained" size="small" color="primary" onClick={() => this.login()}>
                     Sign In
-                  </Button>
-                </div>
-              </CardActions>
+                    </Button>
+                  </div>
+                </CardActions>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -224,7 +180,7 @@ class SignInPage extends React.Component {
               <Typography variant="caption" color="inherit" align="center">
                 <span style={{ marginRight: 10 }}>New to FCTicket?</span>
                 <span>
-                  <a href="default.asp" className={classes.createAccontLink} color="inherit">Create an account</a>
+                  <a href="/sign-up" className={classes.createAccountLink} color="inherit">Create an account</a>
                 </span>
               </Typography>
             </CardContent>
