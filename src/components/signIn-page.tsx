@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -8,6 +9,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import UsernameTextField from "./logInPageComponents/username-text-field";
 import PasswordTextField from "./logInPageComponents/password-text-field";
+import { loginUser } from "../actions/userActions";
+import { navigateBack } from "../helpers/router";
 
 const styles = theme => ( {
   flexContainerLogIn: {
@@ -118,7 +121,7 @@ class SignInPage extends React.Component<any, any> {
 
   login = () => {
     const { username, password } = this.state;
-    const user = this.props.users.find( user => user.username === username );
+    const user = this.props.users.userList.find( user => user.username === username );
     if ( !username || !password ) {
       this.setState( { errorMsg: "Please fill your username and password." } );
       return;
@@ -126,68 +129,67 @@ class SignInPage extends React.Component<any, any> {
     if ( !user || user.password !== password ) {
       this.setState( { errorMsg: "Wrong username or password." } );
     } else {
-      // TODO login
+      this.setState( { errorMsg: "" } );
+      this.props.loginUser( user );
+      navigateBack();
     }
   }
 
   render() {
     const { classes } = this.props;
 
-    return <div>
-      <div className={classes.flexContainerLogIn}>
+    return <div className={classes.flexContainerLogIn}>
 
-        <Typography variant="h3" color="inherit" align="center" className={classes.titlePosition}>
+      <Typography variant="h3" color="inherit" align="center" className={classes.titlePosition}>
           Sign In
-        </Typography>
+      </Typography>
 
-        <Card style={{ width: 450, marginTop: 30 }}>
-          <CardContent>
-            <div style={{ width: 280, margin: "auto" }}>
-              <div className={classes.controls}>
-                <div style={{ width: "100%", margin: "auto" }} >
-                  <UsernameTextField onInputChange={username => this.setState( { username } )} />
-                </div>
-              </div>
-              <div className={classes.controls}>
-                <div style={{ width: "100%", margin: "auto" }} >
-                  <PasswordTextField onInputChange={password => this.setState( { password } )} />
-                </div>
-              </div>
-              <div className={classes.linkDiv}>
-                <Typography variant="caption" color="inherit" align="center">
-                  <a href="default.asp" className={classes.a}>Forgot your password?</a>
-                </Typography>
-              </div>
-              <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
-                <Typography color="error">{this.state.errorMsg}</Typography>
-              </div>
-              <div>
-                <CardActions>
-                  <div className={classes.buttonLogin}>
-                    <Button variant="contained" size="small" color="primary" onClick={() => this.login()}>
-                    Sign In
-                    </Button>
-                  </div>
-                </CardActions>
+      <Card style={{ width: 450, marginTop: 30 }}>
+        <CardContent>
+          <div style={{ width: 280, margin: "auto" }}>
+            <div className={classes.controls}>
+              <div style={{ width: "100%", margin: "auto" }} >
+                <UsernameTextField onInputChange={username => this.setState( { username } )} />
               </div>
             </div>
+            <div className={classes.controls}>
+              <div style={{ width: "100%", margin: "auto" }} >
+                <PasswordTextField onInputChange={password => this.setState( { password } )} />
+              </div>
+            </div>
+            <div className={classes.linkDiv}>
+              <Typography variant="caption" color="inherit" align="center">
+                <a href="default.asp" className={classes.a}>Forgot your password?</a>
+              </Typography>
+            </div>
+            <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
+              <Typography color="error">{this.state.errorMsg}</Typography>
+            </div>
+            <div>
+              <CardActions>
+                <div className={classes.buttonLogin}>
+                  <Button variant="contained" size="small" color="primary" onClick={() => this.login()}>
+                    Sign In
+                  </Button>
+                </div>
+              </CardActions>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className={classes.signUpContainer}>
+        <Card className={classes.signUpCard}>
+          <CardContent>
+            <Typography variant="caption" color="inherit" align="center">
+              <span style={{ marginRight: 10 }}>New to FCTicket?</span>
+              <span>
+                <a href="/sign-up" className={classes.createAccountLink} color="inherit">Create an account</a>
+              </span>
+            </Typography>
           </CardContent>
         </Card>
-
-        <div className={classes.signUpContainer} >
-          <Card className={classes.signUpCard}>
-            <CardContent>
-              <Typography variant="caption" color="inherit" align="center">
-                <span style={{ marginRight: 10 }}>New to FCTicket?</span>
-                <span>
-                  <a href="/sign-up" className={classes.createAccountLink} color="inherit">Create an account</a>
-                </span>
-              </Typography>
-            </CardContent>
-          </Card>
-        </div>
       </div>
-
     </div>;
   }
 }
@@ -198,4 +200,8 @@ function mapStateToProps( state ) {
   };
 }
 
-export default connect( mapStateToProps )( withStyles( styles )( SignInPage ) );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { loginUser: loginUser }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( SignInPage ) );

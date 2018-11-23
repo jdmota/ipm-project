@@ -1,6 +1,6 @@
 import { User } from "../data/types";
 
-const users: User[] = [ {
+const userList: User[] = [ {
   id: "1",
   email: "smithRules@gmail.com",
   username: "bestCostumerOnFCTicket",
@@ -15,13 +15,31 @@ const users: User[] = [ {
   } ],
 } ];
 
-export default function( state = users, action ) {
+const initialState = {
+  userList,
+  loggedInUser: null
+};
+
+export default function( state = initialState, action ) {
   switch ( action.type ) {
     case "ADD_USER":
-      return [
+      return {
         ...state,
-        action.payload
-      ];
+        userList: [
+          ...state.userList,
+          action.payload
+        ]
+      };
+    case "LOGIN_USER":
+      return {
+        ...state,
+        loggedInUser: action.payload
+      };
+    case "LOGOUT_USER":
+      return {
+        ...state,
+        loggedInUser: null
+      };
     default:
       return state;
   }
