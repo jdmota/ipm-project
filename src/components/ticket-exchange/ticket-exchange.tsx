@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -21,6 +23,14 @@ const styles = theme => ( {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  appBar: {
+    top: "auto",
+    bottom: 0,
+    zIndex: 20
+  },
+  toolbar: {
+    margin: "auto"
+  }
 } );
 
 const steps = [
@@ -62,7 +72,7 @@ class TicketExchange extends React.Component<any, any> {
   back = () => {
     this.setState( state => {
       return {
-        step: state.step === 0 ? 0 : state.step + 1
+        step: state.step === 0 ? 0 : state.step - 1
       };
     } );
   }
@@ -100,19 +110,22 @@ class TicketExchange extends React.Component<any, any> {
         onRightDrawerToggle={this.props.onRightDrawerToggle}
       />
       <div>
-        {activeStep === steps.length ? (
-          <div>
+        {
+          activeStep === steps.length ?
             <Typography className={classes.instructions}>
               {"All steps completed - you're finished"}
-            </Typography>
+            </Typography> :
+            <Typography className={classes.instructions}>{getStepContent( activeStep )}</Typography>
+        }
+      </div>
+      <AppBar position="fixed" color="default" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          {activeStep === steps.length ? (
             <Button onClick={this.reset} className={classes.button}>
               Reset
             </Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent( activeStep )}</Typography>
-            <div>
+          ) : (
+            <>
               <Button
                 disabled={activeStep === 0}
                 onClick={this.back}
@@ -126,10 +139,10 @@ class TicketExchange extends React.Component<any, any> {
               >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
-            </div>
-          </div>
-        )}
-      </div>
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
     </div>;
   }
 
