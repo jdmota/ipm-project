@@ -30,7 +30,7 @@ const styles = theme => ( {
 } );
 
 function CardNumberField( props: any ) {
-  const { classes } = props;
+  const { classes, onChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
@@ -44,6 +44,7 @@ function CardNumberField( props: any ) {
       </InputLabel>
       <Input
         id="signup-card-number"
+        onChange={event => onChange( event.target.value )}
       />
     </FormControl>
   );

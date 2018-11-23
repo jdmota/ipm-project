@@ -2,11 +2,10 @@ import { User } from "../data/types";
 
 const users: User[] = [ {
   id: "1",
-  mail: "smithRules@gmail.com",
-  nickname: "bestCostumerOnFCTicket",
+  email: "smithRules@gmail.com",
+  username: "bestCostumerOnFCTicket",
   password: "1234SmithInTheHouse!",
-  firstName: "Stan",
-  lastName: "Smith",
+  fullName: "Stan Smith",
   creditCardNumber: "",
   dateCreditCard: new Date(),
   cvc: "",

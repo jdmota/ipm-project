@@ -5,11 +5,10 @@ export type Ticket = {
 
 export type User = {
   id: string,
-  mail: string,
-  nickname: string,
+  email: string,
+  username: string,
   password: string,
-  firstName: string,
-  lastName: string,
+  fullName: string,
   creditCardNumber: string,
   dateCreditCard: Date,
   cvc: string,

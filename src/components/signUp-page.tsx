@@ -20,12 +20,8 @@ import TicketIcon from "@material-ui/icons/LocalPlayOutlined";
 const styles = theme => ( {
   flexContainerLogIn: {
     width: 730,
-    // height: 1000,
-    marginLeft: "10%",
-    marginTop: "200",
-    display: "inline-block",
+    marginTop: 30,
     float: "left"
-    // top: "600"
   },
   titlePosition: {
     // marginBottom: 40
@@ -134,12 +130,11 @@ const styles = theme => ( {
     color: "#b30000"
   },
   imagesContainer: {
-    // marginRight: "10%",
-    marginTop: "11%",
-    marginLeft: "75%",
+    width: 230,
+    float: "left",
+    marginTop: 70,
+    marginLeft: 50,
     minWidth: 100,
-    width: 230
-    // top: "600"
   },
   font: {
     fontFamily: "Verdana, Geneva, sans-serif",
@@ -167,152 +162,146 @@ const styles = theme => ( {
 class SignUpPage extends React.Component<any, any> {
 
   state = {
-    visible: false,
+    errorMsg: "",
     email: "",
     username: "",
     password: "",
-    confirmedpass: "",
-    name: "",
-    creditcard: "",
-    expirationdate: new Date(),
+    confirmedPass: "",
+    fullName: "",
+    creditCardNumber: "",
+    dateCreditCard: new Date(),
     ccv: "",
   };
 
   signUp() {
-    if ( this.state.password === "" ) {
-      this.handleOpenWrongPassword();
-      console.log( "Error" );
+    const { email, username, password, confirmedPass, fullName, creditCardNumber, dateCreditCard, ccv } = this.state;
+    if ( !email || !username || !password || !confirmedPass ) {
+      this.setState( { errorMsg: "Please fill the required fields." } );
     }
+    console.log( this.state );
   }
 
-  handleCloseWrongPassword = () => {
-    this.setState( { visible: false } );
-  }
-
-  handleOpenWrongPassword = () => {
-    this.setState( { visible: true } );
-  }
   render() {
     const { classes } = this.props;
 
     return <div>
-      <div className={classes.marginFromAppBar}></div>
-      <div className={classes.flexContainerLogIn}>
-        <Typography variant="h4" color="inherit" align="center" className={classes.titlePosition}>
-          Sign Up
-        </Typography>
+      <Typography variant="h4" color="inherit" align="center" className={classes.titlePosition}>
+        Sign Up
+      </Typography>
 
-        <div className={classes.marginWrongPassword}></div>
-        <div className={classes.marginWrongPassword}></div>
+      <div style={{ width: "fit-content", margin: "auto" }}>
 
-        <Card >
-          <CardContent >
-            <div style={{ float: "left" }}>
-              <div className={classes.controls}>
-                <EmailTextField onChange={ Email => this.setState( { email: Email } ) }/>
-              </div>
-              <div className={classes.controls}>
-                <UsernameTextField onChange={ Username => this.setState( { username: Username } ) }/>
-              </div>
-              <div className={classes.controls}>
-                <PasswordTextField onChange={ Pass => this.setState( { password: Pass } ) }/>
-              </div>
-              <div className={classes.controls}>
-                <ConfirmPasswordTextField onChange={ ConfirmedPass => this.setState( { confirmedpass: ConfirmedPass } ) }/>
-              </div>
-              <div style={{ paddingLeft: 15, }}>
-                <Typography color="inherit" variant = "caption">
-                  * Required Fields
-                </Typography>
-              </div>
+        <div className={classes.flexContainerLogIn}>
+          <Card>
+            <CardContent>
+              <div style={{ width: "fit-content", margin: "auto" }}>
+                <div style={{ width: 265, float: "left" }}>
+                  <div className={classes.controls}>
+                    <EmailTextField onChange={email => this.setState( { email } )}/>
+                  </div>
+                  <div className={classes.controls}>
+                    <UsernameTextField onChange={username => this.setState( { username } )}/>
+                  </div>
+                  <div className={classes.controls}>
+                    <PasswordTextField onChange={password => this.setState( { password } )}/>
+                  </div>
+                  <div className={classes.controls}>
+                    <ConfirmPasswordTextField onChange={confirmedPass => this.setState( { confirmedPass } )}/>
+                  </div>
+                  <div style={{ paddingLeft: 15 }}>
+                    <Typography color="inherit" variant="caption">
+                    * Required Fields
+                    </Typography>
+                  </div>
+                </div>
+                <div style={{ width: 265, float: "left" }}>
+                  <div className={classes.controls}>
+                    <FullNameTextField onChange={fullName => this.setState( { fullName } )}/>
+                  </div>
+                  <div className={classes.controls}>
+                    <CardNumberTextField onChange={creditCardNumber => this.setState( { creditCardNumber } )}/>
+                  </div>
+                  <div className={classes.controls}>
+                    <ExpirationDateTextField onChange={dateCreditCard => this.setState( { dateCreditCard } )}/>
+                  </div>
 
-            </div>
-            <div style={{ float: "right" }}>
-              <div className={classes.controls}>
-                <FullNameTextField onChange={ () => console.log( "Full Name" ) }/>
+                  <div className={classes.controls}>
+                    <CCVTextField onChange={ccv => this.setState( { ccv } )}/>
+                  </div>
+                </div>
               </div>
-              <div className={classes.controls}>
-                <CardNumberTextField onChange={ () => console.log( "CardNumber" ) }/>
+              <div style={{ clear: "left" }}></div>
+              <div style={{ width: "fit-content", margin: "auto", padding: 20 }}>
+                <Typography color="error">{this.state.errorMsg}</Typography>
               </div>
-              <div className={classes.controls}>
-                <ExpirationDateTextField onChange={ () => console.log( "expdate" ) }/>
-              </div>
-
-              <div className={classes.controls}>
-                <CCVTextField onChange={ () => console.log( "ccv" ) }/>
-              </div>
-            </div>
-            <div style={{ marginTop: 320 }}>
-              <CardActions>
-                <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="medium" color="primary" onClick = { () => this.signUp()}>
+              <div style={{ }}>
+                <CardActions>
+                  <div className={classes.buttonLogin}>
+                    <Button variant="contained" size="medium" color="primary" onClick={() => this.signUp()}>
                     Register
-                  </Button>
-                </div>
-              </CardActions>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      <div className={classes.imagesContainer}>
-        <Card>
-          <CardContent>
-            <div style={{ width: 100 }}>
-              <div style={{ marginBottom: 30 }}>
-                {/* <div style={{ float: "left" }}>
-                  <FastIcon style={{ fontSize: 50 }} ></FastIcon>
-                </div>*/}
-                <div style={{ paddingTop: 6 }}>
-                  <div style={{ float: "left" }}>
-                    <FastIcon style={{ fontSize: 50 }} ></FastIcon>
+                    </Button>
                   </div>
-                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
-                    <Typography className={`${classes.info} ${classes.fontGreen}`} variant="h4" color="inherit" >
-                    F
-                    </Typography>
-                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
-                    ast
-                    </Typography>
+                </CardActions>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div className={classes.imagesContainer}>
+          <Card>
+            <CardContent>
+              <div style={{ width: 100 }}>
+                <div style={{ marginBottom: 30 }}>
+                  <div style={{ paddingTop: 6 }}>
+                    <div style={{ float: "left" }}>
+                      <FastIcon style={{ fontSize: 50 }} ></FastIcon>
+                    </div>
+                    <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                      <Typography className={`${classes.info} ${classes.fontGreen}`} variant="h4" color="inherit" >
+                      F
+                      </Typography>
+                      <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                      ast
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: 30 }}>
+                  <div style={{ paddingTop: 6 }}>
+                    <div style={{ float: "left" }}>
+                      <EuroIcon style={{ fontSize: 50 }} ></EuroIcon>
+                    </div>
+                    <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                      <Typography className={`${classes.info} ${classes.fontDarkBlue}`} variant="h4" color="inherit" >
+                      C
+                      </Typography>
+                      <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                      heap
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ marginBottom: 30 }}>
+                  <div style={{ paddingTop: 6 }}>
+                    <div style={{ float: "left" }}>
+                      <TicketIcon style={{ fontSize: 50 }} ></TicketIcon>
+                    </div>
+                    <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
+                      <Typography className={`${classes.info} ${classes.fontLightBlue}`} variant="h4" color="inherit" >
+                      T
+                      </Typography>
+                      <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
+                      ickets
+                      </Typography>
+                    </div>
                   </div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </div>
 
-              <div style={{ marginBottom: 30 }}>
-
-                <div style={{ paddingTop: 6 }}>
-                  <div style={{ float: "left" }}>
-                    <EuroIcon style={{ fontSize: 50 }} ></EuroIcon>
-                  </div>
-                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
-                    <Typography className={`${classes.info} ${classes.fontDarkBlue}`} variant="h4" color="inherit" >
-                    C
-                    </Typography>
-                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
-                    heap
-                    </Typography>
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ marginBottom: 30 }}>
-
-                <div style={{ paddingTop: 6 }}>
-                  <div style={{ float: "left" }}>
-                    <TicketIcon style={{ fontSize: 50 }} ></TicketIcon>
-                  </div>
-                  <div className={classes.containerInfoCard} style={{ paddingTop: 6 }}>
-                    <Typography className={`${classes.info} ${classes.fontLightBlue}`} variant="h4" color="inherit" >
-                  T
-                    </Typography>
-                    <Typography className={`${classes.info} ${classes.font}`} variant="h4" color="inherit" >
-                  ickets
-                    </Typography>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
     </div>;

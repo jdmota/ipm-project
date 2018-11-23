@@ -31,7 +31,7 @@ const styles = theme => ( {
 } );
 
 function ExpirationDate( props: any ) {
-  const { classes } = props;
+  const { classes, onChange } = props;
 
   return (
     <div className={classes.container}>
@@ -46,11 +46,11 @@ function ExpirationDate( props: any ) {
         </InputLabel>
         <Input
           id="signup-expiration-date"
+          onChange={event => onChange( event.target.value )}
           endAdornment={
             <InputAdornment position="end">mm/yy</InputAdornment>
           }
         />
-
       </FormControl>
     </div>
   );

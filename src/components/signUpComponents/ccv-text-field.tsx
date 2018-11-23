@@ -30,7 +30,7 @@ const styles = theme => ( {
 } );
 
 function CCVField( props: any ) {
-  const { classes } = props;
+  const { classes, onChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
@@ -44,6 +44,7 @@ function CCVField( props: any ) {
       </InputLabel>
       <Input
         id="signup-ccv"
+        onChange={event => onChange( event.target.value )}
       />
     </FormControl>
   );

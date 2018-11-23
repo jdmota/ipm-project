@@ -30,7 +30,7 @@ const styles = theme => ( {
 } );
 
 function FullNameField( props: any ) {
-  const { classes } = props;
+  const { classes, onChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
@@ -44,6 +44,7 @@ function FullNameField( props: any ) {
       </InputLabel>
       <Input
         id="signup-fullname"
+        onChange={event => onChange( event.target.value )}
       />
     </FormControl>
   );

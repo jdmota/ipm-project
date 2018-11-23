@@ -44,7 +44,7 @@ function EmailField( props: any ) {
       </InputLabel>
       <Input
         id="signup-email"
-        onChange= { event => onChange( event.target.value )}
+        onChange={event => onChange( event.target.value )}
       />
     </FormControl>
   );
