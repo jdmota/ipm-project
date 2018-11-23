@@ -8,10 +8,10 @@ export type User = {
   email: string,
   username: string,
   password: string,
-  fullName: string|null,
-  creditCardNumber: number|null,
+  fullName: string|undefined,
+  creditCardNumber: number|undefined,
   dateCreditCard: Date|null,
-  cvv: number|null,
+  cvv: number|undefined,
   ticketList: Ticket[]
 };
 

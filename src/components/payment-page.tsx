@@ -97,11 +97,11 @@ class PaymentPage extends React.Component<any, any> {
   state = {
     numberOfTickets: 0,
     selectedDate: new Date(),
-    fullName: "",
+    fullName: undefined,
     email: "",
-    creditCardNumber: "",
-    dateCreditCard: "",
-    cvv: "",
+    creditCardNumber: undefined,
+    dateCreditCard: null,
+    cvv: undefined,
     openDialog: false
   };
 
@@ -220,14 +220,16 @@ class PaymentPage extends React.Component<any, any> {
                 </div>
 
                 <div className={classes.margin}>
-                  <InlineDatePicker
-                    keyboard
-                    clearable
-                    label="Expiration Date (MM/yyyy)"
-                    value={this.state.dateCreditCard}
-                    onChange={dateCreditCard => this.setState( { dateCreditCard } )}
-                    format="MM/yyyy"
-                  />
+                  <FormControl className={classes.formControl}>
+                    <InlineDatePicker
+                      keyboard
+                      clearable
+                      label="Expiration Date (MM/yyyy)"
+                      value={this.state.dateCreditCard}
+                      onChange={dateCreditCard => this.setState( { dateCreditCard } )}
+                      format="MM/yyyy"
+                    />
+                  </FormControl>
                 </div>
 
                 <div className={classes.margin}>

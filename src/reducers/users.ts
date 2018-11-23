@@ -6,9 +6,9 @@ const userList: User[] = [ {
   username: "bestCostumerOnFCTicket",
   password: "1234SmithInTheHouse!",
   fullName: "Stan Smith",
-  creditCardNumber: null,
+  creditCardNumber: undefined,
   dateCreditCard: new Date(),
-  cvv: null,
+  cvv: undefined,
   ticketList: [ {
     id: "",
     eventId: "",

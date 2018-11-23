@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
 import { InlineDatePicker } from "material-ui-pickers";
 
 const styles = theme => ( {
@@ -10,6 +11,9 @@ const styles = theme => ( {
   margin: {
     margin: theme.spacing.unit,
   },
+  textField: {
+    flexBasis: 240
+  }
 } );
 
 class ExpirationDate extends React.Component<any, any> {
@@ -27,7 +31,7 @@ class ExpirationDate extends React.Component<any, any> {
     const { classes } = this.props;
 
     return (
-      <div className={`${classes.container} ${classes.margin}`}>
+      <FormControl className={`${classes.margin} ${classes.textField}`}>
         <InlineDatePicker
           keyboard
           clearable
@@ -36,7 +40,7 @@ class ExpirationDate extends React.Component<any, any> {
           onChange={this.handleDateChange}
           format="MM/yyyy"
         />
-      </div>
+      </FormControl>
     );
   }
 

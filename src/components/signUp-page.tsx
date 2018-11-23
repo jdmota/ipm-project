@@ -171,10 +171,10 @@ class SignUpPage extends React.Component<any, any> {
     username: "",
     password: "",
     confirmedPass: "",
-    fullName: null,
-    creditCardNumber: null,
+    fullName: undefined,
+    creditCardNumber: undefined,
     dateCreditCard: null,
-    cvv: null,
+    cvv: undefined,
   };
 
   signUp() {
