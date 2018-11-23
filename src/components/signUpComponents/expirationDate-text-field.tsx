@@ -1,10 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import purple from "@material-ui/core/colors/purple";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { InlineDatePicker } from "material-ui-pickers";
 
 const styles = theme => ( {
   container: {
@@ -14,46 +10,36 @@ const styles = theme => ( {
   margin: {
     margin: theme.spacing.unit,
   },
-  cssLabel: {
-    "&$cssFocused": {
-      color: purple[ 500 ],
-    },
-  },
-  cssFocused: {},
-  cssUnderline: {
-    "&:after": {
-      borderBottomColor: purple[ 500 ],
-    },
-  },
-  textField: {
-    flexBasis: 300
-  }
 } );
 
-function ExpirationDate( props: any ) {
-  const { classes, onChange } = props;
+class ExpirationDate extends React.Component<any, any> {
 
-  return (
-    <div className={classes.container}>
-      <FormControl className={`${classes.margin} ${classes.textField}`}>
-        <InputLabel
-          htmlFor="signup-expiration-date"
-          classes={{
-            focused: classes.cssFocused,
-          }}
-        >
-          Expiration Date
-        </InputLabel>
-        <Input
-          id="signup-expiration-date"
-          onChange={event => onChange( event.target.value )}
-          endAdornment={
-            <InputAdornment position="end">mm/yy</InputAdornment>
-          }
+  state = {
+    date: null
+  };
+
+  handleDateChange = date => {
+    this.setState( { date } );
+    this.props.onChange( date );
+  }
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div className={`${classes.container} ${classes.margin}`}>
+        <InlineDatePicker
+          keyboard
+          clearable
+          label="Expiration Date (MM/yyyy)"
+          value={this.state.date}
+          onChange={this.handleDateChange}
+          format="MM/yyyy"
         />
-      </FormControl>
-    </div>
-  );
+      </div>
+    );
+  }
+
 }
 
 export default withStyles( styles )( ExpirationDate );

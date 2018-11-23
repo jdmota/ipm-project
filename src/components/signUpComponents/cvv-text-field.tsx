@@ -44,6 +44,7 @@ function CVVField( props: any ) {
       </InputLabel>
       <Input
         id="signup-cvv"
+        type="number"
         onChange={event => onChange( event.target.value )}
       />
     </FormControl>

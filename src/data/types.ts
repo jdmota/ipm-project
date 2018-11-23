@@ -9,9 +9,9 @@ export type User = {
   username: string,
   password: string,
   fullName: string|null,
-  creditCardNumber: string|null,
+  creditCardNumber: number|null,
   dateCreditCard: Date|null,
-  cvv: string|null,
+  cvv: number|null,
   ticketList: Ticket[]
 };
 
