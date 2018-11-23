@@ -1,7 +1,8 @@
 export type Ticket = {
+  ticketId: String,
   eventId: String,
-  date: Number,
-  seat: string
+  date: Date,
+  seat: string | undefined
 };
 
 export type User = {

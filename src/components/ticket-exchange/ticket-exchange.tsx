@@ -1,13 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
+import TicketCard from "../ticket-card";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Search from "../search/search-without-auto";
+import ticketToGet from "./ticket-to-get";
 
 const styles = theme => ( {
   ticketExchange: {
@@ -39,25 +42,16 @@ const steps = [
   "Confirmation"
 ];
 
-function getStepContent( step ) {
-  switch ( step ) {
-    case 0:
-      return "Select a ticket to get";
-    case 1:
-      return "Select a ticket to give";
-    case 2:
-      return "Now you just need to confirm your exchange";
-    default:
-      return "Unknown step";
-  }
-}
-
 class TicketExchange extends React.Component<any, any> {
 
   constructor( props ) {
     super( props );
     this.state = {
-      step: 0
+      step: 0,
+      desiredTicket: {
+        username: "",
+        ticketId: ""
+      },
     };
   }
 
@@ -82,6 +76,36 @@ class TicketExchange extends React.Component<any, any> {
       step: 0
     } );
   };
+
+  printGet = () => {
+    return (
+      this.props.tickets.map( ticket => {
+        let user = this.props.users.userList.find( user => { return ticket.username === user.username; } );
+        let ownedTicket = user.ticketList.find( ownedTicket => { return ticket.id === ownedTicket.id; } );
+        let ticketEvent = this.props.events.find( event => { return event.id === ownedTicket.eventId; } );
+        return ( <>
+          <TicketCard key={ ticket } event= {ticketEvent} onClick={ () => { this.setState( { desiredTicket: ticket } ); }} />
+          Ticket id: {ownedTicket.ticketId} event id: {ownedTicket.eventId} <br/>
+          Desired Ticket: {this.state.desiredTicket.ticketId}
+          </>
+        );
+      } )
+    );
+  }
+
+
+  getStepContent = step => {
+    switch ( step ) {
+      case 0:
+        return ( this.printGet() );
+      case 1:
+        return "Select a ticket to give";
+      case 2:
+        return "Now you just need to confirm your exchange";
+      default:
+        return "Unknown step";
+    }
+  }
 
   render() {
 
@@ -115,7 +139,7 @@ class TicketExchange extends React.Component<any, any> {
             <Typography className={classes.instructions}>
               {"All steps completed - you're finished"}
             </Typography> :
-            <Typography className={classes.instructions}>{getStepContent( activeStep )}</Typography>
+            this.getStepContent( activeStep )
         }
       </div>
       <AppBar position="fixed" color="default" className={classes.appBar}>
@@ -148,4 +172,14 @@ class TicketExchange extends React.Component<any, any> {
 
 }
 
-export default withStyles( styles )( TicketExchange );
+
+function mapStateToProps( state ) {
+  return {
+    tickets: state.tickets,
+    users: state.users,
+    events: state.events
+  };
+}
+
+
+export default connect( mapStateToProps )( withStyles( styles )( TicketExchange ) );

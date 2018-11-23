@@ -1,5 +1,7 @@
 import { User } from "../data/types";
 
+let globalId = 3;
+
 const userList: User[] = [ {
   id: "1",
   email: "smithRules@gmail.com",
@@ -9,7 +11,14 @@ const userList: User[] = [ {
   creditCardNumber: 123,
   dateCreditCard: new Date(),
   cvv: 123,
-  ticketList: [],
+  ticketList: [
+    {
+      ticketId: "1",
+      eventId: "1",
+      date: new Date( 2019, 7, 11 ),
+      seat: undefined
+    }
+  ],
 },
 {
   id: "2",
@@ -20,7 +29,14 @@ const userList: User[] = [ {
   creditCardNumber: 3210,
   dateCreditCard: new Date( 2020, 5, 20 ),
   cvv: 2310,
-  ticketList: [],
+  ticketList: [
+    {
+      ticketId: "2",
+      eventId: "1",
+      date: new Date( 2019, 7, 12 ),
+      seat: undefined
+    }
+  ],
 },
 {
   id: "3",
@@ -43,13 +59,14 @@ const initialState = {
 export default function( state = initialState, action ) {
   switch ( action.type ) {
     case "ADD_USER":
+      const user = { ...action.payload, ticketList: [] };
       return {
         ...state,
         userList: [
           ...state.userList,
-          action.payload
+          user
         ],
-        loggedInUser: action.payload
+        loggedInUser: user
       };
     case "LOGIN_USER":
       return {
@@ -70,7 +87,9 @@ export default function( state = initialState, action ) {
             ...user,
             ticketList: [
               ...user.ticketList,
-              ...action.payload
+              ...action.payload.map( ticket => {
+                return { ...ticket, ticketId: ( globalId++ ) + "" };
+              } )
             ]
           };
           return loggedInUser;
