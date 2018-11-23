@@ -121,6 +121,7 @@ class EventPage extends React.Component<any, any > {
   };
 
   commentEvent = () => {
+    this.setState( { text: "" } );
     this.props.commentEvent( {
       eventUrl: this.props.eventUrl,
       comment: {
