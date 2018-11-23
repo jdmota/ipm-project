@@ -25,7 +25,8 @@ export default function( state = initialState, action ) {
         userList: [
           ...state.userList,
           action.payload
-        ]
+        ],
+        loggedInUser: action.payload
       };
     case "LOGIN_USER":
       return {

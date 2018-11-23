@@ -6,8 +6,12 @@ let callback: Cb | void;
 let previousPage = "";
 
 function historyPush( href: string ) {
-  previousPage = location.href;
+  const pathname = location.pathname.replace( /\/+$/, "" ) || "/";
+  if ( ![ "/sign-in", "/sign-up" ].some( p => pathname.startsWith( p ) ) ) {
+    previousPage = location.href;
+  }
   window.history.pushState( {}, "", href );
+  console.log( "Navigating to:", href, "Previous page:", previousPage );
 }
 
 export function navigate( href: string ) {
@@ -23,6 +27,13 @@ export function navigateBack() {
   if ( previousPage ) {
     navigate( previousPage );
   } else {
+    navigate( "/" );
+  }
+}
+
+export function navigateLogout() {
+  const pathname = location.pathname.replace( /\/+$/, "" ) || "/";
+  if ( [ "/buy", "/ticket-exchange" ].some( p => pathname.startsWith( p ) ) ) {
     navigate( "/" );
   }
 }

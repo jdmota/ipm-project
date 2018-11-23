@@ -11,7 +11,7 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
-import { navigate } from "../helpers/router";
+import { navigate, navigateLogout } from "../helpers/router";
 import { logoutUser } from "../actions/userActions";
 
 const styles = {
@@ -61,7 +61,7 @@ class MenuListComposition extends React.Component<any, any> {
     this.handleClose( event, () => {
       setTimeout( () => {
         this.props.logoutUser();
-        navigate( "/" );
+        navigateLogout();
       }, 100 );
     } );
   }
