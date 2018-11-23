@@ -28,6 +28,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin( [
       { from: "src/index.html", to: "index.html" },
+      { from: "src/404.html", to: "404.html" },
       { from: "src/images", to: "images" }
     ] ),
     new webpack.HotModuleReplacementPlugin()

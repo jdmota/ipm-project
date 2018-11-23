@@ -8,12 +8,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
-    <style>
-      body {
-        margin: 0;
-      }
-    </style>
+    <style>body{margin:0;}</style>
     <div id="root"></div>
+    <script>
+      if(location.hash.startsWith("#/"))window.history.pushState({},"",location.hash.slice(1));
+    </script>
     <script src="/index.js"></script>
   </body>
 </html>
