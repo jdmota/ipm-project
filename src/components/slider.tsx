@@ -70,11 +70,7 @@ class Slider extends React.Component<Props, State> {
     super( props );
 
     this.state = {
-      images: [
-        "/images/NOS/nos_alive_1.jpg",
-        "/images/NOS/nos_alive_2.jpg",
-        "/images/NOS/nos_alive_3.jpg",
-      ],
+      images: props.images,
       currentIndex: 0,
       translateValue: 0
     };

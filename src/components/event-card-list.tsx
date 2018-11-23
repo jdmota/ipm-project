@@ -30,12 +30,6 @@ class EventCardList extends React.Component<any, any> {
 
     return <div>
       {this.renderList()}
-      <p>Name: {params.name}</p>
-      <p>Type: {params.type}</p>
-      <p>Localização: {params.location}</p>
-      <p>Range: {params.minPrice} - {params.maxPrice}</p>
-      <p>Data de Início: {params.startDate.toString()}</p>
-      <p>Data de Fim: {params.endDate.toString()}</p>
     </div>;
   }
 }

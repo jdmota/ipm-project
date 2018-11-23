@@ -106,7 +106,7 @@ const styles = theme => ( {
 
 function EventPage( props: { classes: any, event: Event } ) {
 
-  const { url, title, description: eventDescription, date, location, type, comments, priceUnit } = props.event;
+  const { url, title, description: eventDescription, date, images, location, type, comments, priceUnit } = props.event;
   const { classes } = props;
 
   function buy() {
@@ -117,7 +117,7 @@ function EventPage( props: { classes: any, event: Event } ) {
 
     <div className={classes.flexContainerEvent}>
       <div className={classes.imageContainer}>
-        <Slider/>
+        <Slider images={images.slice( 1 )}/>
       </div>
 
       <div className={classes.descriptionContiner}>

@@ -23,6 +23,10 @@ const styles = theme => ( {
       marginBottom: 20
     }
   },
+  link: {
+    textDecoration: "none",
+    width: "fit-content",
+  },
   mostPopularContainer: {
     flex: "1 1 0%",
     maxWidth: "100%",
@@ -76,7 +80,7 @@ const styles = theme => ( {
     paddingBottom: 0
   },
   size: {
-    // width: 300,
+    width: 500,
     height: 120,
     marginTop: 15,
     marginBottom: 0
@@ -118,7 +122,7 @@ const styles = theme => ( {
 
 function HomePage( props: { classes: any, events: Event[] } ) {
   const { classes } = props;
-  const { title, date, location, type, priceUnit } = props.events[ 0 ];
+  const events = props.events;
 
   return <div>
     <div>
@@ -126,7 +130,7 @@ function HomePage( props: { classes: any, events: Event[] } ) {
         <b>Highlights</b>
       </Typography>
       <div className={classes.imageContainer}>
-        <Slider/>
+        <Slider images ={[ "/images/NOS/nos_alive_1.jpg", "/images/escapeRooms/wrongOne/wrongOne.jpg", "/images/NOS/nos_alive_2.jpg", "/images/escapeRooms/rightOne/rightOne3.jpg", "/images/NOS/nos_alive_3.jpg" ]}/>
       </div>
     </div>
 
@@ -160,52 +164,47 @@ function HomePage( props: { classes: any, events: Event[] } ) {
         </Typography>
 
         <div className={classes.size}>
-          <Card className={classes.card}>
+          <a className={classes.link} href={events[ 0 ].url}>
+            <Card className={classes.card}>
 
-            <CardHeader
-              className={classes.force}
-              classes = {
-                { action: classes.action }
-              }
-              avatar={
-                <div className={classes.image}>
-                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                </div>
-              }
-              action={
-                <IconButton className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              title={title}
-              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-            />
+              <CardHeader
+                className={classes.force}
+                classes = {
+                  { action: classes.action }
+                }
+                avatar={
+                  <div className={classes.image}>
+                    <img height={110} src={events[ 0 ].images[ 0 ]}/>
+                  </div>
+                }
+                title={events[ 0 ].title}
+                subheader={`${events[ 0 ].date.getDay()}/${events[ 0 ].date.getMonth()}/${events[ 0 ].date.getFullYear()}`}
+              />
 
-          </Card>
+            </Card>
+          </a>
         </div>
 
         <div className={`${classes.size} ${classes.next}`}>
-          <Card className={classes.card}>
-            <CardHeader
-              className={classes.force}
-              classes = {
-                { action: classes.action }
-              }
-              avatar={
-                <div className={classes.image}>
-                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                </div>
-              }
-              action={
-                <IconButton className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              title={title}
-              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-            ></CardHeader>
-          </Card>
+          <a className={classes.link} href={events[ 1 ].url}>
+            <Card className={classes.card}>
+              <CardHeader
+                className={classes.force}
+                classes = {
+                  { action: classes.action }
+                }
+                avatar={
+                  <div className={classes.image}>
+                    <img height={110} src={events[ 1 ].images[ 0 ]}/>
+                  </div>
+                }
+                title={events[ 1 ].title}
+                subheader={`${events[ 1 ].date.getDay()}/${events[ 1 ].date.getMonth()}/${events[ 1 ].date.getFullYear()}`}
+              />
+            </Card>
+          </a>
         </div>
+
       </div>
 
 
@@ -215,49 +214,44 @@ function HomePage( props: { classes: any, events: Event[] } ) {
         </Typography>
 
         <div className={classes.size}>
-          <Card className={classes.card}>
-            <CardHeader
-              className={classes.force}
-              classes = {
-                { action: classes.action }
-              }
-              avatar={
-                <div className={classes.image}>
-                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                </div>
-              }
-              action={
-                <IconButton className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              title={title}
-              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-            />
-          </Card>
+          <a className={classes.link} href={events[ 2 ].url}>
+            <Card className={classes.card}>
+              <CardHeader
+                className={classes.force}
+                classes = {
+                  { action: classes.action }
+                }
+                avatar={
+                  <div className={classes.image}>
+                    <img height={110} src={events[ 2 ].images[ 0 ]}/>
+                  </div>
+                }
+                title={events[ 2 ].title}
+                subheader={`${events[ 2 ].date.getDay()}/${events[ 2 ].date.getMonth()}/${events[ 2 ].date.getFullYear()}`}
+              />
+            </Card>
+          </a>
         </div>
 
+
         <div className={`${classes.size} ${classes.next}`}>
-          <Card className={classes.card}>
-            <CardHeader
-              className={classes.force}
-              classes = {
-                { action: classes.action }
-              }
-              avatar={
-                <div className={classes.image}>
-                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                </div>
-              }
-              action={
-                <IconButton className={classes.icon}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              title={title}
-              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-            />
-          </Card>
+          <a className={classes.link} href={events[ 3 ].url}>
+            <Card className={classes.card}>
+              <CardHeader
+                className={classes.force}
+                classes = {
+                  { action: classes.action }
+                }
+                avatar={
+                  <div className={classes.image}>
+                    <img height={110} src={events[ 3 ].images[ 0 ]}/>
+                  </div>
+                }
+                title={events[ 3 ].title}
+                subheader={`${events[ 3 ].date.getDay()}/${events[ 3 ].date.getMonth()}/${events[ 3 ].date.getFullYear()}`}
+              />
+            </Card>
+          </a>
         </div>
 
       </div>
