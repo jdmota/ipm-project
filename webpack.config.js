@@ -2,7 +2,7 @@ const path = require( "path" );
 const webpack = require( "webpack" );
 const CopyWebpackPlugin = require( "copy-webpack-plugin" );
 
-const PRODUCTION = true;
+const PRODUCTION = false;
 
 module.exports = {
   mode: PRODUCTION ? "production" : "development",
