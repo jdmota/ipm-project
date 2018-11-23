@@ -25,6 +25,10 @@ const styles = theme => ( {
     textDecoration: "none",
     width: "fit-content",
   },
+  withfit: {
+    width: "fit-content",
+    margin: "auto",
+  },
   mostPopularContainer: {
     flex: "1 1 0%",
     maxWidth: "100%",
@@ -143,7 +147,7 @@ function HomePage( props: { classes: any, events: Event[] } ) {
       style={{ backgroundColor: "#cccccc", height: 100, width: "100%", borderRadius: 20, marginBottom: 30, cursor: "pointer" }}
     >
       <div
-        style={{ margin: "auto", width: "fit-content" }}
+        className={classes.withfit}
       >
         <div className={classes.hiddenExchangeIcon} style={{ float: "left", marginRight: 20 }}>
           <SwapIcon style={{ fontSize: 100 }}></SwapIcon>
