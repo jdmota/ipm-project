@@ -17,31 +17,11 @@ const events: Event[] = [
     location: "Alges",
     priceUnit: 50,
     comments: [ {
-      author: {
-        id: "1",
-        mail: "bestcostumer@gmail.com",
-        nickname: "Thebest",
-        password: "best123",
-        firstName: "John",
-        lastName: "Smith",
-        creditCardNumber: "0000 1111 2222 3333",
-        dateCreditCard: new Date( 2020, 5, 20 ),
-        cvc: "123"
-      },
+      author: "Thebest",
       data: new Date(),
       text: "Adorei!"
     }, {
-      author: {
-        id: "2",
-        mail: "worstcustomer@gmail.com",
-        nickname: "Theworst",
-        password: "worst123",
-        firstName: "Potatoes",
-        lastName: "Smith",
-        creditCardNumber: "0000 1111 2222 3333",
-        dateCreditCard: new Date( 2020, 5, 20 ),
-        cvc: "123"
-      },
+      author: "Theworst",
       data: new Date(),
       text: "Odiei!"
     } ]
@@ -98,5 +78,30 @@ const events: Event[] = [
 ];
 
 export default function( state = events, action ) {
-  return state;
+  switch ( action.type ) {
+    case "COMMENT_EVENT":
+      /* let EventCommented;
+      const eventList = state.events.map( event => {
+        if ( Este evento for o comentado ) {
+          EventCommented = {
+          // @ts-ignore
+            ...user,
+            ticketList: [
+              ...user.ticketList,
+              ...action.payload
+            ]
+          };
+          return loggedInUser;
+        }
+        return user;
+      } );
+      return {
+        userList,
+        loggedInUser
+      };
+    */
+      return state;
+    default:
+      return state;
+  }
 }

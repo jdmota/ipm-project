@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { commentEvent } from "../actions/eventActions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
@@ -104,75 +107,105 @@ const styles = theme => ( {
   }
 } );
 
-function EventPage( props: { classes: any, event: Event } ) {
 
-  const { url, title, description: eventDescription, date, images, location, type, comments, priceUnit } = props.event;
-  const { classes } = props;
-
-  function buy() {
-    navigate( `/buy/${url}`.replace( /\/+/g, "/" ) );
+class EventPage extends React.Component< { classes: any, event: Event }, any > {
+  constructor( props ) {
+    super( props );
+    this.state = {
+      text: "",
+    };
   }
 
-  return <div>
+  buy() {
+    navigate( `/buy/${this.props.url}`.replace( /\/+/g, "/" ) );
+  }
 
-    <div className={classes.flexContainerEvent}>
-      <div className={classes.imageContainer}>
-        <Slider images={images.slice( 1 )}/>
-      </div>
+  commentEvent( url ) {
+    let object = { url,
+      comment: {
+        author: this.props.user.username,
+        text: this.state.text,
+        date: new Date()
+      }
+    };
+    console.log( object );
+    this.props.comment( object );
+  }
 
-      <div className={classes.descriptionContiner}>
-        <Typography variant="h4" color="inherit">
-          <b>{title}</b>
-          <Button className={classes.buttonPurchase} variant="contained" onClick={buy}>
-            {priceUnit}€
-            <AddShoppingCartIcon className={classes.rightIcon}/>
-          </Button>
-        </Typography>
+  render() {
+    const { url, title, description: eventDescription, date, images, location, type, comments, priceUnit } = this.props.event;
+    const { classes } = this.props;
 
-        <Paper className={classes.scroll}>
-          <Typography className={classes.description} variant="subtitle1">
-            <b>Category: </b>{type}
-            <br/>
-            <b>Date: </b>{`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-            <br/>
-            <b>Location: </b>{location}
-            <br/>
-            {eventDescription}
+    return <div>
+      <div className={classes.flexContainerEvent}>
+        <div className={classes.imageContainer}>
+          <Slider images={images.slice( 1 )}/>
+        </div>
+
+        <div className={classes.descriptionContiner}>
+          <Typography variant="h4" color="inherit">
+            <b>{title}</b>
+            <Button className={classes.buttonPurchase} variant="contained" onClick={this.state.buy}>
+              {priceUnit}€
+              <AddShoppingCartIcon className={classes.rightIcon}/>
+            </Button>
           </Typography>
-        </Paper>
-      </div>
-    </div>
 
-    <div>
-      <div className={classes.flexContainerComment}>
-        <div className={classes.commentContainer}>
-          <TextField
-            id="standard-with-placeholder"
-            label="Your comment"
-            placeholder="Write your thoughts here!"
-            className={`${classes.textField} ${classes.comments}`}
-            margin="normal">
-          </TextField>
-        </div>
-
-        <div className={classes.commentButtonContiner}>
-          <Button variant="contained" size="small" color="primary" className={classes.buttonComment}>
-            Post
-          </Button>
+          <Paper className={classes.scroll}>
+            <Typography className={classes.description} variant="subtitle1">
+              <b>Category: </b>{type}
+              <br/>
+              <b>Date: </b>{`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+              <br/>
+              <b>Location: </b>{location}
+              <br/>
+              {eventDescription}
+            </Typography>
+          </Paper>
         </div>
       </div>
 
-      {comments.map( ( comment, i ) => {
-        return <Typography key={i} className={classes.comment} variant="body1">
-          <b>{comment.author.nickname}</b>
-          <br/>
-          <span className={classes.text}>{comment.text}</span>
-        </Typography>;
-      } )}
+      <div>
+        <div className={classes.flexContainerComment}>
+          <div className={classes.commentContainer}>
+            <TextField
+              id= "standard-with-placeholder"
+              label= "Your comment"
+              placeholder= "Write your thoughts here!"
+              onChange= { event => this.setState( { text: event.target.value } ) }
+              className={`${classes.textField} ${classes.comments}`}
+              margin="normal"
+            />
+          </div>
 
-    </div>
+          <div className={classes.commentButtonContiner}>
+            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={ () => this.commentEvent( url ) } >
+              Post
+            </Button>
+          </div>
+        </div>
 
-  </div>;
+        {comments.map( ( comment, i ) => {
+          return <Typography key={i} className={classes.comment} variant="body1">
+            <b>{comment.author}</b>
+            <br/>
+            <span className={classes.text}>{comment.text}</span>
+          </Typography>;
+        } )}
+      </div>
+    </div>;
+  }
 }
 
-export default withStyles( styles )( EventPage );
+function mapStateToProps( state ) {
+  return {
+    events: state.events,
+    user: state.users.loggedInUser
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { comment: commentEvent }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( EventPage ) );

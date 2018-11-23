@@ -130,7 +130,7 @@ function HomePage( props: { classes: any, events: Event[] } ) {
         <b>Highlights</b>
       </Typography>
       <div className={classes.imageContainer}>
-        <Slider images ={[ "/images/NOS/nos_alive_1.jpg", "/images/escapeRooms/wrongOne/wrongOne.jpg", "/images/NOS/nos_alive_2.jpg", "/images/escapeRooms/rightOne/rightOne3.jpg", "/images/NOS/nos_alive_3.jpg" ]}/>
+        <Slider images ={[ "/images/NOS/nos_alive_1.jpg", "/images/escapeRooms/wrongOne/wrongOne.jpg", "/images/escapeRooms/rightOne/rightOne3.jpg" ]}/>
       </div>
     </div>
 

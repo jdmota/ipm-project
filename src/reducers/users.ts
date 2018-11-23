@@ -10,7 +10,30 @@ const userList: User[] = [ {
   dateCreditCard: new Date(),
   cvv: 123,
   ticketList: [],
-} ];
+},
+{
+  id: "2",
+  email: "bestcostumer@gmail.com",
+  username: "theBest",
+  password: "best123",
+  fullName: "John Smith",
+  creditCardNumber: 3210,
+  dateCreditCard: new Date( 2020, 5, 20 ),
+  cvv: 2310,
+  ticketList: [],
+},
+{
+  id: "3",
+  email: "worstcustomer@gmail.com",
+  username: "theWorst",
+  password: "worst123",
+  fullName: "Die Potato",
+  creditCardNumber: 1230,
+  dateCreditCard: new Date( 2020, 5, 20 ),
+  cvv: 1230,
+  ticketList: [],
+},
+];
 
 const initialState = {
   userList,
