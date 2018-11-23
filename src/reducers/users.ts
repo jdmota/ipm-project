@@ -8,7 +8,7 @@ const userList: User[] = [ {
   fullName: "Stan Smith",
   creditCardNumber: "",
   dateCreditCard: new Date(),
-  cvc: "",
+  cvv: "",
   ticketList: [ {
     id: "",
     eventId: "",

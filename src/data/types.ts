@@ -11,7 +11,7 @@ export type User = {
   fullName: string|null,
   creditCardNumber: string|null,
   dateCreditCard: Date|null,
-  cvc: string|null,
+  cvv: string|null,
   ticketList: Ticket[]
 };
 
