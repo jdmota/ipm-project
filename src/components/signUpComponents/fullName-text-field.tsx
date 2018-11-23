@@ -35,19 +35,15 @@ function FullNameField( props: any ) {
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="signup-fullname"
         classes={{
-          // root: classes.cssLabel,
           focused: classes.cssFocused,
         }}
       >
         Full Name
       </InputLabel>
       <Input
-        id="custom-css-standard-input"
-        /* classes={{
-            underline: classes.cssUnderline,
-          }}*/
+        id="signup-fullname"
       />
     </FormControl>
   );

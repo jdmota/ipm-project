@@ -35,7 +35,7 @@ function CCVField( props: any ) {
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="signup-ccv"
         classes={{
           focused: classes.cssFocused,
         }}
@@ -43,7 +43,7 @@ function CCVField( props: any ) {
         CCV
       </InputLabel>
       <Input
-        id="custom-css-standard-input"
+        id="signup-ccv"
       />
     </FormControl>
   );

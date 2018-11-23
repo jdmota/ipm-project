@@ -37,23 +37,17 @@ function ExpirationDate( props: any ) {
     <div className={classes.container}>
       <FormControl className={`${classes.margin} ${classes.textField}`}>
         <InputLabel
-          htmlFor="custom-css-standard-input"
+          htmlFor="signup-expiration-date"
           classes={{
-            // root: classes.cssLabel,
             focused: classes.cssFocused,
           }}
         >
-        Expiration Date
+          Expiration Date
         </InputLabel>
         <Input
-          id="custom-css-standard-input"
-          /* classes={{
-            underline: classes.cssUnderline,
-          }}*/
+          id="signup-expiration-date"
           endAdornment={
-            <InputAdornment position="end">
-                  mm/yy
-            </InputAdornment>
+            <InputAdornment position="end">mm/yy</InputAdornment>
           }
         />
 

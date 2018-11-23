@@ -35,7 +35,7 @@ function CardNumberField( props: any ) {
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="signup-card-number"
         classes={{
           focused: classes.cssFocused,
         }}
@@ -43,7 +43,7 @@ function CardNumberField( props: any ) {
         Credit Card Number
       </InputLabel>
       <Input
-        id="custom-css-standard-input"
+        id="signup-card-number"
       />
     </FormControl>
   );

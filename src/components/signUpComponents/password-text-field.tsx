@@ -52,9 +52,9 @@ class PasswordTextField extends React.Component<any, any> {
     return (
       <div className={classes.root}>
         <FormControl className={`${classes.margin} ${classes.textField}`}>
-          <InputLabel htmlFor="adornment-password">Password *</InputLabel>
+          <InputLabel htmlFor="signup-password">Password *</InputLabel>
           <Input
-            id="adornment-password"
+            id="signup-password"
             type={this.state.showPassword ? "text" : "password"}
             value={this.state.password}
             onChange={this.handleChange( "password" )}

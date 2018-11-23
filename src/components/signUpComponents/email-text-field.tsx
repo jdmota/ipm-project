@@ -35,7 +35,7 @@ function EmailField( props: any ) {
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="signup-email"
         classes={{
           focused: classes.cssFocused,
         }}
@@ -43,7 +43,7 @@ function EmailField( props: any ) {
         Email address *
       </InputLabel>
       <Input
-        id="custom-css-standard-input"
+        id="signup-email"
         onChange= { event => onChange( event.target.value )}
       />
     </FormControl>

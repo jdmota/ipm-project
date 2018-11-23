@@ -35,7 +35,7 @@ function UsernameField( props: any ) {
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
       <InputLabel
-        htmlFor="custom-css-standard-input"
+        htmlFor="signup-username"
         classes={{
           focused: classes.cssFocused,
         }}
@@ -43,8 +43,8 @@ function UsernameField( props: any ) {
         Username *
       </InputLabel>
       <Input
-        id="custom-css-standard-input"
-        onChange= { event => onChange( event.target.value ) }
+        id="signup-username"
+        onChange={event => onChange( event.target.value )}
       />
     </FormControl>
   );
