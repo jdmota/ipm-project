@@ -201,6 +201,10 @@ class SignUpPage extends React.Component<any, any> {
       this.setState( { errorMsg: "Your passwords do not match." } );
       return;
     }
+    if ( this.props.users.find( u => u.email === email || u.username === username ) ) {
+      this.setState( { errorMsg: "There is already a user with the same email or username." } );
+      return;
+    }
     this.setState( { errorMsg: "" } );
     this.props.addUser( {
       email,
