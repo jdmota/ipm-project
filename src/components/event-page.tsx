@@ -121,6 +121,7 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
   }
 
   commentEvent( url ) {
+    console.log( url );
     let object = { url,
       comment: {
         author: this.props.user.username,
@@ -128,7 +129,6 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
         date: new Date()
       }
     };
-    console.log( object );
     this.props.comment( object );
   }
 

@@ -80,27 +80,21 @@ const events: Event[] = [
 export default function( state = events, action ) {
   switch ( action.type ) {
     case "COMMENT_EVENT":
-      /* let EventCommented;
-      const eventList = state.events.map( event => {
-        if ( Este evento for o comentado ) {
-          EventCommented = {
-          // @ts-ignore
-            ...user,
-            ticketList: [
-              ...user.ticketList,
-              ...action.payload
+    {
+      const eventList = state.map( event => {
+        if ( action.eventurl === event.url ) {
+          return {
+            ...event,
+            comments: [
+              ...event.comments,
+              action.comment
             ]
           };
-          return loggedInUser;
         }
-        return user;
+        return event;
       } );
-      return {
-        userList,
-        loggedInUser
-      };
-    */
-      return state;
+      return eventList;
+    }
     default:
       return state;
   }
