@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import MotorcycleOutlined from "@material-ui/icons/MotorcycleOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
@@ -20,9 +21,12 @@ const styles = {
   popper: {
     zIndex: 20
   },
-  MenuList: {
-    overflow: "visible",
-  },
+  loggedInButton: {
+    background: "#0dd20d",
+    "&:hover": {
+      background: "#00b500",
+    }
+  }
 };
 
 const noop = () => {};
@@ -82,9 +86,10 @@ class MenuListComposition extends React.Component<any, any> {
             color="inherit"
             aria-owns={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
+            className={loggedInUser ? classes.loggedInButton : ""}
             onClick={this.handleToggle}
           >
-            <AccountCircle />
+            {loggedInUser ? <MotorcycleOutlined /> : <AccountCircle />}
           </IconButton>
           <Popper
             open={open}
