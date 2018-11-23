@@ -17,7 +17,7 @@ class CenteredTabs extends React.Component<any, any> {
 
   render() {
     return (
-      <Paper>
+      <Paper style={{ borderRadius: 0 }}>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}

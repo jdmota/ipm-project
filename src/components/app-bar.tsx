@@ -29,7 +29,7 @@ const styles = theme => ( {
     marginRight: 24
   },
   appBar: {
-    zIndex: 2
+    zIndex: 20
   },
   home: {
     cursor: "pointer"
@@ -49,7 +49,7 @@ function OurAppBar( props: OurAppBarProps ) {
   const { classes, onLeftDrawerToggle } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
             <MenuIcon />

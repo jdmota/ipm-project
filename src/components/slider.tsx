@@ -55,13 +55,13 @@ const styles = {
     position: "absolute",
     top: "50%",
     left: "25px",
-    zIndex: 20,
+    zIndex: 10,
   },
   rightArrow: {
     position: "absolute",
     top: "50%",
     right: "25px",
-    zIndex: 20,
+    zIndex: 10,
   }
 };
 

@@ -24,15 +24,16 @@ type MainProps = {
 };
 
 const styles = {
+  top: {
+    marginTop: 64,
+  },
   main: {
     maxWidth: "1300px",
     margin: "auto",
-    marginTop: 30,
-    marginBottom: 100
   },
-  margin: {
-    marginLeft: 50,
-    marginRight: 50
+  padding: {
+    padding: 30,
+    paddingBottom: 100
   }
 };
 
@@ -90,16 +91,16 @@ class Main extends React.Component<MainProps, MainState> {
       }
     }
 
-    return <>
+    return <div className={classes.top}>
       {pathname === "/" && <TabsBar />}
       <div className={classes.main}>
-        <div className={classes.margin}>
+        <div className={classes.padding}>
           <Suspense fallback={<div>Loading...</div>}>
             {component}
           </Suspense>
         </div>
       </div>
-    </>;
+    </div>;
   }
 }
 
