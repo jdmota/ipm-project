@@ -79,15 +79,14 @@ const events: Event[] = [
 
 export default function( state = events, action ) {
   switch ( action.type ) {
-    case "COMMENT_EVENT":
-    {
+    case "COMMENT_EVENT": {
       const eventList = state.map( event => {
-        if ( action.eventurl === event.url ) {
+        if ( action.eventUrl === event.url ) {
           return {
             ...event,
             comments: [
-              ...event.comments,
-              action.comment
+              action.comment, // Show first
+              ...event.comments
             ]
           };
         }

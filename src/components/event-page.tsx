@@ -108,7 +108,7 @@ const styles = theme => ( {
 } );
 
 
-class EventPage extends React.Component< { classes: any, event: Event }, any > {
+class EventPage extends React.Component<any, any > {
   constructor( props ) {
     super( props );
     this.state = {
@@ -116,25 +116,25 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
     };
   }
 
-  buy() {
-    navigate( `/buy/${this.props.url}`.replace( /\/+/g, "/" ) );
-  }
+  buy = () => {
+    navigate( `/buy/${this.props.eventUrl}`.replace( /\/+/g, "/" ) );
+  };
 
-  commentEvent( url ) {
-    console.log( url );
-    let object = { url,
+  commentEvent = () => {
+    this.props.commentEvent( {
+      eventUrl: this.props.eventUrl,
       comment: {
         author: this.props.user.username,
         text: this.state.text,
         date: new Date()
       }
-    };
-    this.props.comment( object );
-  }
+    } );
+  };
 
   render() {
-    const { url, title, description: eventDescription, date, images, location, type, comments, priceUnit } = this.props.event;
-    const { classes } = this.props;
+    const { classes, events, eventUrl } = this.props;
+    const event = events.find( event => event.url === eventUrl );
+    const { title, description, date, images, location, type, comments, priceUnit } = event;
 
     return <div>
       <div className={classes.flexContainerEvent}>
@@ -145,7 +145,7 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
         <div className={classes.descriptionContiner}>
           <Typography variant="h4" color="inherit">
             <b>{title}</b>
-            <Button className={classes.buttonPurchase} variant="contained" onClick={this.state.buy}>
+            <Button className={classes.buttonPurchase} variant="contained" onClick={this.buy}>
               {priceUnit}€
               <AddShoppingCartIcon className={classes.rightIcon}/>
             </Button>
@@ -159,7 +159,7 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
               <br/>
               <b>Location: </b>{location}
               <br/>
-              {eventDescription}
+              {description}
             </Typography>
           </Paper>
         </div>
@@ -169,17 +169,18 @@ class EventPage extends React.Component< { classes: any, event: Event }, any > {
         <div className={classes.flexContainerComment}>
           <div className={classes.commentContainer}>
             <TextField
-              id= "standard-with-placeholder"
-              label= "Your comment"
-              placeholder= "Write your thoughts here!"
-              onChange= { event => this.setState( { text: event.target.value } ) }
+              id="standard-with-placeholder"
+              label="Your comment"
+              placeholder="Write your thoughts here!"
+              value={this.state.text}
+              onChange={event => this.setState( { text: event.target.value } )}
               className={`${classes.textField} ${classes.comments}`}
               margin="normal"
             />
           </div>
 
           <div className={classes.commentButtonContiner}>
-            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={ () => this.commentEvent( url ) } >
+            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={() => this.commentEvent()} >
               Post
             </Button>
           </div>
@@ -205,7 +206,7 @@ function mapStateToProps( state ) {
 }
 
 function mapDispatchToProps( dispatch ) {
-  return bindActionCreators( { comment: commentEvent }, dispatch );
+  return bindActionCreators( { commentEvent }, dispatch );
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( EventPage ) );
