@@ -120,6 +120,10 @@ class EventPage extends React.Component<any, any > {
     navigate( `/buy/${this.props.eventUrl}`.replace( /\/+/g, "/" ) );
   };
 
+  login = () => {
+    navigate( "/sign-in" );
+  };
+
   commentEvent = () => {
     if ( this.state.text ) {
       this.setState( { text: "" } );
@@ -141,9 +145,11 @@ class EventPage extends React.Component<any, any > {
   }
 
   render() {
-    const { classes, events, eventUrl } = this.props;
+    const { classes, user, events, eventUrl } = this.props;
     const event = events.find( event => event.url === eventUrl );
     const { title, description, date, images, location, type, comments, priceUnit } = event;
+
+    const loggedIn = !!user;
 
     return <div>
       <div className={classes.flexContainerEvent}>
@@ -178,21 +184,40 @@ class EventPage extends React.Component<any, any > {
         <div className={classes.flexContainerComment}>
           <div className={classes.commentContainer}>
             <TextField
-              id="standard-with-placeholder"
-              label="Your comment"
-              placeholder="Write your thoughts here!"
+              id="comment"
+              label={loggedIn ? "Write your thoughts here!" : "You must login to comment here!"}
+              placeholder={loggedIn ? "Write your thoughts here!" : "You must login to comment here!"}
               value={this.state.text}
               onChange={event => this.setState( { text: event.target.value } )}
               onKeyUp={this.handleKeyUp}
               className={`${classes.textField} ${classes.comments}`}
               margin="normal"
+              disabled={!loggedIn}
             />
           </div>
 
           <div className={classes.commentButtonContiner}>
-            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={this.commentEvent}>
-              Post
-            </Button>
+            {
+              loggedIn ?
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="primary"
+                  className={classes.buttonComment}
+                  onClick={this.commentEvent}
+                >
+                  Post
+                </Button> :
+                <Button
+                  variant="contained"
+                  size="small"
+                  color="primary"
+                  className={classes.buttonComment}
+                  onClick={this.login}
+                >
+                  LogIn
+                </Button>
+            }
           </div>
         </div>
 
