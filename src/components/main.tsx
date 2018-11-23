@@ -7,6 +7,7 @@ import TabsBar from "./appbar-type";
 const HomePage = lazy( () => import( "./home-page" ) );
 const EventPage = lazy( () => import( "./event-page" ) );
 const EventList = lazy( () => import( "./event-card-list" ) );
+const PageOrLogin = lazy( () => import( "./page-or-login" ) );
 const SignInPage = lazy( () => import( "./signIn-page" ) );
 const SignUpPage = lazy( () => import( "./signUp-page" ) );
 const TicketExchange = lazy( () => import( "./ticket-exchange/ticket-exchange" ) );
@@ -64,13 +65,17 @@ class Main extends React.Component<MainProps, MainState> {
         component = <EventList />;
         break;
       case "/sign-in":
-        component = <SignInPage />;
+        component = <PageOrLogin reversed><SignInPage /></PageOrLogin>;
         break;
       case "/sign-up":
-        component = <SignUpPage />;
+        component = <PageOrLogin reversed><SignUpPage /></PageOrLogin>;
         break;
       case "/ticket-exchange":
-        component = <TicketExchange onRightDrawerToggle={this.props.onRightDrawerToggle} />;
+        component = (
+          <PageOrLogin>
+            <TicketExchange onRightDrawerToggle={this.props.onRightDrawerToggle} />
+          </PageOrLogin>
+        );
         break;
       default: {
         const eventUrl = pathname.replace( /^\/buy/, "" );
@@ -78,7 +83,7 @@ class Main extends React.Component<MainProps, MainState> {
 
         const event = getEventByUrl( eventUrl );
         if ( event ) {
-          component = isBuy ? <PaymentPage event={event} /> : <EventPage event={event} />;
+          component = isBuy ? <PageOrLogin><PaymentPage event={event} /></PageOrLogin> : <EventPage event={event} />;
         } else {
           component = <p>Not found.</p>;
         }

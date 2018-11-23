@@ -131,7 +131,9 @@ class SignInPage extends React.Component<any, any> {
     } else {
       this.setState( { errorMsg: "" } );
       this.props.loginUser( user );
-      navigateBack();
+      if ( !this.props.dontRedirect ) {
+        navigateBack();
+      }
     }
   }
 
