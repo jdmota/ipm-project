@@ -30,7 +30,7 @@ module.exports = {
   output: {
     path: DEPLOY ? path.join( __dirname, "docs" ) : path.join( __dirname, "dist" ),
     filename: "index.js",
-    publicPath: DEPLOY ? "/ipm-project" : "/"
+    publicPath: DEPLOY ? "/ipm-project/" : "/"
   },
   resolve: {
     extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
