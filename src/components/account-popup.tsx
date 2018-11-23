@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import IconButton from "@material-ui/core/IconButton";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -9,6 +11,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
 import { navigate } from "../helpers/router";
+import { logoutUser } from "../actions/userActions";
 
 const styles = {
   root: {
@@ -22,7 +25,9 @@ const styles = {
   },
 };
 
-class MenuListComposition extends React.Component {
+const noop = () => {};
+
+class MenuListComposition extends React.Component<any, any> {
   state = {
     open: false,
   };
@@ -31,11 +36,11 @@ class MenuListComposition extends React.Component {
     this.setState( state => ( { open: !state.open } ) );
   };
 
-  handleClose = event => {
-    if ( this.anchorEl.contains( event.target ) ) {
+  handleClose = ( event, cb = noop ) => {
+    if ( this.anchorEl && this.anchorEl.contains( event.target ) ) {
       return;
     }
-    this.setState( { open: false } );
+    this.setState( { open: false }, cb );
   };
 
   createAccount = event => {
@@ -48,17 +53,32 @@ class MenuListComposition extends React.Component {
     navigate( "/sign-in" );
   };
 
+  logout = event => {
+    this.handleClose( event, () => {
+      setTimeout( () => {
+        this.props.logoutUser();
+        navigate( "/" );
+      }, 100 );
+    } );
+  }
+
   render() {
     const { classes } = this.props;
     const { open } = this.state;
+    const { loggedInUser } = this.props.users;
+
+    const list = loggedInUser ?
+      <MenuItem key="logout" onClick={this.logout}>Logout</MenuItem> :
+      [
+        <MenuItem key="signin" onClick={this.createAccount}>Create Account</MenuItem>,
+        <MenuItem key="login" onClick={this.login}>Login</MenuItem>
+      ];
 
     return (
       <div className={classes.root}>
         <div>
           <IconButton
-            buttonRef={node => {
-              this.anchorEl = node;
-            }}
+            buttonRef={node => { this.anchorEl = node; }}
             color="inherit"
             aria-owns={open ? "menu-list-grow" : undefined}
             aria-haspopup="true"
@@ -84,8 +104,7 @@ class MenuListComposition extends React.Component {
                 <Paper>
                   <ClickAwayListener onClickAway={this.handleClose}>
                     <MenuList>
-                      <MenuItem onClick={this.createAccount}>Create Account</MenuItem>
-                      <MenuItem onClick={this.login}>Login</MenuItem>
+                      {list}
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>
@@ -98,4 +117,14 @@ class MenuListComposition extends React.Component {
   }
 }
 
-export default withStyles( styles )( MenuListComposition );
+function mapStateToProps( state ) {
+  return {
+    users: state.users
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { logoutUser: logoutUser }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( MenuListComposition ) );
