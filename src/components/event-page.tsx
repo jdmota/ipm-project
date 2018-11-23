@@ -121,16 +121,24 @@ class EventPage extends React.Component<any, any > {
   };
 
   commentEvent = () => {
-    this.setState( { text: "" } );
-    this.props.commentEvent( {
-      eventUrl: this.props.eventUrl,
-      comment: {
-        author: this.props.user.username,
-        text: this.state.text,
-        date: new Date()
-      }
-    } );
+    if ( this.state.text ) {
+      this.setState( { text: "" } );
+      this.props.commentEvent( {
+        eventUrl: this.props.eventUrl,
+        comment: {
+          author: this.props.user.username,
+          text: this.state.text,
+          date: new Date()
+        }
+      } );
+    }
   };
+
+  handleKeyUp = ( e: any ) => {
+    if ( e.charCode === 13 || e.key === "Enter" ) {
+      this.commentEvent();
+    }
+  }
 
   render() {
     const { classes, events, eventUrl } = this.props;
@@ -175,13 +183,14 @@ class EventPage extends React.Component<any, any > {
               placeholder="Write your thoughts here!"
               value={this.state.text}
               onChange={event => this.setState( { text: event.target.value } )}
+              onKeyUp={this.handleKeyUp}
               className={`${classes.textField} ${classes.comments}`}
               margin="normal"
             />
           </div>
 
           <div className={classes.commentButtonContiner}>
-            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={() => this.commentEvent()} >
+            <Button variant="contained" size="small" color="primary" className={classes.buttonComment} onClick={this.commentEvent}>
               Post
             </Button>
           </div>
