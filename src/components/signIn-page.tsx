@@ -115,19 +115,19 @@ class SignInPage extends React.Component<any, any> {
 
   state = {
     errorMsg: "",
-    username: "",
+    usernameOrEmail: "",
     password: "",
   };
 
   login = () => {
-    const { username, password } = this.state;
-    const user = this.props.users.userList.find( user => user.username === username );
-    if ( !username || !password ) {
-      this.setState( { errorMsg: "Please fill your username and password." } );
+    const { usernameOrEmail, password } = this.state;
+    const user = this.props.users.userList.find( user => user.username === usernameOrEmail || user.email === usernameOrEmail );
+    if ( !usernameOrEmail || !password ) {
+      this.setState( { errorMsg: "Please fill your username/email and password." } );
       return;
     }
     if ( !user || user.password !== password ) {
-      this.setState( { errorMsg: "Wrong username or password." } );
+      this.setState( { errorMsg: "Wrong username/email or password." } );
     } else {
       this.setState( { errorMsg: "" } );
       this.props.loginUser( user );
@@ -152,7 +152,7 @@ class SignInPage extends React.Component<any, any> {
             <div className={classes.controls}>
               <div style={{ width: "100%", margin: "auto" }} >
                 <UsernameTextField
-                  onChange={username => this.setState( { username } )}
+                  onChange={usernameOrEmail => this.setState( { usernameOrEmail } )}
                   onEnter={() => this.login()}
                 />
               </div>
@@ -167,7 +167,7 @@ class SignInPage extends React.Component<any, any> {
             </div>
             <div className={classes.linkDiv}>
               <Typography variant="caption" color="inherit" align="center">
-                <a href="default.asp" className={classes.a}>Forgot your password?</a>
+                <a className={classes.a}>Forgot your password?</a>
               </Typography>
             </div>
             <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>

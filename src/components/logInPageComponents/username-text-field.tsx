@@ -41,7 +41,7 @@ function UsernameField( props: any ) {
   return (
     <div className={classes.root}>
       <FormControl className={`${classes.margin} ${classes.textField}`}>
-        <InputLabel htmlFor="login-username">Username</InputLabel>
+        <InputLabel htmlFor="login-username">Username or Email</InputLabel>
         <Input
           id="login-username"
           type="text"
