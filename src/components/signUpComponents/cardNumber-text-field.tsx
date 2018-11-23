@@ -45,7 +45,7 @@ function CardNumberField( props: any ) {
       <Input
         id="signup-card-number"
         type="number"
-        onChange={event => onChange( event.target.value )}
+        onChange={event => onChange( parseInt( event.target.value, 10 ) || undefined )}
       />
     </FormControl>
   );

@@ -102,11 +102,30 @@ class PaymentPage extends React.Component<any, any> {
     creditCardNumber: undefined,
     dateCreditCard: null,
     cvv: undefined,
+    errorMsg: "",
     openDialog: false
   };
 
-  handleClickOpen = () => {
-    this.setState( { openDialog: true } );
+  buy = () => {
+    const { email, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
+    console.log(this.state);
+    if ( !email || !fullName || !creditCardNumber || !dateCreditCard || !cvv ) {
+      this.setState( { errorMsg: "Please fill the required fields." } );
+      return;
+    }
+    if ( !/@/.test( email ) ) {
+      this.setState( { errorMsg: "Please provide a valid email address." } );
+      return;
+    }
+    this.setState( { errorMsg: "", openDialog: true } );
+  };
+
+  cancelBuy = () => {
+
+  };
+
+  confirmBuy = () => {
+
   };
 
   handleClose = () => {
@@ -184,7 +203,7 @@ class PaymentPage extends React.Component<any, any> {
 
                 <div className={classes.margin}>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="fullname">Full name</InputLabel>
+                    <InputLabel htmlFor="fullname">Full name *</InputLabel>
                     <Input
                       id="fullname"
                       required
@@ -213,8 +232,8 @@ class PaymentPage extends React.Component<any, any> {
                       id="credit-card"
                       type="number"
                       required
-                      value={this.state.creditCardNumber}
-                      onChange={e => this.setState( { creditCardNumber: e.target.value } )}
+                      value={this.state.creditCardNumber || ""}
+                      onChange={e => this.setState( { creditCardNumber: parseInt( e.target.value, 10 ) || undefined } )}
                     />
                   </FormControl>
                 </div>
@@ -224,7 +243,7 @@ class PaymentPage extends React.Component<any, any> {
                     <InlineDatePicker
                       keyboard
                       clearable
-                      label="Expiration Date (MM/yyyy)"
+                      label="Expiration Date (MM/yyyy) *"
                       value={this.state.dateCreditCard}
                       onChange={dateCreditCard => this.setState( { dateCreditCard } )}
                       format="MM/yyyy"
@@ -239,12 +258,16 @@ class PaymentPage extends React.Component<any, any> {
                       id="cvv"
                       type="number"
                       required
-                      onChange={cvv => this.setState( { cvv } )}
+                      value={this.state.cvv || ""}
+                      onChange={e => this.setState( { cvv: parseInt( e.target.value, 10 ) || undefined } )}
                     />
                   </FormControl>
                 </div>
-                <div style={{ paddingLeft: 15 }}>
+                <div style={{ padding: 8 }}>
                   <Typography color="inherit" variant="caption">* Required Fields</Typography>
+                </div>
+                <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
+                  <Typography color="error">{this.state.errorMsg}</Typography>
                 </div>
               </CardContent>
             </Card>
@@ -298,7 +321,7 @@ class PaymentPage extends React.Component<any, any> {
                 <span><b>€</b></span>
               </Typography>
               <div style={{ marginTop: 20 }}>
-                <Button variant="contained" size="large" color="primary" onClick={this.handleClickOpen}>Buy!</Button>
+                <Button variant="contained" size="large" color="primary" onClick={this.buy}>Buy!</Button>
               </div>
             </div>
           </div>
@@ -315,10 +338,10 @@ class PaymentPage extends React.Component<any, any> {
               {"Are you sure you want to confirm this purchase?"}
             </DialogTitle>
             <DialogActions style={{ display: "initial", margin: "auto" }}>
-              <Button onClick={this.handleClose} color="primary">
+              <Button onClick={this.cancelBuy} color="primary">
                 No
               </Button>
-              <Button onClick={this.handleClose} color="primary" autoFocus>
+              <Button onClick={this.confirmBuy} color="primary" autoFocus>
                 Yes
               </Button>
             </DialogActions>

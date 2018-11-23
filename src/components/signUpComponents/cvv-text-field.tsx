@@ -45,7 +45,7 @@ function CVVField( props: any ) {
       <Input
         id="signup-cvv"
         type="number"
-        onChange={event => onChange( event.target.value )}
+        onChange={event => onChange( parseInt( event.target.value, 10 ) || undefined )}
       />
     </FormControl>
   );
