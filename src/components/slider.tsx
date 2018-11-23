@@ -22,17 +22,20 @@ const styles = {
     margin: "0 auto",
     height: "100%",
     overflow: "hidden",
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    borderRadius: 25
+
   },
   sliderWrapper: {
     position: "relative",
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   slide: {
     display: "inline-block",
     height: "100%",
-    width: "100%"
+    width: "100%",
+
   },
   arrow: {
     height: "50px",
