@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import SwapIcon from "@material-ui/icons/SwapHoriz";
 import { Event } from "../data/types";
-import { navigate } from "../helpers/router";
+import { navigate, fixPathname } from "../helpers/router";
 import Slider from "./slider";
 
 const styles = theme => ( {
@@ -138,7 +138,11 @@ function HomePage( props: { classes: any, events: Event[] } ) {
         <b>Highlights</b>
       </Typography>
       <div className={classes.imageContainer}>
-        <Slider images ={[ "/images/NOS/nos_alive_1.jpg", "/images/escapeRooms/wrongOne/wrongOne.jpg", "/images/escapeRooms/rightOne/rightOne3.jpg" ]}/>
+        <Slider images ={[
+          "/images/NOS/nos_alive_1.jpg",
+          "/images/escapeRooms/wrongOne/wrongOne.jpg",
+          "/images/escapeRooms/rightOne/rightOne3.jpg"
+        ].map( fixPathname )}/>
       </div>
     </div>
 

@@ -9,8 +9,12 @@ export function getPathname() {
   return location.pathname.replace( /^\/ipm-project/, "" ).replace( /\/+$/, "" ) || "/";
 }
 
+export function fixPathname( wanted: string ) {
+  return location.origin === "https://jdmota.github.io" ? `/ipm-project${wanted}` : wanted;
+}
+
 function historyPush( wanted: string ) {
-  const wantedPath = location.origin === "https://jdmota.github.io" ? `/ipm-project${wanted}` : wanted;
+  const wantedPath = fixPathname( wanted );
 
   if ( wantedPath === location.pathname ) {
     return false;

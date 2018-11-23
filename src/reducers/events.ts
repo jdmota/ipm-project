@@ -1,3 +1,4 @@
+import { fixPathname } from "../helpers/router";
 import { Event } from "../data/types";
 
 const events: Event[] = [
@@ -12,7 +13,7 @@ const events: Event[] = [
       "/images/NOS/nos_alive_1.jpg",
       "/images/NOS/nos_alive_2.jpg",
       "/images/NOS/nos_alive_3.jpg"
-    ],
+    ].map( fixPathname ),
     type: "Festival",
     location: "Alges",
     priceUnit: 50,
@@ -34,7 +35,7 @@ const events: Event[] = [
     date: new Date(),
     images: [
       "/images/aPiorComediaDoMundo/img1.jpg"
-    ],
+    ].map( fixPathname ),
     type: "Theater",
     location: "Lisboa",
     comments: [],
@@ -52,7 +53,7 @@ const events: Event[] = [
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
       "/images/escapeRooms/wrongOne/wrongOne4.jpg"
-    ],
+    ].map( fixPathname ),
     type: "Other",
     location: "Almada",
     comments: [],
@@ -69,7 +70,7 @@ const events: Event[] = [
       "/images/escapeRooms/rightOne/rightOne.jpg",
       "/images/escapeRooms/rightOne/rightOne2.jpg",
       "/images/escapeRooms/rightOne/rightOne3.jpg"
-    ],
+    ].map( fixPathname ),
     type: "Other",
     location: "Almada",
     comments: [],
