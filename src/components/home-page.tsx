@@ -7,9 +7,9 @@ import CardHeader from "@material-ui/core/CardHeader";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import SwapIcon from "@material-ui/icons/SwapHoriz";
-import { Event } from "src/data/types";
+import { Event } from "../data/types";
+import { navigate } from "../helpers/router";
 import Slider from "./slider";
-
 
 const styles = theme => ( {
   container: {
@@ -57,6 +57,7 @@ const styles = theme => ( {
   imageContainer: {
     width: "94%",
     height: 450,
+    margin: "auto",
     marginTop: 15,
     marginBottom: 15,
   },
@@ -103,10 +104,6 @@ const styles = theme => ( {
   next: {
     marginTop: 0
   },
-  outside: {
-    marginLeft: 100,
-    marginRight: 40
-  },
   icon: {
     color: "rgb(180, 180, 180)",
   },
@@ -124,163 +121,157 @@ function HomePage( props: { classes: any, events: Event[] } ) {
   const { title, date, location, type, priceUnit } = props.events[ 0 ];
 
   return <div>
-
-    <div className={classes.outside}>
-
-      <div>
-        <Typography variant="h4" color="inherit" >
-          <b>Highlights</b>
-        </Typography>
-
-        {/* <div className={classes.sizeHighlight}>
-        <Card className={classes.cardHighlight}>
-          <CardHeader
-            className={classes.forceHighlight}
-            avatar={
-              <div className={classes.imageHighlight}>
-                <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-              </div>
-            }
-            title={title}
-            subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-          />
-        </Card>
-          </div>*/}
-        <div className={classes.imageContainer}>
-          <Slider/>
-        </div>
-
+    <div>
+      <Typography variant="h4" color="inherit" >
+        <b>Highlights</b>
+      </Typography>
+      <div className={classes.imageContainer}>
+        <Slider/>
       </div>
+    </div>
 
-      <div onClick ="location.href = '#'" style= {{ backgroundColor: "#cccccc", height: 100, width: "94%", minWidth: "94%", borderRadius: 20, marginBottom: 30, cursor: "pointer" }} >
-        <div style = {{ float: "left", marginLeft: 330, marginRight: 20 }}><SwapIcon fontSize = "inherit" style={{ fontSize: 100, marginLeft: 20 }}></SwapIcon>
-        </div>
-        <div style = {{ paddingTop: 15 }}>
-          <div><Typography variant = "display2" style = {{ fontSize: "2vw" }}><b style= {{ color: "#000000" }}>Exchange Your Tickets Here</b></Typography></div>
-          <div style ={{ marginTop: 10 }}><Typography variant = "display2" style = {{ fontSize: "1vw" }}><b style= {{ color: "#000000" }}>The first platform to provide online ticket exchange!</b></Typography></div>
+    <div
+      onClick={() => navigate( "/ticket-exchange" )}
+      style={{ backgroundColor: "#cccccc", height: 100, width: "100%", borderRadius: 20, marginBottom: 30, cursor: "pointer" }}
+    >
+      <div
+        style={{ margin: "auto", width: 490 }}
+      >
+        <SwapIcon fontSize="inherit" style={{ fontSize: 100, float: "left", marginRight: 20 }}></SwapIcon>
+        <div style={{ paddingTop: 15 }}>
+          <div>
+            <Typography variant="display2" style={{ fontSize: "2vw" }}>
+              <b style={{ color: "#000000" }}>Exchange Your Tickets Here</b>
+            </Typography>
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <Typography variant="display2" style={{ fontSize: "1vw" }}>
+              <b style={{ color: "#000000" }}>The first platform to provide online ticket exchange!</b>
+            </Typography>
+          </div>
         </div>
       </div>
+    </div>
 
-      <div className={classes.container}>
-        <div className={classes.mostPopularContainer}>
-          <Typography variant="h4" color="inherit">
-            <b>Most Popular</b>
-          </Typography>
-
-          <div className={classes.size}>
-            <Card className={classes.card}>
-
-              <CardHeader
-                className={classes.force}
-                classes = {
-                  { action: classes.action }
-                }
-                avatar={
-                  <div className={classes.image}>
-                    <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                  </div>
-                }
-                action={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
-                title={title}
-                subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-              />
-
-            </Card>
-          </div>
-
-          <div className={`${classes.size} ${classes.next}`}>
-            <Card className={classes.card}>
-              <CardHeader
-                className={classes.force}
-                classes = {
-                  { action: classes.action }
-                }
-                avatar={
-                  <div className={classes.image}>
-                    <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                  </div>
-                }
-                action={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
-                title={title}
-                subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-              ></CardHeader>
-            </Card>
-          </div>
-        </div>
-
-
-        <div className={classes.recentlyAnnouncedContiner}>
-          <Typography variant="h4" color="inherit">
-            <b>Recently Announced</b>
-          </Typography>
-
-          <div className={classes.size}>
-            <Card className={classes.card}>
-              <CardHeader
-                className={classes.force}
-                classes = {
-                  { action: classes.action }
-                }
-                avatar={
-                  <div className={classes.image}>
-                    <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                  </div>
-                }
-                action={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
-                title={title}
-                subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-              />
-            </Card>
-          </div>
-
-          <div className={`${classes.size} ${classes.next}`}>
-            <Card className={classes.card}>
-              <CardHeader
-                className={classes.force}
-                classes = {
-                  { action: classes.action }
-                }
-                avatar={
-                  <div className={classes.image}>
-                    <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
-                  </div>
-                }
-                action={
-                  <IconButton className={classes.icon}>
-                    <InfoIcon />
-                  </IconButton>
-                }
-                title={title}
-                subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
-              />
-            </Card>
-          </div>
-
-        </div>
-      </div>
-
-      <div>
-        {/* nr de div igual ao nr de patrocinios*/}
+    <div className={classes.container}>
+      <div className={classes.mostPopularContainer}>
         <Typography variant="h4" color="inherit">
-          <b>Sponsors</b>
+          <b>Most Popular</b>
         </Typography>
+
+        <div className={classes.size}>
+          <Card className={classes.card}>
+
+            <CardHeader
+              className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
+              avatar={
+                <div className={classes.image}>
+                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
+                </div>
+              }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+              title={title}
+              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+            />
+
+          </Card>
+        </div>
+
+        <div className={`${classes.size} ${classes.next}`}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
+              avatar={
+                <div className={classes.image}>
+                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
+                </div>
+              }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+              title={title}
+              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+            ></CardHeader>
+          </Card>
+        </div>
       </div>
 
-      <div>
-        {/* "Quem somos?"*/}
+
+      <div className={classes.recentlyAnnouncedContiner}>
+        <Typography variant="h4" color="inherit">
+          <b>Recently Announced</b>
+        </Typography>
+
+        <div className={classes.size}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
+              avatar={
+                <div className={classes.image}>
+                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
+                </div>
+              }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+              title={title}
+              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+            />
+          </Card>
+        </div>
+
+        <div className={`${classes.size} ${classes.next}`}>
+          <Card className={classes.card}>
+            <CardHeader
+              className={classes.force}
+              classes = {
+                { action: classes.action }
+              }
+              avatar={
+                <div className={classes.image}>
+                  <img height={110} src={"/images/NOS/nos_alive_4.jpg"}/>
+                </div>
+              }
+              action={
+                <IconButton className={classes.icon}>
+                  <InfoIcon />
+                </IconButton>
+              }
+              title={title}
+              subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+            />
+          </Card>
+        </div>
+
       </div>
+    </div>
+
+    <div>
+      {/* nr de div igual ao nr de patrocinios*/}
+      <Typography variant="h4" color="inherit">
+        <b>Sponsors</b>
+      </Typography>
+    </div>
+
+    <div>
+      {/* "Quem somos?"*/}
     </div>
   </div>;
 }

@@ -1,33 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-};
+const styles = {};
 
-class CenteredTabs extends React.Component {
+class CenteredTabs extends React.Component<any, any> {
   state = {
-    value: false,
+    value: 0
   };
 
   handleChange = ( event, value ) => {
     this.setState( { value } );
-
   };
 
   render() {
-    const { classes } = this.props;
-
-    // se nao quisermos nenhuma tab seleccionada meter value a false
-
     return (
-      <Paper className={classes.root}>
+      <Paper>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -35,6 +25,7 @@ class CenteredTabs extends React.Component {
           textColor="primary"
           centered
         >
+          <Tab label="Highlights" />
           <Tab label="Festivals" />
           <Tab label="Concerts" />
           <Tab label="Theathers" />
@@ -43,9 +34,5 @@ class CenteredTabs extends React.Component {
     );
   }
 }
-
-CenteredTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles( styles )( CenteredTabs );

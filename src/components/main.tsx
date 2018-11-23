@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { installRouter } from "../helpers/router";
 import { getEventByUrl } from "../helpers/search";
+import TabsBar from "./appbar-type";
 
 const HomePage = lazy( () => import( "./home-page" ) );
 const EventPage = lazy( () => import( "./event-page" ) );
@@ -23,14 +24,14 @@ type MainProps = {
 
 const styles = {
   main: {
-    maxWidth: "1600px",
+    maxWidth: "1300px",
     margin: "auto",
     marginTop: 30,
     marginBottom: 100
   },
   margin: {
-    marginLeft: 30,
-    marginRight: 30
+    marginLeft: 50,
+    marginRight: 50
   }
 };
 
@@ -68,6 +69,9 @@ class Main extends React.Component<MainProps, MainState> {
       case "/sign-up":
         component = <SignUpPage />;
         break;
+      case "/ticket-exchange":
+        component = <TicketExchange onRightDrawerToggle={this.props.onRightDrawerToggle} />;
+        break;
       default: {
         const eventUrl = pathname.replace( /^\/buy/, "" );
         const isBuy = eventUrl !== pathname;
@@ -81,20 +85,17 @@ class Main extends React.Component<MainProps, MainState> {
       }
     }
 
-    return <div className={classes.main}>
-      <div className={classes.margin}>
-        <Suspense fallback={<div>Loading...</div>}>
-          {component}
-        </Suspense>
+    return <>
+      {pathname === "/" && <TabsBar />}
+      <div className={classes.main}>
+        <div className={classes.margin}>
+          <Suspense fallback={<div>Loading...</div>}>
+            {component}
+          </Suspense>
+        </div>
       </div>
-    </div>;
+    </>;
   }
 }
-
-/*
-<TicketExchange
-  onRightDrawerToggle={this.props.onRightDrawerToggle}
-/>
-*/
 
 export default withStyles( styles )( Main );
