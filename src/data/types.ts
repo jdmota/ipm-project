@@ -1,3 +1,8 @@
+export type Ticket = {
+  id: String,
+  eventId: string,
+};
+
 export type User = {
   id: string,
   mail: string,
@@ -7,7 +12,8 @@ export type User = {
   lastName: string,
   creditCardNumber: string,
   dateCreditCard: Date,
-  cvc: string
+  cvc: string,
+  ticketList: Ticket[]
 };
 
 export type EventComment = {

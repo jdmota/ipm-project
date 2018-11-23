@@ -30,7 +30,7 @@ const styles = theme => ( {
 } );
 
 function EmailField( props: any ) {
-  const { classes } = props;
+  const { classes, onChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
@@ -44,6 +44,7 @@ function EmailField( props: any ) {
       </InputLabel>
       <Input
         id="custom-css-standard-input"
+        onChange= { event => onChange( event.target.value )}
       />
     </FormControl>
   );

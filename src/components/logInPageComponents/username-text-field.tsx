@@ -30,7 +30,7 @@ const styles = theme => ( {
 } );
 
 function UsernameField( props: any ) {
-  const { classes } = props;
+  const { classes, onInputChange } = props;
 
   return (
     <FormControl className={`${classes.margin} ${classes.textField}`}>
@@ -42,7 +42,10 @@ function UsernameField( props: any ) {
       >
         Username
       </InputLabel>
-      <Input id="username" type="text"/>
+      <Input id="username"
+        type="text"
+        onChange={event => onInputChange( event.target.value )}
+      />
     </FormControl>
   );
 }

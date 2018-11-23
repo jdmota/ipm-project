@@ -168,13 +168,28 @@ class SignUpPage extends React.Component<any, any> {
 
   state = {
     visible: false,
+    email: "",
+    username: "",
+    password: "",
+    confirmedpass: "",
+    name: "",
+    creditcard: "",
+    expirationdate: new Date(),
+    ccv: "",
   };
+
+  signUp() {
+    if ( this.state.password === "" ) {
+      this.handleOpenWrongPassword();
+      console.log( "Error" );
+    }
+  }
 
   handleCloseWrongPassword = () => {
     this.setState( { visible: false } );
   }
 
-  handleOpenWrongPassowrd = () => {
+  handleOpenWrongPassword = () => {
     this.setState( { visible: true } );
   }
   render() {
@@ -194,16 +209,16 @@ class SignUpPage extends React.Component<any, any> {
           <CardContent >
             <div style={{ float: "left" }}>
               <div className={classes.controls}>
-                <EmailTextField></EmailTextField>
+                <EmailTextField onChange={ Email => this.setState( { email: Email } ) }/>
               </div>
               <div className={classes.controls}>
-                <UsernameTextField></UsernameTextField>
+                <UsernameTextField onChange={ Username => this.setState( { username: Username } ) }/>
               </div>
               <div className={classes.controls}>
-                <PasswordTextField></PasswordTextField>
+                <PasswordTextField onChange={ Pass => this.setState( { password: Pass } ) }/>
               </div>
               <div className={classes.controls}>
-                <ConfirmPasswordTextField></ConfirmPasswordTextField>
+                <ConfirmPasswordTextField onChange={ ConfirmedPass => this.setState( { confirmedpass: ConfirmedPass } ) }/>
               </div>
               <div style={{ paddingLeft: 15, }}>
                 <Typography color="inherit" variant = "caption">
@@ -214,23 +229,23 @@ class SignUpPage extends React.Component<any, any> {
             </div>
             <div style={{ float: "right" }}>
               <div className={classes.controls}>
-                <FullNameTextField></FullNameTextField>
+                <FullNameTextField onChange={ () => console.log( "Full Name" ) }/>
               </div>
               <div className={classes.controls}>
-                <CardNumberTextField></CardNumberTextField>
+                <CardNumberTextField onChange={ () => console.log( "CardNumber" ) }/>
               </div>
               <div className={classes.controls}>
-                <ExpirationDateTextField></ExpirationDateTextField>
+                <ExpirationDateTextField onChange={ () => console.log( "expdate" ) }/>
               </div>
 
               <div className={classes.controls}>
-                <CCVTextField></CCVTextField>
+                <CCVTextField onChange={ () => console.log( "ccv" ) }/>
               </div>
             </div>
             <div style={{ marginTop: 320 }}>
               <CardActions>
                 <div className={classes.buttonLogin}>
-                  <Button variant="contained" size="medium" color="primary">
+                  <Button variant="contained" size="medium" color="primary" onClick = { () => this.signUp()}>
                     Register
                   </Button>
                 </div>
@@ -303,5 +318,6 @@ class SignUpPage extends React.Component<any, any> {
     </div>;
   }
 }
+
 
 export default withStyles( styles )( SignUpPage );
