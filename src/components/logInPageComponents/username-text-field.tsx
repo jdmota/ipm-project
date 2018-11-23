@@ -30,7 +30,13 @@ const styles = theme => ( {
 } );
 
 function UsernameField( props: any ) {
-  const { classes, onInputChange } = props;
+  const { classes, onChange } = props;
+
+  function handleKeyUp( e: any ) {
+    if ( e.charCode === 13 || e.key === "Enter" ) {
+      props.onEnter();
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -39,7 +45,8 @@ function UsernameField( props: any ) {
         <Input
           id="login-username"
           type="text"
-          onChange={event => onInputChange( event.target.value )}
+          onChange={event => onChange( event.target.value )}
+          onKeyUp={handleKeyUp}
         />
       </FormControl>
     </div>

@@ -149,12 +149,18 @@ class SignInPage extends React.Component<any, any> {
           <div style={{ width: 280, margin: "auto" }}>
             <div className={classes.controls}>
               <div style={{ width: "100%", margin: "auto" }} >
-                <UsernameTextField onInputChange={username => this.setState( { username } )} />
+                <UsernameTextField
+                  onChange={username => this.setState( { username } )}
+                  onEnter={() => this.login()}
+                />
               </div>
             </div>
             <div className={classes.controls}>
               <div style={{ width: "100%", margin: "auto" }} >
-                <PasswordTextField onInputChange={password => this.setState( { password } )} />
+                <PasswordTextField
+                  onChange={password => this.setState( { password } )}
+                  onEnter={() => this.login()}
+                />
               </div>
             </div>
             <div className={classes.linkDiv}>

@@ -32,12 +32,18 @@ class PasswordTextField extends React.Component<any, any> {
 
   handleChange = prop => event => {
     this.setState( { [ prop ]: event.target.value } );
-    this.props.onInputChange( event.target.value );
+    this.props.onChange( event.target.value );
   };
 
   handleClickShowPassword = () => {
     this.setState( state => ( { showPassword: !state.showPassword } ) );
   };
+
+  handleKeyUp = ( e: any ) => {
+    if ( e.charCode === 13 || e.key === "Enter" ) {
+      this.props.onEnter();
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -51,6 +57,7 @@ class PasswordTextField extends React.Component<any, any> {
             type={this.state.showPassword ? "text" : "password"}
             value={this.state.password}
             onChange={this.handleChange( "password" )}
+            onKeyUp={this.handleKeyUp}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
