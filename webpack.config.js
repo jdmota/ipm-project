@@ -2,11 +2,13 @@ const path = require( "path" );
 const webpack = require( "webpack" );
 const CopyWebpackPlugin = require( "copy-webpack-plugin" );
 
+const PRODUCTION = true;
+
 module.exports = {
-  mode: "development",
+  mode: PRODUCTION ? "production" : "development",
   entry: "./src/index.tsx",
   output: {
-    path: path.join( __dirname, "dist" ),
+    path: PRODUCTION ? path.join( __dirname, "docs" ) : path.join( __dirname, "dist" ),
     filename: "index.js",
     publicPath: "/"
   },
