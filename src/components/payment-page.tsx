@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Input from "@material-ui/core/Input";
@@ -9,7 +11,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { InlineDatePicker } from "material-ui-pickers";
 import EmptySeatIcon from "../icons/emptySeat";
 import FilledSeatIcon from "../icons/filledSeat";
@@ -17,6 +18,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Tooltip from "@material-ui/core/Tooltip";
+import { buy } from "../actions/userActions";
+import { navigate } from "../helpers/router";
 
 const styles = theme => ( {
   title: {
@@ -94,21 +97,25 @@ const rows = (
 );
 
 class PaymentPage extends React.Component<any, any> {
-  state = {
-    numberOfTickets: 0,
-    selectedDate: new Date(),
-    fullName: undefined,
-    email: "",
-    creditCardNumber: undefined,
-    dateCreditCard: null,
-    cvv: undefined,
-    errorMsg: "",
-    openDialog: false
-  };
+
+  constructor( props ) {
+    super( props );
+    const loggedInUser = this.props.users.loggedInUser || {};
+    this.state = {
+      numberOfTickets: 1,
+      selectedDate: new Date(),
+      fullName: loggedInUser.fullName,
+      email: loggedInUser.email,
+      creditCardNumber: loggedInUser.creditCardNumber,
+      dateCreditCard: loggedInUser.dateCreditCard,
+      cvv: loggedInUser.cvv,
+      errorMsg: "",
+      openDialog: false
+    };
+  }
 
   buy = () => {
     const { email, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
-    console.log(this.state);
     if ( !email || !fullName || !creditCardNumber || !dateCreditCard || !cvv ) {
       this.setState( { errorMsg: "Please fill the required fields." } );
       return;
@@ -121,11 +128,19 @@ class PaymentPage extends React.Component<any, any> {
   };
 
   cancelBuy = () => {
-
+    this.handleClose();
   };
 
   confirmBuy = () => {
-
+    const tickets: any[] = [];
+    for ( let i = 0; i < this.state.numberOfTickets; i++ ) {
+      tickets.push( {
+        eventId: this.props.event.id,
+        date: this.state.selectedDate
+      } );
+    }
+    this.props.buy( tickets );
+    navigate( this.props.event.url );
   };
 
   handleClose = () => {
@@ -182,7 +197,7 @@ class PaymentPage extends React.Component<any, any> {
                         type="number"
                         id="number-ticket"
                         required
-                        inputProps={{ min: 0 }}
+                        inputProps={{ min: 1 }}
                         value={this.state.numberOfTickets}
                         onChange={e => this.setState( { numberOfTickets: e.target.value } )}
                       />
@@ -207,7 +222,7 @@ class PaymentPage extends React.Component<any, any> {
                     <Input
                       id="fullname"
                       required
-                      value={this.state.fullName}
+                      value={this.state.fullName || ""}
                       onChange={e => this.setState( { fullName: e.target.value } )}
                     />
                   </FormControl>
@@ -219,7 +234,7 @@ class PaymentPage extends React.Component<any, any> {
                     <Input
                       id="email"
                       required
-                      value={this.state.email}
+                      value={this.state.email || ""}
                       onChange={e => this.setState( { email: e.target.value } )}
                     />
                   </FormControl>
@@ -244,7 +259,7 @@ class PaymentPage extends React.Component<any, any> {
                       keyboard
                       clearable
                       label="Expiration Date (MM/yyyy) *"
-                      value={this.state.dateCreditCard}
+                      value={this.state.dateCreditCard || null}
                       onChange={dateCreditCard => this.setState( { dateCreditCard } )}
                       format="MM/yyyy"
                     />
@@ -352,4 +367,12 @@ class PaymentPage extends React.Component<any, any> {
   }
 }
 
-export default withStyles( styles )( PaymentPage );
+function mapStateToProps( state ) {
+  return { users: state.users };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { buy: buy }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( PaymentPage ) );

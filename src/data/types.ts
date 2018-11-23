@@ -1,6 +1,6 @@
 export type Ticket = {
-  id: String,
-  eventId: string,
+  eventId: String,
+  date: Number
 };
 
 export type User = {
