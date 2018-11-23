@@ -116,6 +116,12 @@ const styles = theme => ( {
     alignSelf: "flex-start",
     marginTop: 0,
     marginRight: 0
+  },
+  hiddenExchangeIcon: {
+    "@media all and (max-width: 600px)": {
+      display: "none",
+      // margin: 0
+    }
   }
 } );
 
@@ -139,17 +145,19 @@ function HomePage( props: { classes: any, events: Event[] } ) {
       style={{ backgroundColor: "#cccccc", height: 100, width: "100%", borderRadius: 20, marginBottom: 30, cursor: "pointer" }}
     >
       <div
-        style={{ margin: "auto", width: 490 }}
+        style={{ margin: "auto", width: "fit-content" }}
       >
-        <SwapIcon fontSize="inherit" style={{ fontSize: 100, float: "left", marginRight: 20 }}></SwapIcon>
-        <div style={{ paddingTop: 15 }}>
+        <div className={classes.hiddenExchangeIcon} style={{ float: "left", marginRight: 20 }}>
+          <SwapIcon style={{ fontSize: 100 }}></SwapIcon>
+        </div>
+        <div style={{ float: "left", paddingTop: 15 }}>
           <div>
-            <Typography variant="display2" style={{ fontSize: "2vw" }}>
+            <Typography variant="h5">
               <b style={{ color: "#000000" }}>Exchange Your Tickets Here</b>
             </Typography>
           </div>
           <div style={{ marginTop: 10 }}>
-            <Typography variant="display2" style={{ fontSize: "1vw" }}>
+            <Typography variant="body1">
               <b style={{ color: "#000000" }}>The first platform to provide online ticket exchange!</b>
             </Typography>
           </div>
