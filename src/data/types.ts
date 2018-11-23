@@ -1,6 +1,7 @@
 export type Ticket = {
   eventId: String,
-  date: Number
+  date: Number,
+  seat: string
 };
 
 export type User = {

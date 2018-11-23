@@ -85,7 +85,7 @@ const columns = (
 );
 
 const rows = (
-  <div key="ui-rows" style={{ float: "left", marginLeft: "15%", marginTop: 18 }}>
+  <div key="ui-rows" style={{ float: "left", marginLeft: "15%", marginTop: 35 }}>
     <Typography color="inherit">
       <b style={{ marginBottom: 28, display: "block" }}>E</b>
       <b style={{ marginBottom: 28, display: "block" }}>D</b>
@@ -102,8 +102,9 @@ class PaymentPage extends React.Component<any, any> {
     super( props );
     const loggedInUser = this.props.users.loggedInUser || {};
     this.state = {
-      numberOfTickets: 1,
+      numberOfTickets: 0,
       selectedDate: new Date(),
+      seats: {},
       fullName: loggedInUser.fullName,
       email: loggedInUser.email,
       creditCardNumber: loggedInUser.creditCardNumber,
@@ -114,8 +115,33 @@ class PaymentPage extends React.Component<any, any> {
     };
   }
 
+  toggleSeat( place ) {
+    this.setState( state => {
+      if ( state.seats[ place ] ) {
+        return {
+          numberOfTickets: state.numberOfTickets - 1,
+          seats: {
+            ...state.seats,
+            [ place ]: false
+          }
+        };
+      }
+      return {
+        numberOfTickets: state.numberOfTickets + 1,
+        seats: {
+          ...state.seats,
+          [ place ]: true
+        }
+      };
+    } );
+  }
+
   buy = () => {
-    const { email, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
+    const { numberOfTickets, email, fullName, creditCardNumber, dateCreditCard, cvv } = this.state;
+    if ( !numberOfTickets ) {
+      this.setState( { errorMsg: "Select the seats you want." } );
+      return;
+    }
     if ( !email || !fullName || !creditCardNumber || !dateCreditCard || !cvv ) {
       this.setState( { errorMsg: "Please fill the required fields." } );
       return;
@@ -133,10 +159,12 @@ class PaymentPage extends React.Component<any, any> {
 
   confirmBuy = () => {
     const tickets: any[] = [];
+    const seats: any[] = Object.keys( this.state.seats ).filter( seat => this.state.seats[ seat ] );
     for ( let i = 0; i < this.state.numberOfTickets; i++ ) {
       tickets.push( {
         eventId: this.props.event.id,
-        date: this.state.selectedDate
+        date: this.state.selectedDate,
+        seat: seats[ i ]
       } );
     }
     this.props.buy( tickets );
@@ -157,7 +185,7 @@ class PaymentPage extends React.Component<any, any> {
           {columns.map( column => (
             <Tooltip
               key={`${row}.${column}`}
-              title="50.00 €"
+              title={`${event.priceUnit}`}
               classes={{ tooltipPlacementBottom: classes.tooltipPlacementBottom }}
             >
               <FormControlLabel
@@ -166,7 +194,7 @@ class PaymentPage extends React.Component<any, any> {
                   <Checkbox
                     icon={icon}
                     checkedIcon={checkedIcon}
-                    value="checkedH"
+                    onChange={() => this.toggleSeat( `${row}.${column}` )}
                   />
                 }
                 label=""
@@ -190,21 +218,7 @@ class PaymentPage extends React.Component<any, any> {
             <Card>
               <CardContent>
                 <div className={classes.margin}>
-                  <div style={{ float: "left", width: 130 }}>
-                    <FormControl>
-                      <InputLabel htmlFor="number-ticket">Number of tickets</InputLabel>
-                      <Input
-                        type="number"
-                        id="number-ticket"
-                        required
-                        inputProps={{ min: 1 }}
-                        value={this.state.numberOfTickets}
-                        onChange={e => this.setState( { numberOfTickets: e.target.value } )}
-                      />
-                    </FormControl>
-                  </div>
-
-                  <div style={{ float: "right", width: 140, marginRight: 20 }}>
+                  <FormControl className={classes.formControl}>
                     <InlineDatePicker
                       keyboard
                       label="Date to Attend"
@@ -213,7 +227,7 @@ class PaymentPage extends React.Component<any, any> {
                       format="dd/MM/yyyy"
                       mask={[ /\d/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/ ]}
                     />
-                  </div>
+                  </FormControl>
                 </div>
 
                 <div className={classes.margin}>
@@ -332,7 +346,7 @@ class PaymentPage extends React.Component<any, any> {
             <div style={{ marginLeft: "25%", marginTop: 15 }}>
               <Typography variant="h6" color="primary" paragraph={false}>
                 <span><b>Total Price: </b></span>
-                <span><b>00.00 </b></span>
+                <span><b>${this.props.event.priceUnit * this.state.numberOfTickets} </b></span>
                 <span><b>€</b></span>
               </Typography>
               <div style={{ marginTop: 20 }}>
