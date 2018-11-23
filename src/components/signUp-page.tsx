@@ -1,10 +1,15 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import FastIcon from "@material-ui/icons/FastForwardRounded";
+import EuroIcon from "@material-ui/icons/EuroSymbolOutlined";
+import TicketIcon from "@material-ui/icons/LocalPlayOutlined";
 import UsernameTextField from "./signUpComponents/username-text-field";
 import PasswordTextField from "./signUpComponents/password-text-field";
 import EmailTextField from "./signUpComponents/email-text-field";
@@ -13,9 +18,8 @@ import FullNameTextField from "./signUpComponents/fullName-text-field";
 import CardNumberTextField from "./signUpComponents/cardNumber-text-field";
 import ExpirationDateTextField from "./signUpComponents/expirationDate-text-field";
 import CCVTextField from "./signUpComponents/ccv-text-field";
-import FastIcon from "@material-ui/icons/FastForwardRounded";
-import EuroIcon from "@material-ui/icons/EuroSymbolOutlined";
-import TicketIcon from "@material-ui/icons/LocalPlayOutlined";
+import { addUser } from "../actions/userActions";
+import { navigateBack } from "../helpers/router";
 
 const styles = theme => ( {
   flexContainerLogIn: {
@@ -167,18 +171,47 @@ class SignUpPage extends React.Component<any, any> {
     username: "",
     password: "",
     confirmedPass: "",
-    fullName: "",
-    creditCardNumber: "",
-    dateCreditCard: new Date(),
-    ccv: "",
+    fullName: null,
+    creditCardNumber: null,
+    dateCreditCard: null,
+    ccv: null,
   };
 
   signUp() {
     const { email, username, password, confirmedPass, fullName, creditCardNumber, dateCreditCard, ccv } = this.state;
     if ( !email || !username || !password || !confirmedPass ) {
       this.setState( { errorMsg: "Please fill the required fields." } );
+      return;
     }
-    console.log( this.state );
+    if ( !/@/.test( email ) ) {
+      this.setState( { errorMsg: "Please provide a valid email address." } );
+      return;
+    }
+    if ( password.length < 5 ) {
+      this.setState( { errorMsg: "Your password is not very strong." } );
+      return;
+    }
+    if ( creditCardNumber || dateCreditCard || ccv ) {
+      if ( !creditCardNumber || !dateCreditCard || !ccv ) {
+        this.setState( { errorMsg: "To prefill your credit card information, you have to fill all 3 related camps." } );
+        return;
+      }
+    }
+    if ( password !== confirmedPass ) {
+      this.setState( { errorMsg: "Your passwords do not match." } );
+      return;
+    }
+    this.setState( { errorMsg: "" } );
+    this.props.addUser( {
+      email,
+      username,
+      password,
+      fullName,
+      creditCardNumber,
+      dateCreditCard,
+      ccv
+    } );
+    navigateBack();
   }
 
   render() {
@@ -308,5 +341,14 @@ class SignUpPage extends React.Component<any, any> {
   }
 }
 
+function mapStateToProps( state ) {
+  return {
+    users: state.users
+  };
+}
 
-export default withStyles( styles )( SignUpPage );
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { addUser: addUser }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( SignUpPage ) );

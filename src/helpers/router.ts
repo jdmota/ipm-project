@@ -3,13 +3,27 @@
 type Cb = ( location: Location, event: Event | null ) => void;
 
 let callback: Cb | void;
+let previousPage = "";
+
+function historyPush( href: string ) {
+  previousPage = location.href;
+  window.history.pushState( {}, "", href );
+}
 
 export function navigate( href: string ) {
   if ( href !== location.href ) {
-    window.history.pushState( {}, "", href );
+    historyPush( href );
     if ( callback ) {
       callback( location, null );
     }
+  }
+}
+
+export function navigateBack() {
+  if ( previousPage ) {
+    navigate( previousPage );
+  } else {
+    navigate( "/" );
   }
 }
 
@@ -39,7 +53,7 @@ export function installRouter( locationUpdatedCallback: Cb ) {
 
     e.preventDefault();
     if ( href !== location.href ) {
-      window.history.pushState( {}, "", href );
+      historyPush( href );
       locationUpdatedCallback( location, e );
     }
   } );
