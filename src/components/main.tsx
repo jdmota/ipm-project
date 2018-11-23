@@ -16,7 +16,6 @@ const PaymentPage = lazy( () => import( "./payment-page" ) );
 
 type MainState = {
   pathname: string,
-  search: string,
 };
 
 type MainProps = {

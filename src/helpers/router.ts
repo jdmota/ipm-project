@@ -1,6 +1,6 @@
 // From https://github.com/Polymer/pwa-helpers/blob/master/src/router.ts
 
-type Cb = ( string, event: Event | null ) => void;
+type Cb = ( string ) => void;
 
 let callback: Cb | void;
 let previousPage = "";
@@ -29,7 +29,7 @@ function historyPush( wanted: string ) {
 
 export function navigate( pathname: string ) {
   if ( historyPush( pathname ) && callback ) {
-    callback( getPathname(), null );
+    callback( getPathname() );
   }
 }
 
@@ -73,6 +73,6 @@ export function installRouter( cb: Cb ) {
     navigate( anchor.pathname );
   } );
 
-  window.addEventListener( "popstate", e => cb( getPathname(), e ) );
-  cb( getPathname(), null );
+  window.addEventListener( "popstate", () => cb( getPathname() ) );
+  cb( getPathname() );
 }
