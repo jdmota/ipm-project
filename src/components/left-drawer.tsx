@@ -1,13 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import { navigate, navigateLogout } from "../helpers/router";
+import { logoutUser } from "../actions/userActions";
 
 const styles = {
   list: {
@@ -18,35 +19,47 @@ const styles = {
   },
 };
 
-type LeftDrawerProps = {
-  classes: {
-    list: string,
-    fullList: string
-  },
-  open: boolean,
-  onOpen: () => void,
-  onClose: () => void
-};
+function LeftDrawer( { classes, open, onOpen, onClose, users, logoutUser }: any ) {
 
-function LeftDrawer( { classes, open, onOpen, onClose }: LeftDrawerProps ) {
+  function navigateAndClose( url ) {
+    onClose();
+    navigate( url );
+  }
+
+  function logout() {
+    onClose();
+    logoutUser();
+    navigateLogout();
+  }
+
+  function item( [ text, onClick ]: [ string, any ] ) {
+    return (
+      <ListItem button key={text} onClick={onClick}>
+        <ListItemText primary={text} />
+      </ListItem>
+    );
+  }
+
   const sideList = (
     <div className={classes.list}>
       <List>
-        {[ "Festivals", "Concerts", "Theather plays" ].map( ( text, index ) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) )}
+        {[
+          [ "Festivals", () => null ] as [ string, any ],
+          [ "Concerts", () => null ] as [ string, any ],
+          [ "Theathers", () => null ] as [ string, any ],
+        ].map( item )}
       </List>
       <Divider />
       <List>
-        {[ "Exchange Tickets", "Account" ].map( ( text, index ) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ) )}
+        {item( [ "Exchange Tickets", () => navigateAndClose( "/ticket-exchange" ) ] )}
+        {
+          users.loggedInUser ?
+            item( [ "Logout", logout ] ) :
+            [
+              [ "Login", () => navigateAndClose( "/sign-in" ) ] as [ string, any ],
+              [ "Create Account", () => navigateAndClose( "/sign-up" ) ] as [ string, any ],
+            ].map( item )
+        }
       </List>
     </div>
   );
@@ -64,4 +77,14 @@ function LeftDrawer( { classes, open, onOpen, onClose }: LeftDrawerProps ) {
   );
 }
 
-export default withStyles( styles )( LeftDrawer );
+function mapStateToProps( state ) {
+  return {
+    users: state.users
+  };
+}
+
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { logoutUser: logoutUser }, dispatch );
+}
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( LeftDrawer ) );

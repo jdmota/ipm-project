@@ -47,14 +47,14 @@ class MenuListComposition extends React.Component<any, any> {
     this.setState( { open: false }, cb );
   };
 
-  createAccount = event => {
-    this.handleClose( event );
-    navigate( "/sign-up" );
-  };
-
   login = event => {
     this.handleClose( event );
     navigate( "/sign-in" );
+  };
+
+  createAccount = event => {
+    this.handleClose( event );
+    navigate( "/sign-up" );
   };
 
   logout = event => {
@@ -74,8 +74,8 @@ class MenuListComposition extends React.Component<any, any> {
     const list = loggedInUser ?
       <MenuItem key="logout" onClick={this.logout}>Logout</MenuItem> :
       [
-        <MenuItem key="signin" onClick={this.createAccount}>Create Account</MenuItem>,
-        <MenuItem key="login" onClick={this.login}>Login</MenuItem>
+        <MenuItem key="login" onClick={this.login}>Login</MenuItem>,
+        <MenuItem key="signin" onClick={this.createAccount}>Create Account</MenuItem>
       ];
 
     return (
