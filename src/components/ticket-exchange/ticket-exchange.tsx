@@ -12,7 +12,6 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Search from "../search/search-without-auto";
-import ticketToGet from "./ticket-to-get";
 
 const styles = theme => ( {
   ticketExchange: {
@@ -50,14 +49,8 @@ class TicketExchange extends React.Component<any, any> {
     super( props );
     this.state = {
       step: 0,
-      desiredTicket: {
-        username: "",
-        ticketId: ""
-      },
-      ticketToGive: {
-        username: "",
-        ticketId: ""
-      },
+      desiredTicket: null,
+      ticketToGive: null,
     };
   }
 
@@ -68,11 +61,10 @@ class TicketExchange extends React.Component<any, any> {
       };
     }, () => {
       if ( this.state.step === 3 ) {
-        let object = {
+        this.props.trade( {
           ticket1: this.state.desiredTicket,
           ticket2: this.state.ticketToGive
-        };
-        this.props.trade( object );
+        } );
       }
     } );
   }
@@ -87,35 +79,40 @@ class TicketExchange extends React.Component<any, any> {
 
   reset = () => {
     this.setState( {
-      step: 0
+      step: 0,
+      desiredTicket: null,
+      ticketToGive: null,
     } );
   };
 
   printGet = () => {
+    const owner = this.props.users.loggedInUser.username;
+
     return (
-      this.props.tickets.map( ticket => {
-        let user = this.props.users.userList.find( user => { return ticket.username === user.username; } );
-        let ownedTicket = user.ticketList.find( ownedTicket => { return ticket.id === ownedTicket.id; } );
-        let ticketEvent = this.props.events.find( event => { return event.id === ownedTicket.eventId; } );
-        return ( <div key= {ticket.id}>
-          <TicketCard event= {ticketEvent} onClick={ () => { this.setState( { desiredTicket: ticket } ); }} />
-          Ticket id: {ownedTicket.ticketId} event id: {ownedTicket.eventId} <br/>
-          Desired Ticket: {this.state.desiredTicket.ticketId}
-        </div>
+      this.props.tickets.filter( ticket => ticket.owner !== owner ).map( ticket => {
+        const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
+        return (
+          <div key={ticket.ticketId}>
+            <TicketCard event={ticketEvent} ticket={ticket} onClick={() => this.setState( { desiredTicket: ticket } )} />
+            Event id: {ticketEvent.id}<br/>
+            Desired Ticket: {this.state.desiredTicket && this.state.desiredTicket.ticketId}
+          </div>
         );
       } )
     );
   }
 
   printGive = () => {
+    const owner = this.props.users.loggedInUser.username;
+
     return (
-      this.props.users.loggedInUser.ticketList.map( ticketToGive => {
-        let ticketEvent = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGive.eventId; } );
+      this.props.tickets.filter( ticket => ticket.owner === owner ).map( ticket => {
+        const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
         return (
-          <div key= {ticketToGive.id}>
-            <TicketCard event= {ticketEvent} onClick={ () => { this.setState( { ticketToGive: { username: this.props.users.loggedInUser.username, ticketId: ticketToGive.ticketId } } ); }} />
-          Desired Ticket: {this.state.desiredTicket.ticketId}
-          Ticket To Give: {this.state.ticketToGive.ticketId}
+          <div key={ticket.ticketId}>
+            <TicketCard event={ticketEvent} ticket={ticket} onClick={() => this.setState( { ticketToGive: ticket } )} />
+            Desired Ticket: {this.state.desiredTicket.ticketId}
+            Ticket To Give: {this.state.ticketToGive && this.state.ticketToGive.ticketId}
           </div>
         );
       } )
@@ -124,38 +121,32 @@ class TicketExchange extends React.Component<any, any> {
 
   printConfirm = () => {
     const { desiredTicket, ticketToGive } = this.state;
-    let ticketToGetOwner = this.props.users.userList.find( user => { return user.username === desiredTicket.username; } );
-    let ticketToGetInfo = ticketToGetOwner.ticketList.find( ticket => { return ticket.ticketId === desiredTicket.ticketId; } );
-    let eventTicketToGet = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGetInfo.eventId; } );
 
-    let ticketToGiveOwner = this.props.users.loggedInUser;
-    let ticketToGiveInfo = ticketToGiveOwner.ticketList.find( ticket => { return ticket.ticketId === ticketToGive.ticketId; } );
-    let eventTicketToGive = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGiveInfo.eventId; } );
+    const eventTicketToGive = this.props.events.find( eventsTicket => eventsTicket.id === ticketToGive.eventId );
+    const eventTicketToGet = this.props.events.find( eventsTicket => eventsTicket.id === desiredTicket.eventId );
 
     return (
       <div>
-      Are you sure you want to trade this:
-        <TicketCard event= {eventTicketToGet} />
-      For this:
-        <TicketCard event= {eventTicketToGive} />
+        <Typography>Are you sure you want to trade this ticket:</Typography>
+        <TicketCard event={eventTicketToGive} ticket={ticketToGive} />
+        <Typography>For this ticket:</Typography>
+        <TicketCard event={eventTicketToGet} ticket={desiredTicket} />
       </div>
     );
   }
 
   tradeTickets = () => {
-    return (
-      "All steps completed - you're finished"
-    );
+    return "All steps completed - you're finished";
   }
 
   getStepContent = step => {
     switch ( step ) {
       case 0:
-        return ( this.printGet() );
+        return this.printGet();
       case 1:
-        return ( this.printGive() );
+        return this.printGive();
       case 2:
-        return ( this.printConfirm() );
+        return this.printConfirm();
       default:
         return "Unknown step";
     }
@@ -173,7 +164,7 @@ class TicketExchange extends React.Component<any, any> {
         </Typography>
       </div>
       <Stepper activeStep={activeStep}>
-        {steps.map( ( label, index ) => {
+        {steps.map( label => {
           const props = {};
           const labelProps = {};
           return (
@@ -190,9 +181,7 @@ class TicketExchange extends React.Component<any, any> {
       <div>
         {
           activeStep === steps.length ?
-            <Typography className={classes.instructions}>
-              { this.tradeTickets()}
-            </Typography> :
+            this.tradeTickets() :
             this.getStepContent( activeStep )
         }
       </div>
@@ -200,7 +189,7 @@ class TicketExchange extends React.Component<any, any> {
         <Toolbar className={classes.toolbar}>
           {activeStep === steps.length ? (
             <Button onClick={this.reset} className={classes.button}>
-              Reset
+              Make new trade
             </Button>
           ) : (
             <>
@@ -212,6 +201,7 @@ class TicketExchange extends React.Component<any, any> {
               <Button
                 variant="contained"
                 color="primary"
+                disabled={!this.state.desiredTicket || ( activeStep === 1 && !this.state.ticketToGive )}
                 onClick={this.next}
                 className={classes.button}
               >

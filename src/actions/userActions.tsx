@@ -28,7 +28,7 @@ export function buy( tickets ) {
 export function trade( tickets ) {
   return {
     type: "TRADE",
-    user1: tickets.ticket1,
-    user2: tickets.ticket2
+    ticket1: tickets.ticket1,
+    ticket2: tickets.ticket2
   };
 }

@@ -31,12 +31,13 @@ const styles = theme => ( {
 
 function PaperSheet( props: any ) {
   const { classes, onClick } = props;
-  const { url, title, description, type, location, date, images } = props.event;
+  const { title, images } = props.event;
+  const { owner, date } = props.ticket;
 
   const defaultImage = "https://vignette.wikia.nocookie.net/dragonballfanon/images/7/70/Random.png/revision/latest?cb=20161221030547";
 
   return (
-    <Card className={classes.card} onClick={ onClick } >
+    <Card className={classes.card} onClick={onClick}>
       <CardHeader
         className={classes.force}
         avatar={
@@ -45,7 +46,7 @@ function PaperSheet( props: any ) {
           </div>
         }
         title={title}
-        subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+        subheader={`${owner} - ${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}
       />
     </Card>
   );
