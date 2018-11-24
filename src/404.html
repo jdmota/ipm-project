@@ -3,7 +3,14 @@
   <head>
     <title>FCTicket</title>
     <meta charset="utf-8">
-    <script>var l=location;l.replace(l.protocol+"//"+l.hostname+"/"+l.search+"#"+l.pathname);</script>
+    <script>
+      var l=location;
+      l.replace(
+        location.origin==="https://jdmota.github.io"?
+          l.protocol+"//"+l.hostname+"/ipm-project/"+l.search+"#"+l.pathname:
+          l.protocol+"//"+l.hostname+"/"+l.search+"#"+l.pathname
+      );
+    </script>
   </head>
   <body>
   </body>
