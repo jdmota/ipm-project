@@ -146,7 +146,7 @@ class SignInPage extends React.Component<any, any> {
           Sign In
       </Typography>
 
-      <Card style={{ width: 450, marginTop: 30 }}>
+      <Card style={{ marginTop: 30 }}>
         <CardContent>
           <div style={{ width: 280, margin: "auto" }}>
             <div className={classes.controls}>
