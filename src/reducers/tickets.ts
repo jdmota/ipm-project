@@ -1,7 +1,7 @@
 
 const initialState = [
   {
-    owner: "bestCostumerOnFCTicket",
+    owner: "bestCostumer",
     ticketId: "1",
     eventId: "1",
     date: new Date( 2019, 7, 11 ),

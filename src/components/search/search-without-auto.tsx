@@ -32,7 +32,7 @@ class SearchWihoutAutoComplete extends React.Component<any, any> {
   }
 
   handleRequestSearch = () => {
-    this.props.onRequestSearch( this.state.value, null );
+    this.props.onRequestSearch( this.state.value.trim(), null );
   }
 
   render() {

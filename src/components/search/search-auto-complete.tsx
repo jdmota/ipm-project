@@ -147,7 +147,7 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
 
   handleRequestSearch = () => {
     this.input.blur();
-    this.props.onRequestSearch( this.state.value, null );
+    this.props.onRequestSearch( this.state.value.trim(), null );
   }
 
   handleSuggestionsFetchRequested = ( { value }: { value: string } ) => {
@@ -163,7 +163,7 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
   };
 
   handleSuggestionSelected = ( _: any, { suggestion, suggestionValue }: { suggestion: Event, suggestionValue: string } ) => {
-    this.props.onRequestSearch( suggestionValue, suggestion );
+    this.props.onRequestSearch( suggestionValue.trim(), suggestion );
     this.justSelectedSuggestion = true;
   }
 
