@@ -1,6 +1,6 @@
 const initialState = {
   name: "",
-  type: [ "Festival", "Concert", "Theater" ],
+  type: [ "Festival", "Concert", "Theater", "Other" ],
   location: "None",
   minPrice: 0,
   maxPrice: 1000,

@@ -39,7 +39,8 @@ const MenuProps = {
 const names = [
   "Festival",
   "Concert",
-  "Theater"
+  "Theater",
+  "Other"
 ];
 
 function TypeSelector( props: any ) {
