@@ -163,8 +163,8 @@ class TicketExchange extends React.Component<any, any> {
     );
   }
 
-  tradeTickets = () => {
-    return "All steps completed - you're finished";
+  finished = () => {
+    return <Typography>All steps completed - trade completed!</Typography>;
   }
 
   printStep = list => {
@@ -213,7 +213,7 @@ class TicketExchange extends React.Component<any, any> {
       <div className={classes.margin}>
         {
           activeStep === steps.length ?
-            this.tradeTickets() :
+            this.finished() :
             this.getStepContent( activeStep )
         }
       </div>
