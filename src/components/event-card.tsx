@@ -46,7 +46,7 @@ function PaperSheet( props: any ) {
             </div>
           }
           title={title}
-          subheader={`${date.getDay()}/${date.getMonth()}/${date.getFullYear()}`}
+          subheader={`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`}
         />
       </Card>
     </a>
