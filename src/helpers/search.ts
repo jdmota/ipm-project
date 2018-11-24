@@ -30,7 +30,11 @@ export function advancedSearch(
   const foundEvents = search( inputSearch );
   const resultEvents = foundEvents.filter( event => {
     return types.indexOf( event.type ) > -1 &&
-      event.location.toUpperCase().includes( location.trim().toUpperCase() );
+      event.location.toUpperCase().includes( location.trim().toUpperCase() ) &&
+      minPrice <= event.priceUnit &&
+      maxPrice >= event.priceUnit &&
+      minDate <= event.date &&
+      maxDate >= event.date;
   } );
 
   return resultEvents;
