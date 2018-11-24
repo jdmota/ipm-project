@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import { advancedSearch } from "../helpers/search";
 import EventCard from "./event-card";
 
@@ -26,10 +27,10 @@ class EventCardList extends React.Component<any, any> {
   }
 
   render() {
-    const { params } = this.props;
+    const list = this.renderList();
 
     return <div>
-      {this.renderList()}
+      {list.length ? list : <Typography>No results found for query: {this.props.params.name}</Typography>}
     </div>;
   }
 }
