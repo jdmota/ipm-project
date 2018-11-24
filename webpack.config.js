@@ -1,6 +1,9 @@
+const DEPLOY = false;
+
 const path = require( "path" );
 const webpack = require( "webpack" );
 const CopyWebpackPlugin = require( "copy-webpack-plugin" );
+const ImageminPlugin = DEPLOY && require( "imagemin-webpack-plugin" ).default;
 
 function Replace( { test, callback } ) {
   return {
@@ -21,8 +24,6 @@ function Replace( { test, callback } ) {
     }
   };
 }
-
-const DEPLOY = false;
 
 module.exports = {
   mode: DEPLOY ? "production" : "development",
@@ -53,6 +54,9 @@ module.exports = {
       { from: "src/404.html", to: "404.html" },
       { from: "src/images", to: "images" }
     ] ),
+    DEPLOY && new ImageminPlugin( {
+      test: /\.(jpe?g|png|gif|svg)$/i
+    } ),
     DEPLOY && new Replace( {
       test: /\.html$/,
       callback( source ) {
