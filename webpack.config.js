@@ -36,6 +36,9 @@ module.exports = {
   resolve: {
     extensions: [ ".ts", ".tsx", ".js", ".jsx" ]
   },
+  optimization: {
+    moduleIds: "hashed"
+  },
   devtool: DEPLOY ? false : "source-map",
   module: {
     rules: [
