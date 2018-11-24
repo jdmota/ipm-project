@@ -1,4 +1,4 @@
-const DEPLOY = true;
+const DEPLOY = false;
 
 const path = require( "path" );
 const webpack = require( "webpack" );
