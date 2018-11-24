@@ -103,7 +103,7 @@ function Search( props: any ) {
     >
       <SearchIcon classes={{ root: classes.icon }} />
     </IconButton>
-    <IconButton
+    {onRightDrawerToggle ? <IconButton
       onClick={onRightDrawerToggle}
       classes={{
         root: variant === "black" ? classes.iconButtonBlack : classes.iconButton,
@@ -112,7 +112,7 @@ function Search( props: any ) {
       disabled={disabled}
     >
       <FilterIcon classes={{ root: classes.icon }} />
-    </IconButton>
+    </IconButton> : null}
   </div>;
 }
 

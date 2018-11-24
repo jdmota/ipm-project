@@ -208,7 +208,7 @@ class TicketExchange extends React.Component<any, any> {
       </Stepper>
       <Search
         onRequestSearch={ text => { this.setState( { text } ); } }
-        onRightDrawerToggle={this.props.onRightDrawerToggle}
+        // onRightDrawerToggle={this.props.onRightDrawerToggle}
       />
       <div className={classes.margin}>
         {
