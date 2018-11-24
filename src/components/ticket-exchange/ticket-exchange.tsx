@@ -48,6 +48,7 @@ class TicketExchange extends React.Component<any, any> {
   constructor( props ) {
     super( props );
     this.state = {
+      text: "",
       step: 0,
       desiredTicket: null,
       ticketToGive: null,
@@ -89,13 +90,11 @@ class TicketExchange extends React.Component<any, any> {
     const owner = this.props.users.loggedInUser.username;
 
     return (
-      this.props.tickets.filter( ticket => ticket.owner !== owner ).map( ticket => {
+      this.props.tickets.filter( ticket => ticket.owner !== owner && ( this.props.events.find( event => event.id === ticket.eventId ).title.toUpperCase().includes( this.state.text.toUpperCase() ) ) ).map( ticket => {
         const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
         return (
           <div key={ticket.ticketId}>
-            <TicketCard event={ticketEvent} ticket={ticket} onClick={() => this.setState( { desiredTicket: ticket } )} />
-            Event id: {ticketEvent.id}<br/>
-            Desired Ticket: {this.state.desiredTicket && this.state.desiredTicket.ticketId}
+            <TicketCard event={ticketEvent} selected={ this.state.desiredTicket === ticket } ticket={ticket} onClick={() => this.setState( { desiredTicket: ticket } )} />
           </div>
         );
       } )
@@ -110,9 +109,7 @@ class TicketExchange extends React.Component<any, any> {
         const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
         return (
           <div key={ticket.ticketId}>
-            <TicketCard event={ticketEvent} ticket={ticket} onClick={() => this.setState( { ticketToGive: ticket } )} />
-            Desired Ticket: {this.state.desiredTicket.ticketId}
-            Ticket To Give: {this.state.ticketToGive && this.state.ticketToGive.ticketId}
+            <TicketCard event={ticketEvent} selected={ this.state.ticketToGive === ticket } ticket={ticket} onClick={() => this.setState( { ticketToGive: ticket } )} />
           </div>
         );
       } )
@@ -175,7 +172,7 @@ class TicketExchange extends React.Component<any, any> {
         } )}
       </Stepper>
       <Search
-        onRequestSearch={( ...args ) => console.log( args )}
+        onRequestSearch={ text => { this.setState( { text } ); } }
         onRightDrawerToggle={this.props.onRightDrawerToggle}
       />
       <div>

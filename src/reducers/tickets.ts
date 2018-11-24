@@ -14,6 +14,13 @@ const initialState = [
     date: new Date( 2019, 7, 12 ),
     seat: undefined
   },
+  {
+    owner: "theBest",
+    ticketId: "3",
+    eventId: "3",
+    date: new Date( 2019, 7, 21 ),
+    seat: undefined
+  },
 ];
 
 let globalId = initialState.length + 1;
