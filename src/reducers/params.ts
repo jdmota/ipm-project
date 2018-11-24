@@ -1,7 +1,7 @@
 const initialState = {
   name: "",
   type: [ "Festival", "Concert", "Theater", "Other" ],
-  location: "None",
+  location: "",
   minPrice: 0,
   maxPrice: 1000,
   startDate: new Date( 2018, 0, 1, 0, 0, 0, 0 ), // Month index is 0-based

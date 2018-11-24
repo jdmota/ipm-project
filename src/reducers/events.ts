@@ -34,7 +34,8 @@ const events: Event[] = [
     description: "Super funny",
     date: new Date(),
     images: [
-      "/images/aPiorComediaDoMundo/img1.jpg"
+      "/images/aPiorComediaDoMundo/img1.jpg",
+      "/images/aPiorComediaDoMundo/img2.jpg"
     ].map( fixPathname ),
     type: "Theater",
     location: "Lisboa",
