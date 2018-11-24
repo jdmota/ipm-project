@@ -4,9 +4,9 @@ const userList: User[] = [
   {
     id: "1",
     email: "smithRules@gmail.com",
-    username: "bestCostumerOnFCTicket",
-    password: "1234SmithInTheHouse!",
-    fullName: "Stan Smith",
+    username: "bestCostumer",
+    password: "1234Smith",
+    fullName: "John Smith",
     creditCardNumber: 123,
     dateCreditCard: new Date(),
     cvv: 123,
@@ -16,7 +16,7 @@ const userList: User[] = [
     email: "bestcostumer@gmail.com",
     username: "theBest",
     password: "best123",
-    fullName: "John Smith",
+    fullName: "Stan Smith",
     creditCardNumber: 3210,
     dateCreditCard: new Date( 2020, 5, 20 ),
     cvv: 2310,
@@ -31,6 +31,16 @@ const userList: User[] = [
     dateCreditCard: new Date( 2020, 5, 20 ),
     cvv: 1230,
   },
+  {
+    id: "4",
+    email: "carolinewhatelse@gmail.com",
+    username: "Caroline123",
+    password: "Caroline1997",
+    fullName: "Caroline Smith",
+    creditCardNumber: 12454567894,
+    dateCreditCard: new Date( 2020, 5, 20 ),
+    cvv: 1235460
+  }
 ];
 
 const initialState = {
