@@ -45,7 +45,7 @@ const userList: User[] = [
 
 const initialState = {
   userList,
-  loggedInUser: userList[ 0 ]
+  loggedInUser: null // userList[ 0 ]
 };
 
 export default function( state = initialState, action ) {
