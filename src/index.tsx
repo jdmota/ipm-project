@@ -6,6 +6,8 @@ import DateFnsUtils from "@date-io/date-fns";
 import App from "./components/app";
 import store from "./data/store";
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 ReactDOM.render(
   <Provider store={store}>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>

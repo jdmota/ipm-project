@@ -69,7 +69,7 @@ module.exports = {
     !DEPLOY && new webpack.HotModuleReplacementPlugin()
   ].filter( Boolean ),
   devServer: {
-    contentBase: path.join( __dirname, "dist" ),
+    contentBase: DEPLOY ? path.join( __dirname, "docs" ) : path.join( __dirname, "dist" ),
     port: 9000,
     hot: true,
     historyApiFallback: true

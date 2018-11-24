@@ -111,7 +111,8 @@ class PaymentPage extends React.Component<any, any> {
       dateCreditCard: loggedInUser.dateCreditCard,
       cvv: loggedInUser.cvv,
       errorMsg: "",
-      openDialog: false
+      openDialog: false,
+      openFinalDialog: false
     };
   }
 
@@ -168,11 +169,15 @@ class PaymentPage extends React.Component<any, any> {
       } );
     }
     this.props.buy( tickets );
-    navigate( this.props.event.url );
+    this.setState( { openDialog: false, openFinalDialog: true } );
   };
 
   handleClose = () => {
     this.setState( { openDialog: false } );
+  };
+
+  exit = () => {
+    navigate( this.props.event.url );
   };
 
   render() {
@@ -372,6 +377,21 @@ class PaymentPage extends React.Component<any, any> {
               </Button>
               <Button onClick={this.confirmBuy} color="primary" autoFocus>
                 Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={this.state.openFinalDialog}
+            onClose={this.exit}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Purchase done!"}
+            </DialogTitle>
+            <DialogActions style={{ display: "initial", margin: "auto" }}>
+              <Button onClick={this.exit} color="primary" autoFocus>
+                OK
               </Button>
             </DialogActions>
           </Dialog>
