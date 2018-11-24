@@ -5,6 +5,7 @@ import Input from "@material-ui/core/Input";
 import ClearIcon from "@material-ui/icons/Clear";
 import SearchIcon from "@material-ui/icons/Search";
 import FilterIcon from "@material-ui/icons/FilterList";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const styles = theme => ( {
   root: {
@@ -50,6 +51,12 @@ const styles = theme => ( {
   container: {
     position: "relative",
     width: "100%"
+  },
+  hide: {
+    display: "none"
+  },
+  show: {
+    display: "block"
   }
 } );
 
@@ -58,15 +65,23 @@ function Search( props: any ) {
   const {
     classes,
     variant,
+    fullMode,
     inputProps,
     onRightDrawerToggle,
+    handleLeaveFullMode,
     handleCancel,
     handleRequestSearch
   } = props;
   const { value } = inputProps;
   const disabled = false;
 
-  return <div className={classes.searchContainer}>
+  return <div className={classes.searchContainer} id="search">
+    <IconButton
+      onClick={handleLeaveFullMode}
+      className={fullMode ? classes.iconButton : classes.hide}
+    >
+      <ArrowBackIcon className={classes.icon} />
+    </IconButton>
     <Input {...inputProps} style={{ flexGrow: 1 }} />
     <IconButton
       onClick={handleCancel}
@@ -81,7 +96,7 @@ function Search( props: any ) {
     <IconButton
       onClick={handleRequestSearch}
       classes={{
-        root: variant === "black" ? classes.iconButtonBlack : classes.iconButton,
+        root: fullMode ? classes.hide : variant === "black" ? classes.iconButtonBlack : classes.iconButton,
         disabled: classes.iconButtonDisabled
       }}
       disabled={disabled}

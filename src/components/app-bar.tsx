@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
 import { setParamsName } from "../actions/setParams";
 import LoginButton from "./account-popup";
@@ -26,14 +27,48 @@ const styles = theme => ( {
   search: {
     width: "100%",
     marginLeft: 24,
-    marginRight: 24
+    marginRight: 24,
+  },
+  searchHide: {
+    "@media all and (max-width: 600px)": {
+      display: "none"
+    }
+  },
+  searchFillAll: {
+    position: "fixed",
+    margin: 0,
+    top: 0,
+    left: 0,
+    zIndex: 9999,
+    borderRadius: 0,
+    backgroundColor: "rgb(92, 107, 192)",
+    minHeight: 48,
+    paddingTop: 8,
+    paddingBottom: 8,
+    "@media all and (max-width: 600px)": {
+      minHeight: 48,
+      paddingTop: 0,
+      paddingBottom: 0
+    }
   },
   appBar: {
     zIndex: 20
   },
   home: {
     cursor: "pointer"
-  }
+  },
+  iconButton: {
+    color: "white",
+    transform: "scale(1, 1)",
+    transition: "transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+    display: "none",
+    "@media all and (max-width: 600px)": {
+      display: "block"
+    }
+  },
+  icon: {
+    transition: "opacity 200ms cubic-bezier(0.4, 0.0, 0.2, 1)"
+  },
 } );
 
 type OurAppBarProps = {
@@ -45,36 +80,55 @@ type OurAppBarProps = {
 
 const navigateHome = () => navigate( "/" );
 
-function OurAppBar( props: OurAppBarProps ) {
-  const { classes, onLeftDrawerToggle } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
-            <MenuIcon />
-          </IconButton>
-          <div className={classes.home} onClick={navigateHome} role="button" aria-label="Home">
-            <Typography variant="h6" color="inherit">FCTicket</Typography>
-          </div>
-          <SearchWithAutoComplete
-            className={classes.search}
-            onRequestSearch={( text, event ) => {
-              if ( event ) {
-                navigate( event.url );
-              } else {
-                props.setParamsName( text );
-                navigate( "/search" );
-              }
-            }}
-            onRightDrawerToggle={() => props.onRightDrawerToggle()}
-          />
-          <div className={classes.grow} />
-          <LoginButton />
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+class OurAppBar extends React.Component<OurAppBarProps, any> {
+
+  state = {
+    smallScreen: false,
+    searchOpened: false
+  };
+
+  render() {
+    const { smallScreen, searchOpened } = this.state;
+    const { classes, setParamsName, onLeftDrawerToggle, onRightDrawerToggle } = this.props;
+    const fullMode = searchOpened;
+    return (
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton className={classes.menuButton} onClick={onLeftDrawerToggle} color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <div className={classes.home} onClick={navigateHome} role="button" aria-label="Home">
+              <Typography variant="h6" color="inherit">FCTicket</Typography>
+            </div>
+            <SearchWithAutoComplete
+              fullMode={fullMode}
+              handleLeaveFullMode={() => this.setState( { searchOpened: false } )}
+              className={`${classes.search} ${fullMode ? classes.searchFillAll : classes.searchHide}`}
+              onRequestSearch={( text, event ) => {
+                if ( event ) {
+                  navigate( event.url );
+                } else {
+                  setParamsName( text );
+                  navigate( "/search" );
+                }
+              }}
+              onRightDrawerToggle={onRightDrawerToggle}
+            />
+            <div className={classes.grow} />
+            <IconButton
+              onClick={() => this.setState( { searchOpened: true } )}
+              className={classes.iconButton}
+            >
+              <SearchIcon className={classes.icon} />
+            </IconButton>
+            <LoginButton />
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+
 }
 
 function mapDispatchToProps( dispatch ) {

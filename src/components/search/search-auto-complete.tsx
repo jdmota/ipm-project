@@ -64,10 +64,12 @@ const styles = theme => ( {
 } );
 
 type SearchBarProps = {
+  fullMode: boolean,
   onRequestSearch: ( value: string, suggestion: Event | null ) => void,
   classes: any,
   className: string
   onRightDrawerToggle: () => void
+  handleLeaveFullMode: () => void
 };
 
 type SearchBarState = {
@@ -91,6 +93,7 @@ function renderSuggestion( suggestion: Event, { isHighlighted }: { isHighlighted
 class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBarState> {
 
   private justSelectedSuggestion: boolean;
+  private input: any;
 
   constructor( props: SearchBarProps ) {
     super( props );
@@ -100,13 +103,20 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
       suggestions: [],
     };
     this.justSelectedSuggestion = false;
+    this.input = null;
   }
 
   handleFocus = () => {
     this.setState( { focus: true } );
   }
 
-  handleBlur = () => {
+  handleBlur = event => {
+    const { relatedTarget } = event;
+
+    if ( !relatedTarget || relatedTarget.parentNode.id !== "search" ) {
+      this.props.handleLeaveFullMode();
+    }
+
     this.setState( { focus: false } );
     if ( this.state.value.trim().length === 0 ) {
       this.setState( { value: "" } );
@@ -136,6 +146,7 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
   }
 
   handleRequestSearch = () => {
+    this.input.blur();
     this.props.onRequestSearch( this.state.value, null );
   }
 
@@ -158,11 +169,23 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
 
   renderInputComponent = ( inputProps: any ) => {
     return <Search
+      fullMode={this.props.fullMode}
+      handleLeaveFullMode={this.props.handleLeaveFullMode}
       onRightDrawerToggle={this.props.onRightDrawerToggle}
       inputProps={inputProps}
       handleCancel={this.handleCancel}
       handleRequestSearch={this.handleRequestSearch}
     />;
+  }
+
+  componentDidUpdate( prevProps ) {
+    if ( this.props.fullMode !== prevProps.fullMode ) {
+      if ( this.props.fullMode ) {
+        this.input.focus();
+      } else {
+        this.input.blur();
+      }
+    }
   }
 
   render() {
@@ -180,7 +203,8 @@ class SearchBarWithAutoComplete extends React.Component<SearchBarProps, SearchBa
             onFocus: this.handleFocus,
             onBlur: this.handleBlur,
             className: classes.input,
-            disableUnderline: true
+            disableUnderline: true,
+            inputRef: input => { this.input = input; }
           }}
           theme={{
             container: classes.container,
