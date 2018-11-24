@@ -1,7 +1,9 @@
 export type Ticket = {
+  owner: String,
+  ticketId: String,
   eventId: String,
-  date: Number,
-  seat: string
+  date: Date,
+  seat: string | undefined
 };
 
 export type User = {
@@ -13,7 +15,6 @@ export type User = {
   creditCardNumber: number|undefined,
   dateCreditCard: Date|null,
   cvv: number|undefined,
-  ticketList: Ticket[]
 };
 
 export type EventComment = {

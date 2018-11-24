@@ -24,3 +24,11 @@ export function buy( tickets ) {
     payload: tickets
   };
 }
+
+export function trade( tickets ) {
+  return {
+    type: "TRADE",
+    ticket1: tickets.ticket1,
+    ticket2: tickets.ticket2
+  };
+}
