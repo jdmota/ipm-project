@@ -101,6 +101,45 @@ export default function( state = initialState, action ) {
         loggedInUser
       };
     }
+    case "TRADE": {
+      let ticket1Owner = state.userList.find( user => { return action.user1.username === user.username; } );
+      console.log( ticket1Owner );
+      let ticket1 = ticket1Owner.ticketList.find( ticket => { return ticket.ticketId === action.user1.ticketId; } );
+      console.log( ticket1 );
+      let ticket2Owner = state.userList.find( user => { return action.user2.username === user.username; } );
+      console.log( action );
+      let ticket2 = ticket2Owner.ticketList.find( ticket => { return ticket.ticketId === action.user2.ticketId; } );
+      console.log( ticket2 );
+      const userList = state.userList.map( user => {
+        if ( user.username === action.user1.username ) {
+          const newTicketList = user.ticketList.map( ticket => {
+            if ( ticket.ticketId === action.user1.ticketId ) {
+              return ticket1;
+            }
+          } );
+          return {
+            ...user,
+            ticketList: newTicketList
+          };
+        }
+        if ( user.username === action.user2.username ) {
+          const newTicketList = user.ticketList.map( ticket => {
+            if ( ticket.ticketId === action.user2.ticketId ) {
+              return ticket2;
+            }
+          } );
+          return {
+            ...user,
+            ticketList: newTicketList
+          };
+        }
+        return user;
+      } );
+      return {
+        ...state,
+        userList
+      };
+    }
     default:
       return state;
   }

@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { trade } from "../../actions/userActions";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
@@ -52,6 +54,10 @@ class TicketExchange extends React.Component<any, any> {
         username: "",
         ticketId: ""
       },
+      ticketToGive: {
+        username: "",
+        ticketId: ""
+      },
     };
   }
 
@@ -60,6 +66,14 @@ class TicketExchange extends React.Component<any, any> {
       return {
         step: state.step + 1
       };
+    }, () => {
+      if ( this.state.step === 3 ) {
+        let object = {
+          ticket1: this.state.desiredTicket,
+          ticket2: this.state.ticketToGive
+        };
+        this.props.trade( object );
+      }
     } );
   }
 
@@ -83,25 +97,65 @@ class TicketExchange extends React.Component<any, any> {
         let user = this.props.users.userList.find( user => { return ticket.username === user.username; } );
         let ownedTicket = user.ticketList.find( ownedTicket => { return ticket.id === ownedTicket.id; } );
         let ticketEvent = this.props.events.find( event => { return event.id === ownedTicket.eventId; } );
-        return ( <>
-          <TicketCard key={ ticket } event= {ticketEvent} onClick={ () => { this.setState( { desiredTicket: ticket } ); }} />
+        return ( <div key= {ticket.id}>
+          <TicketCard event= {ticketEvent} onClick={ () => { this.setState( { desiredTicket: ticket } ); }} />
           Ticket id: {ownedTicket.ticketId} event id: {ownedTicket.eventId} <br/>
           Desired Ticket: {this.state.desiredTicket.ticketId}
-          </>
+        </div>
         );
       } )
     );
   }
 
+  printGive = () => {
+    return (
+      this.props.users.loggedInUser.ticketList.map( ticketToGive => {
+        let ticketEvent = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGive.eventId; } );
+        return (
+          <div key= {ticketToGive.id}>
+            <TicketCard event= {ticketEvent} onClick={ () => { this.setState( { ticketToGive: { username: this.props.users.loggedInUser.username, ticketId: ticketToGive.ticketId } } ); }} />
+          Desired Ticket: {this.state.desiredTicket.ticketId}
+          Ticket To Give: {this.state.ticketToGive.ticketId}
+          </div>
+        );
+      } )
+    );
+  }
+
+  printConfirm = () => {
+    const { desiredTicket, ticketToGive } = this.state;
+    let ticketToGetOwner = this.props.users.userList.find( user => { return user.username === desiredTicket.username; } );
+    let ticketToGetInfo = ticketToGetOwner.ticketList.find( ticket => { return ticket.ticketId === desiredTicket.ticketId; } );
+    let eventTicketToGet = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGetInfo.eventId; } );
+
+    let ticketToGiveOwner = this.props.users.loggedInUser;
+    let ticketToGiveInfo = ticketToGiveOwner.ticketList.find( ticket => { return ticket.ticketId === ticketToGive.ticketId; } );
+    let eventTicketToGive = this.props.events.find( eventsTicket => { return eventsTicket.id === ticketToGiveInfo.eventId; } );
+
+    return (
+      <div>
+      Are you sure you want to trade this:
+        <TicketCard event= {eventTicketToGet} />
+      For this:
+        <TicketCard event= {eventTicketToGive} />
+      </div>
+    );
+  }
+
+  tradeTickets = () => {
+    return (
+      "All steps completed - you're finished"
+    );
+  }
 
   getStepContent = step => {
     switch ( step ) {
       case 0:
         return ( this.printGet() );
       case 1:
-        return "Select a ticket to give";
+        return ( this.printGive() );
       case 2:
-        return "Now you just need to confirm your exchange";
+        return ( this.printConfirm() );
       default:
         return "Unknown step";
     }
@@ -137,7 +191,7 @@ class TicketExchange extends React.Component<any, any> {
         {
           activeStep === steps.length ?
             <Typography className={classes.instructions}>
-              {"All steps completed - you're finished"}
+              { this.tradeTickets()}
             </Typography> :
             this.getStepContent( activeStep )
         }
@@ -181,5 +235,9 @@ function mapStateToProps( state ) {
   };
 }
 
+function mapDispatchToProps( dispatch ) {
+  return bindActionCreators( { trade: trade }, dispatch );
+}
 
-export default connect( mapStateToProps )( withStyles( styles )( TicketExchange ) );
+
+export default connect( mapStateToProps, mapDispatchToProps )( withStyles( styles )( TicketExchange ) );
