@@ -48,7 +48,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -66,7 +66,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -84,7 +84,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -102,7 +102,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -120,7 +120,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -138,7 +138,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",
@@ -156,7 +156,7 @@ const events: Event[] = [
     description: "Try your best",
     date: new Date(),
     images: [
-      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOneLogo.jpg",
       "/images/escapeRooms/wrongOne/wrongOne.jpg",
       "/images/escapeRooms/wrongOne/wrongOne2.jpg",
       "/images/escapeRooms/wrongOne/wrongOne3.jpg",

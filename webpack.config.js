@@ -1,4 +1,4 @@
-const DEPLOY = false;
+const DEPLOY = true;
 
 const path = require( "path" );
 const webpack = require( "webpack" );
@@ -63,7 +63,7 @@ module.exports = {
         return Buffer.from( source.toString().replace( /\/index\.js/g, "/ipm-project/index.js" ) );
       }
     } ),
-    new webpack.HotModuleReplacementPlugin()
+    !DEPLOY && new webpack.HotModuleReplacementPlugin()
   ].filter( Boolean ),
   devServer: {
     contentBase: path.join( __dirname, "dist" ),
