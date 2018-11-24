@@ -34,6 +34,9 @@ const styles = theme => ( {
   },
   toolbar: {
     margin: "auto"
+  },
+  margin: {
+    margin: 30
   }
 } );
 
@@ -58,6 +61,7 @@ class TicketExchange extends React.Component<any, any> {
   next = () => {
     this.setState( state => {
       return {
+        text: "",
         step: state.step + 1
       };
     }, () => {
@@ -90,14 +94,27 @@ class TicketExchange extends React.Component<any, any> {
     const owner = this.props.users.loggedInUser.username;
 
     return (
-      this.props.tickets.filter( ticket => ticket.owner !== owner && ( this.props.events.find( event => event.id === ticket.eventId ).title.toUpperCase().includes( this.state.text.toUpperCase() ) ) ).map( ticket => {
+      this.props.tickets.map( ticket => {
+        if ( ticket.owner === owner ) {
+          return null;
+        }
+
         const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
+        if ( !ticketEvent.title.toUpperCase().includes( this.state.text.toUpperCase() ) ) {
+          return null;
+        }
+
         return (
           <div key={ticket.ticketId}>
-            <TicketCard event={ticketEvent} selected={ this.state.desiredTicket === ticket } ticket={ticket} onClick={() => this.setState( { desiredTicket: ticket } )} />
+            <TicketCard
+              event={ticketEvent}
+              ticket={ticket}
+              selected={this.state.desiredTicket === ticket}
+              onClick={() => this.setState( { desiredTicket: ticket } )}
+            />
           </div>
         );
-      } )
+      } ).filter( Boolean )
     );
   }
 
@@ -105,14 +122,28 @@ class TicketExchange extends React.Component<any, any> {
     const owner = this.props.users.loggedInUser.username;
 
     return (
-      this.props.tickets.filter( ticket => ticket.owner === owner ).map( ticket => {
+      this.props.tickets.map( ticket => {
+
+        if ( ticket.owner !== owner ) {
+          return null;
+        }
+
         const ticketEvent = this.props.events.find( event => event.id === ticket.eventId );
+        if ( !ticketEvent.title.toUpperCase().includes( this.state.text.toUpperCase() ) ) {
+          return null;
+        }
+
         return (
           <div key={ticket.ticketId}>
-            <TicketCard event={ticketEvent} selected={ this.state.ticketToGive === ticket } ticket={ticket} onClick={() => this.setState( { ticketToGive: ticket } )} />
+            <TicketCard
+              event={ticketEvent}
+              ticket={ticket}
+              selected={this.state.ticketToGive === ticket}
+              onClick={() => this.setState( { ticketToGive: ticket } )}
+            />
           </div>
         );
-      } )
+      } ).filter( Boolean )
     );
   }
 
@@ -136,12 +167,16 @@ class TicketExchange extends React.Component<any, any> {
     return "All steps completed - you're finished";
   }
 
+  printStep = list => {
+    return list.length ? list : <Typography>No results found for query: {this.state.text}</Typography>;
+  }
+
   getStepContent = step => {
     switch ( step ) {
       case 0:
-        return this.printGet();
+        return this.printStep( this.printGet() );
       case 1:
-        return this.printGive();
+        return this.printStep( this.printGive() );
       case 2:
         return this.printConfirm();
       default:
@@ -175,7 +210,7 @@ class TicketExchange extends React.Component<any, any> {
         onRequestSearch={ text => { this.setState( { text } ); } }
         onRightDrawerToggle={this.props.onRightDrawerToggle}
       />
-      <div>
+      <div className={classes.margin}>
         {
           activeStep === steps.length ?
             this.tradeTickets() :
