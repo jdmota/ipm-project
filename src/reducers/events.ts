@@ -55,13 +55,121 @@ const events: Event[] = [
       "/images/escapeRooms/wrongOne/wrongOne4.jpg"
     ].map( fixPathname ),
     type: "Other",
-    location: "Almada",
+    location: "Porto",
     comments: [],
     priceUnit: 50
   },
   {
     id: "4",
     url: "/event/4",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Faro",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "5",
+    url: "/event/5",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Algarve",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "6",
+    url: "/event/6",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Castelo Branco",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "7",
+    url: "/event/7",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Évora",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "8",
+    url: "/event/8",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Serra da Estrela",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "9",
+    url: "/event/9",
+    title: "Escape Room",
+    description: "Try your best",
+    date: new Date(),
+    images: [
+      "/images/escapeRooms/wrongOne/wrongOneLogo.png",
+      "/images/escapeRooms/wrongOne/wrongOne.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne2.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne3.jpg",
+      "/images/escapeRooms/wrongOne/wrongOne4.jpg"
+    ].map( fixPathname ),
+    type: "Other",
+    location: "Beja",
+    comments: [],
+    priceUnit: 50
+  },
+  {
+    id: "10",
+    url: "/event/10",
     title: "Escape Room",
     description: "Can You Escape?",
     date: new Date(),
@@ -75,7 +183,7 @@ const events: Event[] = [
     location: "Almada",
     comments: [],
     priceUnit: 50
-  }
+  },
 ];
 
 export default function( state = events, action ) {
