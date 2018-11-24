@@ -165,11 +165,6 @@ class SignInPage extends React.Component<any, any> {
                 />
               </div>
             </div>
-            <div className={classes.linkDiv}>
-              <Typography variant="caption" color="inherit" align="center">
-                <a className={classes.a}>Forgot your password?</a>
-              </Typography>
-            </div>
             <div style={{ width: "fit-content", margin: "auto", padding: 8 }}>
               <Typography color="error">{this.state.errorMsg}</Typography>
             </div>
@@ -201,6 +196,14 @@ class SignInPage extends React.Component<any, any> {
     </div>;
   }
 }
+
+/*
+<div className={classes.linkDiv}>
+  <Typography variant="caption" color="inherit" align="center">
+    <a className={classes.a}>Forgot your password?</a>
+  </Typography>
+</div>
+*/
 
 function mapStateToProps( state ) {
   return {
