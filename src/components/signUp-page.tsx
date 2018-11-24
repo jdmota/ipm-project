@@ -22,8 +22,7 @@ import { addUser } from "../actions/userActions";
 import { navigateBack } from "../helpers/router";
 
 const styles = theme => ( {
-  flexContainerLogIn: {
-    width: 730,
+  flexContainer: {
     marginTop: 30,
     float: "left"
   },
@@ -160,6 +159,10 @@ const styles = theme => ( {
   },
   info: {
     textAlign: "center"
+  },
+  widthfit: {
+    width: "fit-content",
+    margin: "auto"
   }
 } );
 
@@ -226,12 +229,12 @@ class SignUpPage extends React.Component<any, any> {
         Sign Up
       </Typography>
 
-      <div style={{ width: "fit-content", margin: "auto" }}>
+      <div className={classes.widthfit}>
 
-        <div className={classes.flexContainerLogIn}>
+        <div className={classes.flexContainer}>
           <Card>
             <CardContent>
-              <div style={{ width: "fit-content", margin: "auto" }}>
+              <div className={classes.widthfit}>
                 <div style={{ width: 265, float: "left" }}>
                   <div className={classes.controls}>
                     <EmailTextField onChange={email => this.setState( { email } )}/>
@@ -268,10 +271,10 @@ class SignUpPage extends React.Component<any, any> {
                 </div>
               </div>
               <div style={{ clear: "left" }}></div>
-              <div style={{ width: "fit-content", margin: "auto", padding: 20 }}>
+              <div className={classes.widthfit} style={{ padding: 20 }}>
                 <Typography color="error">{this.state.errorMsg}</Typography>
               </div>
-              <div style={{ }}>
+              <div>
                 <CardActions>
                   <div className={classes.buttonLogin}>
                     <Button variant="contained" size="medium" color="primary" onClick={() => this.signUp()}>
