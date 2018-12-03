@@ -7,19 +7,22 @@ export function getEventByUrl( url ) {
   return events.find( e => e.url === url );
 }
 
-export function search( inputSearch: string ) {
-  const inputSearchMin = inputSearch.trim().toUpperCase();
-  const inputWords = inputSearchMin.split( /\s+/ );
-  const resultEvents = events.filter( event => {
-    const title = event.title.toUpperCase();
-    return inputWords.some( word => title.includes( word ) );
-  } );
+function matchesText( _input: string, _string: string, relevance: number, returnTrueIfEmpty?: boolean ): boolean {
+  const input = _input.trim().toUpperCase();
+  if ( input.length === 0 ) {
+    return !!returnTrueIfEmpty;
+  }
+  const string = _string.trim().toUpperCase();
+  const inputWords = input.split( /\s+/ );
+  return inputWords.some( word => word.length > relevance && string.includes( word ) );
+}
 
-  return resultEvents;
+export function search( input: string ) {
+  return events.filter( event => matchesText( input, event.title, 3 ) );
 }
 
 export function advancedSearch(
-  inputSearch: string,
+  input: string,
   types: string[],
   location: string,
   minPrice: number,
@@ -27,15 +30,13 @@ export function advancedSearch(
   minDate: Date,
   maxDate: Date
 ) {
-  const foundEvents = search( inputSearch );
-  const resultEvents = foundEvents.filter( event => {
+  return events.filter( event => {
     return types.indexOf( event.type ) > -1 &&
-      event.location.toUpperCase().includes( location.trim().toUpperCase() ) &&
+      matchesText( input, event.title, 3, true ) &&
+      matchesText( location, event.location, 3, true ) &&
       minPrice <= event.priceUnit &&
       maxPrice >= event.priceUnit &&
       minDate <= event.date &&
       maxDate >= event.date;
   } );
-
-  return resultEvents;
 }
