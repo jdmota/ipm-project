@@ -14,11 +14,15 @@ function matchesText( _input: string, _string: string, relevance: number, return
   }
   const string = _string.trim().toUpperCase();
   const inputWords = input.split( /\s+/ );
-  return inputWords.some( word => word.length > relevance && string.includes( word ) );
+  return inputWords.some( word => word.length >= relevance && string.includes( word ) );
+}
+
+function sorter( a, b ) {
+  return a.title.localeCompare( b.title );
 }
 
 export function search( input: string ) {
-  return events.filter( event => matchesText( input, event.title, 3 ) );
+  return events.filter( event => matchesText( input, event.title, 3 ) ).sort( sorter );
 }
 
 export function advancedSearch(
@@ -38,5 +42,5 @@ export function advancedSearch(
       maxPrice >= event.priceUnit &&
       minDate <= event.date &&
       maxDate >= event.date;
-  } );
+  } ).sort( sorter );
 }
