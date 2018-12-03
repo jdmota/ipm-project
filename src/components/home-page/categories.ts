@@ -19,6 +19,11 @@ export const categories = {
     type: "Theater",
     index: 3
   },
+  "/others": {
+    title: "Others",
+    type: "Other",
+    index: 4
+  },
 };
 
-export const categoriesByIndex = [ "/", "/festivals", "/concerts", "/theaters" ];
+export const categoriesByIndex = [ "/", "/festivals", "/concerts", "/theaters", "/others" ];

@@ -22,6 +22,7 @@ function CategoriesBar( props: any ) {
         <Tab label="Festivals" />
         <Tab label="Concerts" />
         <Tab label="Theaters" />
+        <Tab label="Others" />
       </Tabs>
     </Paper>
   );

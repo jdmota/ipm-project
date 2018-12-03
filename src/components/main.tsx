@@ -68,6 +68,7 @@ class Main extends React.Component<MainProps, MainState> {
       case "/festivals":
       case "/concerts":
       case "/theaters":
+      case "/others":
         component = <HomePageCategory pathname={pathname} />;
         showCategoryBar = true;
         break;
