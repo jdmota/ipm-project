@@ -6,13 +6,14 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import IconButton from "@material-ui/core/IconButton";
 
 type State = {
-  currentIndex: number,
   images: string[],
+  currentIndex: number,
   translateValue: number
 };
 
 type Props = {
-  classes: any
+  classes: any,
+  images: string[]
 };
 
 const styles = {
@@ -76,6 +77,17 @@ class Slider extends React.Component<Props, State> {
     };
   }
 
+  static getDerivedStateFromProps( props, state ) {
+    if ( props.images[ 0 ] === state.images[ 0 ] ) {
+      return null;
+    }
+    return {
+      images: props.images,
+      currentIndex: 0,
+      translateValue: 0
+    };
+  }
+
   goToPrevSlide = () => {
     if ( this.state.currentIndex === 0 ) return;
 
@@ -99,7 +111,8 @@ class Slider extends React.Component<Props, State> {
   }
 
   render() {
-    const classes = this.props.classes;
+    const { classes } = this.props;
+    const { images } = this.state;
     return (
       <div className={classes.slider}>
 
@@ -110,7 +123,7 @@ class Slider extends React.Component<Props, State> {
           }}
         >
           {
-            this.state.images.map( ( image, i ) => (
+            images.map( ( image, i ) => (
               <Slide className={classes.slide} key={i} image={image} />
             ) )
           }
@@ -121,7 +134,7 @@ class Slider extends React.Component<Props, State> {
             <ArrowBack/>
           </IconButton> }
 
-        { this.state.currentIndex < this.state.images.length - 1 &&
+        { this.state.currentIndex < images.length - 1 &&
           <IconButton className={`${classes.arrow} ${classes.rightArrow}`} onClick={this.goToNextSlide}>
             <ArrowForward/>
           </IconButton> }
