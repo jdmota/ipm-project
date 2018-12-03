@@ -37,12 +37,18 @@ const styles = theme => ( {
   },
   margin: {
     margin: 30
+  },
+  iconBigger: {
+    fontSize: 30
+  },
+  labelBigger: {
+    fontSize: 16
   }
 } );
 
 const steps = [
-  "Ticket to get",
-  "Ticket to give",
+  "Select a ticket to GET",
+  "Select a ticket to GIVE",
   "Confirmation"
 ];
 
@@ -195,10 +201,19 @@ class TicketExchange extends React.Component<any, any> {
           Ticket Exchange
         </Typography>
       </div>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map( label => {
           const props = {};
-          const labelProps = {};
+          const labelProps = {
+            StepIconProps: {
+              classes: {
+                root: classes.iconBigger
+              }
+            },
+            classes: {
+              label: classes.labelBigger
+            }
+          };
           return (
             <Step key={label} {...props}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -207,7 +222,7 @@ class TicketExchange extends React.Component<any, any> {
         } )}
       </Stepper>
       <Search
-        onRequestSearch={ text => { this.setState( { text } ); } }
+        onRequestSearch={text => this.setState( { text } )}
         // onRightDrawerToggle={this.props.onRightDrawerToggle}
       />
       <div className={classes.margin}>
